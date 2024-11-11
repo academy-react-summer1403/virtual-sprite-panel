@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 import TableAdvSearch from "../../../@core/components/tables/data-tables/advance/TableAdvSearch";
-import { getTopCourses } from '../../../@core/services/api/courses/courseTop.api';
+import { getTopCourses } from '../../../core/services/api/courses/courseTop.api';
 import { useState, useEffect } from "react";
 
 const CourseList = () => {
@@ -8,7 +8,7 @@ const CourseList = () => {
 
   const getCourses = async () => {
     const result = await getTopCourses();
-    setTopCourses(result);
+    setTopCourses(result.courseDtos);
   };
 
   useEffect(() => {
