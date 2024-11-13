@@ -1,7 +1,7 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom"; // useNavigate را وارد کنید
+import { loginAPI } from "../core/services/api/Auth/auth";
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
 
@@ -18,7 +18,12 @@ import {
   Label,
   Input,
   Button,
+  FormFeedback,
 } from "reactstrap";
+
+// ** Formik Imports
+import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 // ** Illustrations Imports
 import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
@@ -29,8 +34,37 @@ import "@styles/react/pages/page-authentication.scss";
 
 const Login = () => {
   const { skin } = useSkin();
-
+  const navigate = useNavigate(); // استفاده از useNavigate برای هدایت
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
+
+  const loginUser = async (values) => {
+    console.log("Login Clicked");
+    const userObj = {
+      phoneOrGmail: values.loginEmail,
+      password: values.loginPassword,
+      rememberMe: true,
+    };
+    const user = await loginAPI(userObj);
+    console.log(user); // بررسی محتوای پاسخ API
+    if (user && user.token) {
+      if (user.message.includes("موفق")) {
+        localStorage.setItem("token", user.token);
+        console.log(user.token);
+        navigate("/home"); // هدایت به صفحه home در صورت موفقیت
+      }
+    } else {
+      console.log("توکن موجود نیست");
+    }
+  };
+
+  // Validation schema with Yup
+  const validationSchema = Yup.object({
+    loginEmail: Yup.string()
+      .email("Invalid email address")
+      .required("Required"),
+    loginPassword: Yup.string().required("Password is required"),
+    rememberMe: Yup.boolean(),
+  });
 
   return (
     <div className="auth-wrapper auth-cover">
@@ -80,24 +114,6 @@ const Login = () => {
                     fill="url(#linearGradient-1)"
                     opacity="0.2"
                   ></path>
-                  <polygon
-                    id="Path-2"
-                    fill="#000000"
-                    opacity="0.049999997"
-                    points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"
-                  ></polygon>
-                  <polygon
-                    id="Path-2"
-                    fill="#000000"
-                    opacity="0.099999994"
-                    points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"
-                  ></polygon>
-                  <polygon
-                    id="Path-3"
-                    fill="url(#linearGradient-2)"
-                    opacity="0.099999994"
-                    points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"
-                  ></polygon>
                 </g>
               </g>
             </g>
@@ -121,45 +137,64 @@ const Login = () => {
             <CardText className="mb-2">
               Please sign-in to your account and start the adventure
             </CardText>
-            <Form
-              className="auth-login-form mt-2"
-              onSubmit={(e) => e.preventDefault()}
+            <Formik
+              initialValues={{}}
+              validationSchema={validationSchema}
+              onSubmit={loginUser}
             >
-              <div className="mb-1">
-                <Label className="form-label" for="login-email">
-                  Email
-                </Label>
-                <Input
-                  type="email"
-                  id="login-email"
-                  placeholder="john@example.com"
-                  autoFocus
-                />
-              </div>
-              <div className="mb-1">
-                <div className="d-flex justify-content-between">
-                  <Label className="form-label" for="login-password">
-                    Password
-                  </Label>
-                  <Link to="/forgot-password">
-                    <small>Forgot Password?</small>
-                  </Link>
-                </div>
-                <InputPasswordToggle
-                  className="input-group-merge"
-                  id="login-password"
-                />
-              </div>
-              <div className="form-check mb-1">
-                <Input type="checkbox" id="remember-me" />
-                <Label className="form-check-label" for="remember-me">
-                  Remember Me
-                </Label>
-              </div>
-              <Button tag={Link} to="/" color="primary" block>
-                Sign in
-              </Button>
-            </Form>
+              {({ handleSubmit, handleChange, values, errors, touched }) => (
+                <Form className="auth-login-form mt-2" onSubmit={handleSubmit}>
+                  <div className="mb-1">
+                    <Label className="form-label" for="login-email">
+                      Email
+                    </Label>
+                    <Input
+                      type="email"
+                      id="login-email"
+                      name="loginEmail"
+                      placeholder="virtual-sprite@google.com"
+                      value={values.loginEmail}
+                      onChange={handleChange}
+                      invalid={touched.loginEmail && !!errors.loginEmail}
+                    />
+                    <FormFeedback>{errors.loginEmail}</FormFeedback>
+                  </div>
+                  <div className="mb-1">
+                    <div className="d-flex justify-content-between">
+                      <Label className="form-label" for="login-password">
+                        Password
+                      </Label>
+                      <Link to="/forgot-password">
+                        <small>Forgot Password?</small>
+                      </Link>
+                    </div>
+                    <InputPasswordToggle
+                      id="login-password"
+                      name="loginPassword"
+                      value={values.loginPassword}
+                      onChange={handleChange}
+                      invalid={touched.loginPassword && !!errors.loginPassword}
+                    />
+                    <FormFeedback>{errors.loginPassword}</FormFeedback>
+                  </div>
+                  <div className="form-check mb-1">
+                    <Input
+                      type="checkbox"
+                      id="remember-me"
+                      name="rememberMe"
+                      checked={values.rememberMe}
+                      onChange={handleChange}
+                    />
+                    <Label className="form-check-label" for="remember-me">
+                      Remember Me
+                    </Label>
+                  </div>
+                  <Button type="submit" color="primary" block>
+                    Sign in
+                  </Button>
+                </Form>
+              )}
+            </Formik>
             <p className="text-center mt-2">
               <span className="me-25">New on our platform?</span>
               <Link to="/register">

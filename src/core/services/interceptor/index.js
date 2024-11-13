@@ -3,8 +3,10 @@ import {
   clearStorage,
   getItem,
   removeItem,
-} from "../../../components/common/storage.services";
+} from "../../../@core/components/common/storage.services";
 
+
+// ../../../components/common/storage.services";
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 const instance = axios.create({
@@ -37,6 +39,7 @@ instance.interceptors.request.use((opt) => {
   // const token = getItem("token") ? JSON.parse(getItem("token")) : "";
   if (token) opt.headers.Authorization = "Bearer " + token;
   return opt;
+  console.log(opt)
 });
 
 export default instance;
