@@ -15,7 +15,7 @@ export const getTopCourses = async () => {
     console.log("API Response:", res.courseDtos); //  داده‌های بازگشتی
     return res;
   } catch (error) {
-    console.log("Error:", error); // نمایش خطا
+    console.log("Error:", error); // نمایش خطا2
     return [];
   }
 };
