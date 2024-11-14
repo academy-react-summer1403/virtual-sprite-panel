@@ -1,5 +1,5 @@
 // ** Dropdowns Imports
-import UserDropdown from "./UserDropdown";
+import UserDropdown from "../../../../pages/navbar/UserDropdown";
 
 const NavbarUser = () => {
   return (
