@@ -7,7 +7,7 @@ import { Card, Input, Label, Row, Col } from "reactstrap";
 
 const TableAdvSearch = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5); // مقدار پیش‌فرض ۵
+  const [rowsPerPage, setRowsPerPage] = useState(5); // مقدار پیش‌فرض 
   const [searchValue, setSearchValue] = useState("");
   const [searchField, setSearchField] = useState("title");
   const [filteredData, setFilteredData] = useState([]);
