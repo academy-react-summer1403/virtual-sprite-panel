@@ -18,7 +18,7 @@ const CourseList = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>لیست دوره ها</CardTitle>
+        <CardTitle>لیست دوره ها    change </CardTitle>
       </CardHeader>
       <CardBody>
         <TableAdvSearch data={topCourses} />
