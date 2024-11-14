@@ -24,7 +24,7 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 
 // ** Default Route
 const DefaultRoute = "/login";
-
+//
 const Home = lazy(() => import("../../pages/Home"));
 const UserManagement = lazy(() => import("../../pages/UserManagement"));
 const CourseList = lazy(() => import("../../pages/Course/CourseList"));
