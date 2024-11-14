@@ -12,7 +12,7 @@ export const getTopCourses = async () => {
       }
     );
 
-    console.log("API Response:", res.courseDtos); // بررسی داده‌های بازگشتی
+    console.log("API Response:", res.data); // بررسی داده‌های بازگشتی
     return res;
   } catch (error) {
     console.log("Error:", error); // نمایش خطا
