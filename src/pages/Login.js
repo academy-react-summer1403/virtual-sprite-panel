@@ -34,30 +34,28 @@ import "@styles/react/pages/page-authentication.scss";
 
 const Login = () => {
   const { skin } = useSkin();
-  const navigate = useNavigate(); // استفاده از useNavigate برای هدایت
+  const navigate = useNavigate();
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
   const loginUser = async (values) => {
-    console.log("Login Clicked");
     const userObj = {
       phoneOrGmail: values.loginEmail,
       password: values.loginPassword,
       rememberMe: true,
     };
     const user = await loginAPI(userObj);
-    console.log(user); // بررسی محتوای پاسخ API
+    console.log("اطلاعات لاگین", user);
     if (user && user.token) {
       if (user.message.includes("موفق")) {
         localStorage.setItem("token", user.token);
-        console.log(user.token);
-        navigate("/home"); // هدایت به صفحه home در صورت موفقیت
+        console.log("توکن شما", user.token);
+        navigate("/home");
       }
     } else {
       console.log("توکن موجود نیست");
     }
   };
 
-  // Validation schema with Yup
   const validationSchema = Yup.object({
     loginEmail: Yup.string()
       .email("Invalid email address")

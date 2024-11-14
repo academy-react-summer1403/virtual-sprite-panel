@@ -31,6 +31,12 @@ export default [
         icon: <PlusCircle size={12} />,
         navLink: "/course-add",
       },
+      // {
+      //   id: "coursedetail",
+      //   title: "جزئیات دوره",
+      //   icon: <PlusCircle size={12} />,
+      //   navLink: "/course-detail",
+      // },
     ],
   },
   {

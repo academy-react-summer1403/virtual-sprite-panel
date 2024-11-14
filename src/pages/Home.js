@@ -25,7 +25,7 @@ const Home = () => {
               target="_blank"
             >
               Template Documentation
-            </CardLink>{" "}
+            </CardLink>
             to understand where to go from here and how to use our template.
           </CardText>
         </CardBody>

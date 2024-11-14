@@ -38,7 +38,7 @@ const UserDropdown = () => {
       >
         <div className="user-nav d-sm-flex d-none">
           <span className="user-name fw-bold">John Doe</span>
-          <span className="user-status">Admin</span>
+          <span className="user-status">ادمین</span>
         </div>
         <Avatar
           img={defaultAvatar}

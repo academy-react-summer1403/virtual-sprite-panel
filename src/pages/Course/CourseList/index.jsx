@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
-import TableAdvSearch from "../../../@core/components/tables/data-tables/advance/TableAdvSearch";
+import TableAdvSearch from "../tables/data-tables/advance/TableAdvSearch";
 import { getTopCourses } from '../../../core/services/api/courses/courseTop.api';
 import { useState, useEffect } from "react";
 
