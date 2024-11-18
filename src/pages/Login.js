@@ -1,14 +1,12 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // useNavigate را وارد کنید
 import { loginAPI } from "../core/services/api/Auth/auth";
-// ** Icons Imports
+import toast, { Toaster } from "react-hot-toast";
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
-
-// ** Custom Components
 import InputPasswordToggle from "@components/input-password-toggle";
 
-// ** Reactstrap Imports
 import {
   Row,
   Col,
@@ -36,6 +34,10 @@ const Login = () => {
   const { skin } = useSkin();
   const navigate = useNavigate();
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
+  useEffect(() => {
+    // حذف توکن از localStorage هنگام بازگشت به صفحه لاگین
+    localStorage.removeItem("token");
+  }, []);
 
   const loginUser = async (values) => {
     const userObj = {
@@ -53,6 +55,7 @@ const Login = () => {
       }
     } else {
       console.log("توکن موجود نیست");
+      toast.error("نام کاربری یا رمز عبور اشتباه است");
     }
   };
 
@@ -97,12 +100,11 @@ const Login = () => {
               strokeWidth="1"
               fill="none"
               fillRule="evenodd"
-            >
-            </g>
+            ></g>
           </svg>
           {/* <h2 className="brand-text text-primary ms-1">Vuexy</h2> */}
         </Link>
-        
+
         <Col
           className="d-flex align-items-center auth-bg px-2 p-lg-5"
           lg="4"
@@ -197,7 +199,8 @@ const Login = () => {
               </Button>
             </div>
           </Col>
-        </Col><Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
+        </Col>
+        <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
             <img className="img-fluid" src={source} alt="Login Cover" />
           </div>
