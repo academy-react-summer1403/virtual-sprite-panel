@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import {  Check } from 'react-feather'
@@ -25,9 +25,20 @@ import {
   CardImg,
   Button,
 } from "reactstrap";
+import { useParams } from "react-router-dom";
+import { getCoursesDetail } from "../../../core/services/api/courses/courseDetail.api";
 
 const CoursDetail = () => {
   // ** States
+  const [data,setData]=useState([]);
+  const {id}=useParams();
+  const getcardid= async () =>{
+    const result = await getCoursesDetail({id});
+    console.log("hi",result)
+  }
+  useEffect(()=> {
+    getcardid();
+    },[detailid]);
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -37,7 +48,8 @@ const CoursDetail = () => {
     setActive(tab);
   };
   return (
-    <Row>
+    <>
+   {detailid ?(<Row>
       <Col lg="4">
         <Card>
           <CardImg></CardImg>
@@ -311,7 +323,8 @@ const CoursDetail = () => {
           </TabContent>
         </Card>
       </Col>
-    </Row>
+    </Row>):null}
+  </>
   );
 };
 
