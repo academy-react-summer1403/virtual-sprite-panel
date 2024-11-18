@@ -32,13 +32,15 @@ const CoursDetail = () => {
   // ** States
   const [data,setData]=useState([]);
   const {id}=useParams();
+  const hardId="2772aef0-9121-ef11-b6c7-cc06a3e06235";
   const getcardid= async () =>{
-    const result = await getCoursesDetail({id});
+    const result = await getCoursesDetail(hardId);
     console.log("hi",result)
+    setData(result);
   }
   useEffect(()=> {
     getcardid();
-    },[detailid]);
+    },[]);
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -49,10 +51,10 @@ const CoursDetail = () => {
   };
   return (
     <>
-   {detailid ?(<Row>
+   <Row>
       <Col lg="4">
         <Card>
-          <CardImg></CardImg>
+          <CardImg src={data.imageAddress} ></CardImg>
           <CardBody>
             <CardTitle tag="h4" className="border-bottom">
               جزيیات
@@ -60,23 +62,23 @@ const CoursDetail = () => {
             <CardColumns>
               <CardText className="d-flex flex-row gap-2">
                 <h3 className="mt-2 ">نام دوره:</h3>{" "}
-                <h5 className="mt-2">5200000</h5>
+                <h5 className="mt-2">{data.title}</h5>
               </CardText>
               <CardText className="d-flex flex-row gap-2">
                 <h3 className="mt-2 ">نام استاد:</h3>{" "}
-                <h5 className="mt-2">5200000</h5>
+                <h5 className="mt-2">{data.teacherName}</h5>
               </CardText>
               <CardText className="d-flex flex-row gap-2">
                 <h3 className="mt-2 ">نام کلاس:</h3>{" "}
-                <h5 className="mt-2">5200000</h5>
+                <h5 className="mt-2">{data.courseClassRoomName}</h5>
               </CardText>
               <CardText className="d-flex flex-row gap-2">
                 <h3 className="mt-2 ">وضعیت:</h3>{" "}
-                <h5 className="mt-2">5200000</h5>
+                <h5 className="mt-2">{data.courseLevelName}</h5>
               </CardText>
               <CardText className="d-flex flex-row gap-2">
                 <h3 className="mt-2 ">نحوه برگزاری:</h3>{" "}
-                <h5 className="mt-2">5200000</h5>
+                <h5 className="mt-2">{data.courseTypeName}</h5>
               </CardText>
             </CardColumns>
             <div className="demo-inline-spacing">
@@ -151,19 +153,19 @@ const CoursDetail = () => {
             <TabPane tabId="1">
               <div className="d-flex flex-row  justify-content-around">
                 <Card className=" border border-primary">
-                  <CardHeader className="text-center">0</CardHeader>
+                  <CardHeader className="text-center">{data.courseLikeTotal}</CardHeader>
                   <CardBody>تعدادلایک ها</CardBody>
                 </Card>
                 <Card className="border border-danger">
-                  <CardHeader>0</CardHeader>
+                  <CardHeader>{data.reserveUserTotal}</CardHeader>
                   <CardBody>تعداد رزرو ها</CardBody>
                 </Card>
                 <Card className="border border-warning">
-                  <CardHeader>15</CardHeader>
+                  <CardHeader>{data.paymentNotDoneTotal}</CardHeader>
                   <CardBody>تعداد پرداخت های ناموفق</CardBody>
                 </Card>
                 <Card className="border border-success">
-                  <CardHeader>0</CardHeader>
+                  <CardHeader>{data.courseUserTotal}</CardHeader>
                   <CardBody>تعداد دانشجویان</CardBody>
                 </Card>
               </div>
@@ -173,34 +175,27 @@ const CoursDetail = () => {
                     <h2>توضیحات</h2>
                   </CardHeader>
                   <CardBody>
-                    {" "}
-                    Pudding candy canes sugar plum cookie chocolate cake powder
-                    croissant. Carrot cake tiramisu danish candy cake muffin
-                    croissant tart dessert. Tiramisu caramels candy canes
-                    chocolate cake sweet roll liquorice icing cupcake.Bear claw
-                    chocolate chocolate cake jelly-o pudding lemon drops sweet
-                    roll sweet candy. Chocolate sweet chocolate bar candy
-                    chocolate bar chupa chups gummi bears lemon drops.
+                  {data.describe}
                     <CardColumns>
                       <CardText className="d-flex flex-row gap-2">
                         <h3 className="mt-2 ">قیمت:</h3>{" "}
-                        <h4 className="mt-2">5200000</h4>
+                        <h4 className="mt-2">{data.cost}</h4>
                       </CardText>
                       <CardText className="d-flex flex-row gap-2">
                         <h3 className="mt-2 ">گروه های دوره:</h3>{" "}
-                        <h4 className="mt-2">5200000</h4>
+                        <h4 className="mt-2">{data.courseGroupTotal}</h4>
                       </CardText>
                       <CardText className="d-flex flex-row gap-2">
                         <h3 className="mt-2 ">شناسه گروه :</h3>{" "}
-                        <h4 className="mt-2">5200000</h4>
+                        <h4 className="mt-2">5</h4>
                       </CardText>
                       <CardText className="d-flex flex-row gap-2">
                         <h3 className="mt-2 ">ظرفیت:</h3>{" "}
-                        <h4 className="mt-2">5200000</h4>
+                        <h4 className="mt-2">5</h4>
                       </CardText>
                       <CardText className="d-flex flex-row gap-2">
                         <h3 className="mt-2 ">نام گروه:</h3>{" "}
-                        <h4 className="mt-2">5200000</h4>
+                        <h4 className="mt-2">{data.title}</h4>
                       </CardText>
                     </CardColumns>
                     <div className="demo-inline-spacing">
@@ -233,7 +228,7 @@ const CoursDetail = () => {
         </thead>
         <tbody>
         <tr >
-                <td className='text-start'> m ,m</td>
+                <td className='text-start'> {data.insertDate}</td>
                 <td>
                jmn 
                 </td>
@@ -323,7 +318,7 @@ const CoursDetail = () => {
           </TabContent>
         </Card>
       </Col>
-    </Row>):null}
+    </Row>
   </>
   );
 };
