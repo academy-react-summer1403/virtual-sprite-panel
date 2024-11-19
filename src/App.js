@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-
+import '../src/index.scss'
 // ** Router Import
 import Router from "./router/Router";
 
