@@ -6,7 +6,6 @@ import { loginAPI } from "../core/services/api/Auth/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
 import InputPasswordToggle from "@components/input-password-toggle";
-
 import {
   Row,
   Col,
@@ -114,7 +113,7 @@ const Login = () => {
             <CardTitle tag="h2" className="fw-bold mb-1">
               به پنل ادمین Virtual Sprite خوش آمدید
             </CardTitle>
-            <CardText className="mb-2">
+            <CardText className="mb-2 yekanR">
               لطفاً اطلاعات مورد نیاز را پر کنید
             </CardText>
             <Formik

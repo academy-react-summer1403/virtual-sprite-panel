@@ -1,3 +1,4 @@
+import './index.scss'
 // ** React Imports
 import { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
