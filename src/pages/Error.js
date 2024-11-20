@@ -23,7 +23,7 @@ const Error = () => {
   return (
     <div className="misc-wrapper">
       <a className="brand-logo" href="/">
-        <svg viewBox="0 0 139 95" version="1.1" height="28">
+        {/* <svg viewBox="0 0 139 95" version="1.1" height="28">
           <defs>
             <linearGradient
               x1="100%"
@@ -88,24 +88,22 @@ const Error = () => {
               </g>
             </g>
           </g>
-        </svg>
-        <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+        </svg> */}
+        <h2 className="brand-text text-primary ms-1">Virtual Sprite</h2>
       </a>
       <div className="misc-inner p-2 p-sm-3">
         <div className="w-100 text-center">
-          <h2 className="mb-1">Page Not Found 🕵🏻‍♀️</h2>
-          <p className="mb-2">
-            Oops! 😖 The requested URL was not found on this server.
-          </p>
+          <h2 className="mb-1">صفحه مورد نظر یافت نشد 🕵🏻‍♀️</h2>
+          <p className="mb-2">آدرس درخواست شده یافت نشد.</p>
           <Button
             tag={Link}
             to="/"
             color="primary"
             className="btn-sm-block mb-2"
           >
-            Back to home
+            بازگشت به خانه
           </Button>
-          <img className="img-fluid" src={source} alt="Not authorized page" />
+          <img className="img-fluid" src={source} alt="صفحه تعریف نشده" />
         </div>
       </div>
     </div>
