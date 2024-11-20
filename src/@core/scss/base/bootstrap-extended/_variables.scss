@@ -144,10 +144,16 @@ $component-active-bg: $primary !default;
 
 //
 // Font, line-height, and color for body text, headings, and more.
+@font-face {
+     font-family: "yekanReg";
+     src: url("../assets/fonts/Yekan_Bakh_Fanum_Regular.TTF") format("woff2");
+     font-weight: normal;
+     font-style: normal;
+   }
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Montserrat', Helvetica, Arial, serif !default;
-$font-family-monospace: 'Montserrat', Helvetica, Arial, serif !default;
+$font-family-yekan-r: "yekanReg", Arial, sans-serif !default;
+$font-family-monospace: 'yekanReg', Helvetica, Arial, serif !default;
 
 // stylelint-enable value-keyword-case
 $font-size-base: 1rem !default;
