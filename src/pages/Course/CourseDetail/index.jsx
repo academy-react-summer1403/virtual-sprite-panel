@@ -25,7 +25,7 @@ import {
   CardImg,
   Button,
 } from "reactstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCoursesDetail } from "../../../core/services/api/courses/courseDetail.api";
 
 const CoursDetail = () => {
@@ -49,6 +49,12 @@ const CoursDetail = () => {
   const toggle = (tab) => {
     setActive(tab);
   };
+  const navigate = useNavigate();
+  const gotoedit =()=>{
+    return(
+      navigate("/course-edit")
+    )
+  }
   return (
     <>
    <Row>
@@ -82,7 +88,7 @@ const CoursDetail = () => {
               </CardText>
             </CardColumns>
             <div className="demo-inline-spacing">
-              <Button color="relief-primary"> ویرایش</Button>
+              <Button onClick={gotoedit}  color="relief-primary"> ویرایش</Button>
               <Button outline color="warning">
                 غیرفعال کردن دوره
               </Button>
@@ -202,7 +208,7 @@ const CoursDetail = () => {
                       <Button outline color="danger">
                         حذف
                       </Button>
-                      <Button color="info">ویرایش</Button>
+                      <Button onClick={gotoedit} color="info">ویرایش</Button>
                     </div>
                     <Button className="m-1" color="relief-primary">
                       اضافه کردن گروه
