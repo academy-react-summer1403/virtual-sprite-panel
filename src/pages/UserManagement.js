@@ -2,8 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import {  Check, Twitter } from 'react-feather';
-import linkdin from '../assets/images/detail/linkdin.png';
-import twiter from '../assets/images/detail/twiter.webp';
+import { Search } from 'react-feather'
 // ** Reactstrap Imports
 import {
   Nav,
@@ -26,211 +25,113 @@ import {
   Row,
   CardImg,
   Button,
+  Label,
+   InputGroup, Input,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-
-
+import Select from 'react-select'
+import '@styles/react/libs/react-select/_react-select.scss'
+import { selectThemeColors } from '@utils'
 const UserManagement = () => {
-  
-  const [active, setActive] = useState("1");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  
-  const toggle = (tab) => {
-    setActive(tab);
-  };
-  return (
-    <>
-   <Row>
-      <Col lg="4">
-        <Card>
-          <CardImg  ></CardImg>
-          <CardTitle></CardTitle>
-          <CardBody>
-            <CardTitle tag="h4" className="border-bottom">
-              جزيیات
-            </CardTitle>
-            <CardColumns>
-              <CardText className="d-flex flex-row gap-2">
-                <h3 className="mt-2 ">نام کاربری:</h3>{" "}
-                <h5 className="mt-2"></h5>
-              </CardText>
-              <CardText className="d-flex flex-row gap-2">
-                <h3 className="mt-2 "> ایمیل:</h3>{" "}
-                <h5 className="mt-2"></h5>
-              </CardText>
-              <CardText className="d-flex flex-row gap-2">
-                <h3 className="mt-2 ">وضعیت :</h3>{" "}
-                <h5 className="mt-2"></h5>
-              </CardText>
-              <CardText className="d-flex flex-row gap-2">
-                <h3 className="mt-2 ">درصد تکمیل پروفایل:</h3>{" "}
-                <h5 className="mt-2"></h5>
-              </CardText>
-              <CardText className="d-flex flex-row gap-2">
-                <h3 className="mt-2 "> جنسیت:</h3>{" "}
-                <h5 className="mt-2"></h5>
-              </CardText>
-            </CardColumns>
-          
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col lg="8" className=".bg-light-subtle">
-        <Nav pills>
-          <NavItem>
-            <NavLink
-              active={active === "1"}
-              onClick={() => {
-                toggle("1");
-              }}
-            >
-              دوره ها
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              active={active === "2"}
-              onClick={() => {
-                toggle("2");
-              }}
-            >
-              دوره های رزرو 
-            </NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink
-              active={active === "3"}
-              onClick={() => {
-                toggle("3");
-              }}
-            >
-                کامنت ها
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              active={active === "4"}
-              onClick={() => {
-                toggle("4");
-              }}
-            >
-              سایر اطلاعات کاربر
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              active={active === "5"}
-              onClick={() => {
-                toggle("5");
-              }}
-            >
-              ارتباط با کاربر
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <Card>
-          <TabContent className="py-50" activeTab={active}>
-            <TabPane tabId="1">
-            <Table className='text-nowrap text-center border-bottom' responsive>
-        <thead>
-          <tr>
-            <th className='text-start'>نام دوره </th>
-            <th>توضیحات دوره </th>
-            <th> تاریخ آخرین بروزرسانی</th>
+  const navigate =useNavigate();
+  const gotodetail =()=>{
+    return (navigate("/user-management-detail"))
+  }
+  return(
+    <Col>
+    <Row lg={3}>
+    <Col md='4' className='mb-1'>
+            <Label className='form-label' for='level'>
+          نقش
+            </Label>
+            <Select
+              theme={selectThemeColors}
+              isClearable={false}
+              id={`level`}
+              className='react-select'
+              classNamePrefix='select'
+              // options={termOptions}
            
-          </tr>
-        </thead>
-        <tbody>
-        <tr >
-                <td className='text-start'>
-                  <img></img>
-                دپدو</td>
-                <td>
-              نتمن
-                </td>
-                <td>
-   
-                 دپدپن
-                </td>
-
-              </tr>
-        </tbody>
-        </Table>
-            </TabPane>
-            <TabPane tabId="2">
-            <Table className='text-nowrap text-center border-bottom' responsive>
+            />
+          </Col>
+          <Col md='4' className='mb-1'>
+            <Label className='form-label' for='level'>
+            وضعیت
+            </Label>
+            <Select
+              theme={selectThemeColors}
+              isClearable={false}
+              id={`level`}
+              className='react-select'
+              classNamePrefix='select'
+              // options={termOptions}
+           
+            />
+          </Col>
+          <Col md='4' className='mb-1'>
+            <Label className='form-label' for='level'>
+           مرتب سازی
+            </Label>
+            <Select
+              theme={selectThemeColors}
+              isClearable={false}
+              id={`level`}
+              className='react-select'
+              classNamePrefix='select'
+              // options={termOptions}
+           
+            />
+          </Col>
+    </Row>
+    <Col className="mt-1" >
+    <Row lg={4} className="justify-content-between">
+    <Col lg={2} className='mb-1'>
+            <Label className='form-label' for='level'>
+         نمایش
+            </Label>
+            <Select
+              theme={selectThemeColors}
+              isClearable={false}
+              id={`level`}
+              className='react-select'
+              classNamePrefix='select'
+              // options={termOptions}
+           
+            />
+          </Col>
+          <Col lg={7}>
+          <Row>
+          <Col className='mt-2' lg={8}>
+        <InputGroup>
+          <Button color='success' outline>
+            <Search size={12} />
+          </Button>
+          <Input type='text' placeholder='Button on both sides' />
+          <Button color='success' outline>
+            Search !
+          </Button>
+        </InputGroup>
+      </Col>
+          <Col lg={4} className='mt-2'>
+          <Button color='success' >
+            اضافه کردن کاربر جدید
+          </Button>
+          
+          </Col>
+          </Row>
+          </Col >
+ 
+    </Row>
+    <Table className='text-nowrap text-center border-bottom' responsive>
         <thead>
           <tr>
-            <th className='text-start'>نام دوره </th>
-            <th>تاریخ رزرو</th>
-            <th>وضعیت دوره</th>
-            <th>عملیات</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr >
-                <td className='text-start'>نمنپم</td>
-                <td>
-               jmn 
-                </td>
-                <td>
-                <Button.Ripple outline color='danger' >
-       رزرو شده
-      </Button.Ripple>
-                 
-                </td>
-                <td>
-                <Button.Ripple gradiant color='secondary' >
-      جزيیات
-      </Button.Ripple>
-      
-                </td>
-              </tr>
-        </tbody>
-        </Table>
-            </TabPane>
-            <TabPane tabId="3">
-            
-            <Table className='text-nowrap text-center border-bottom' responsive>
-        <thead>
-          <tr>
-            <th className='text-start'> نام دوره</th>
-            <th>عنوان کامنت </th>
+            <th className='text-start'> کاربر </th>
+            <th> نام کاربر</th>
+            <th>نقش </th>
+            <th>ایمیل </th>
+            <th>درصد تکمیل پروفایل </th>
             <th>وضعیت </th>
-            <th>اقدام</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr >
-                <td className='text-start'></td>
-                <td>
-               jmn 
-                </td>
-                <td>
-                <Button.Ripple className='round' color='success' >
-       تایید شده
-      </Button.Ripple>
-                 
-                </td>
-                <td>
-     ...
-                </td>
-              </tr>
-        </tbody>
-        </Table>
-            </TabPane>
-            <TabPane tabId="4">
-            <h1 className="m-2">دانشجویان مربوط به این دوره</h1>
-            <Table className='text-nowrap text-center border-bottom' responsive>
-        <thead>
-          <tr>
-            <th className='text-start'>نام دانشجو </th>
-            <th> نمره</th>
-            <th>وضعیت پرداخت</th>
+            <th>جزییات </th>
           </tr>
         </thead>
         <tbody>
@@ -240,40 +141,32 @@ const UserManagement = () => {
                0 
                 </td>
                 <td>
-                <Button.Ripple className='round' color='danger' >
-      پرداخت نشده
-      </Button.Ripple>
+      تننتتن
+                 
+                </td>
+                <td>
+      تات
+                 
+                </td>
+                <td>
+      اتات
+                 
+                </td>
+                <td>
+   تننتن
+                 
+                </td>
+                <td onClick={gotodetail}>
+  ...
                  
                 </td>
               </tr>
         </tbody>
         </Table>
-            </TabPane>
-            <TabPane tabId="5">
-            <h1 className="m-2"> شبکه های اجتماعی</h1>
-           <Col className="p-1">
-           <Row lg={5} >
-          <img  src={twiter} ></img>
-          <Col lg={8}><Card >
-              <CardTitle>telegram Id</CardTitle>
-              <CardBody>http://t.me</CardBody>
-            </Card></Col> 
-           </Row>
-           <Row lg={5} className="mt-1">
-            <img src={linkdin}></img>
-            <Col lg={8}><Card >
-              <CardTitle>linkdin profile</CardTitle>
-              <CardBody>http://www.linkdin.com</CardBody>
-            </Card></Col> 
-           </Row>
-           </Col>
-            </TabPane>
-          </TabContent>
-        </Card>
-      </Col>
-    </Row>
-  </>
-  );
+    
+    </Col>
+    </Col>
+  )
 };
 
 export default UserManagement;
