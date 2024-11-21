@@ -29,7 +29,6 @@ const CourseAdd = () => {
       const result = await getCourses();
       setCreateCourse(result.courseTypeDtos);
 
-      // تبدیل داده‌های API به ساختار typeOptions
       const options = result.courseTypeDtos.map((item) => ({
         value: item.id,
         label: item.typeName,
@@ -131,28 +130,49 @@ const CourseAdd = () => {
                 <div>
                   <Card>
                     <CardHeader className="text-center text-lg">
-                      <h4>موضوع دوره : </h4>
-                      <Select
-                        theme={selectThemeColors}
-                        className="react-select"
-                        classNamePrefix="select"
-                        defaultValue={typeOptions[0]}
-                        options={typeOptions}
-                        isClearable={false}
-                      />
+                   
+                    
                     </CardHeader>
                     <CardBody>
                       {/* {data.describe} */}
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">قیمت:</h4>{" "}
-                          <h5 className="mt-2">{/* {data.cost} */}</h5>
+                        <Row className="align-items-center">
+                        <Col xs={12} md={6}>
+                          <h5 className="mb-0">عنوان دوره</h5>
+                        </Col>
+                        <Col xs={12} md={6}>
+                          input
+                        </Col>
+                      </Row>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">گروه های دوره:</h4>{" "}
-                          <h5 className="mt-2">
-                            {/* {data.courseGroupTotal} */}
-                          </h5>
+                        <Row className="align-items-center">
+                        <Col xs={12} md={6}>
+                          <h5 className="mb-0">موضوع دوره</h5>
+                        </Col>
+                        <Col xs={12} md={6}>
+                          <Select
+                            theme={selectThemeColors}
+                            className="react-select w-100"
+                            classNamePrefix="select"
+                            defaultValue={typeOptions[0]}
+                            options={typeOptions}
+                            isClearable={false}
+                            styles={{
+                              container: (base) => ({
+                                ...base,
+                                width: "100%",
+                              }),
+                              control: (base) => ({
+                                ...base,
+                                minWidth: "200px",
+                                maxWidth: "100%",
+                              }),
+                            }}
+                          />
+                        </Col>
+                      </Row>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
                           <h4 className="mt-2 ">شناسه گروه :</h4>{" "}
