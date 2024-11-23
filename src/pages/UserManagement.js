@@ -1,7 +1,6 @@
-import { Fragment, useEffect, useState } from "react";
+
 // ** Third Party Components
 import classnames from "classnames";
-import {  Check, Twitter } from 'react-feather';
 import { Search } from 'react-feather'
 // ** Reactstrap Imports
 import {
@@ -15,6 +14,7 @@ import {
   DropdownItem,
   DropdownToggle,
   Table,
+  Form,
   Card,
   CardHeader,
   CardBody,
@@ -24,20 +24,94 @@ import {
   Col,
   Row,
   CardImg,
-  Button,
   Label,
    InputGroup, Input,
+   Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from 'react-select'
 import '@styles/react/libs/react-select/_react-select.scss'
 import { selectThemeColors } from '@utils'
+import { Fragment, useState } from 'react'
 const UserManagement = () => {
   const navigate =useNavigate();
   const gotodetail =()=>{
     return (navigate("/user-management-detail"))
-  }
+  };
+ 
+
+    const [centeredModal, setCenteredModal] = useState(false)
+  
   return(
+    <>
+    <div className='vertically-centered-modal'>
+<Modal isOpen={centeredModal} toggle={() => setCenteredModal(!centeredModal)} className='modal-dialog-centered'>
+          <ModalHeader toggle={() => setCenteredModal(!centeredModal)}>لطفا اطلاعات کاربر را وارد نمایید</ModalHeader>
+          <ModalBody>
+          <Card>
+      <CardHeader>
+        <CardTitle tag='h4'>Vertical Form</CardTitle>
+      </CardHeader>
+
+      <CardBody>
+        <Form>
+          <Row>
+            <Col sm='12' className='mb-1'>
+              <Label className='form-label' for='nameVertical'>
+               نام
+              </Label>
+              <Input type='text' name='name' id='nameVertical' placeholder='First Name' />
+            </Col>
+            <Col sm='12' className='mb-1'>
+              <Label className='form-label' for='nameVertical'>
+               نام خانوادگی
+              </Label>
+              <Input type='text' name='lastname' id='nameVertical' placeholder='First Name' />
+            </Col>
+            <Col sm='12' className='mb-1'>
+              <Label className='form-label' for='EmailVertical'>
+               ایمیل
+              </Label>
+              <Input type='email' name='Email' id='EmailVertical' placeholder='Email' />
+            </Col>
+            <Col sm='12' className='mb-1'>
+              <Label className='form-label' for='mobileVertical'>
+               شماره موبایل
+              </Label>
+              <Input type='number' name='mobile' id='mobileVertical' placeholder='Mobile' />
+            </Col>
+            <Col sm='12' className='mb-1'>
+              <Label className='form-label' for='passwordVertical'>
+              رمز عبور
+              </Label>
+              <Input type='password' name='password' id='passwordVertical' placeholder='Password' />
+            </Col>
+            <Col sm='12' className='mb-1'>
+              <div className='form-check'>
+                <Input type='checkbox' id='remember-me-vertical' defaultChecked={false} />
+                <Label className='form-check-label' for='remember-me-vertical'>
+                 مرا به خاطر بسپار
+                </Label>
+              </div>
+            </Col>
+            <Col sm='12'>
+              <div className='d-flex'>
+                <Button className='me-1' color='primary' type='submit' onClick={e => e.preventDefault()}>
+                  ثبت
+                </Button>
+                <Button outline color='secondary' type='reset'>
+                  انصراف
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Form>
+      </CardBody>
+    </Card>
+          </ModalBody>
+         
+        </Modal>
+</div>
     <Col>
     <Row lg={3}>
     <Col md='4' className='mb-1'>
@@ -113,7 +187,7 @@ const UserManagement = () => {
         </InputGroup>
       </Col>
           <Col lg={4} className='mt-2'>
-          <Button color='success' >
+          <Button color='success' onClick={() => setCenteredModal(!centeredModal)}>
             اضافه کردن کاربر جدید
           </Button>
           
@@ -166,6 +240,7 @@ const UserManagement = () => {
     
     </Col>
     </Col>
+    </>
   )
 };
 

@@ -31,6 +31,7 @@ export default [
         icon: <PlusCircle size={12} />,
         navLink: "/course-add",
       },
+     
       // {
       //   id: "coursedetail",
       //   title: "جزئیات دوره",
@@ -39,18 +40,24 @@ export default [
       // },
     ],
   },
+  // {
+  //   id: "smaplePage",
+  //   title: "Sample Page",
+  //   icon: <Airplay size={20} />,
+  //   // navLink: "/sample",
+  //   children: [
+  //     {
+  //       id: "invoiceList",
+  //       title: "List",
+  //       icon: <Circle size={12} />,
+  //       navLink: "/apps/invoice/list",
+  //     },
+  //   ],
+  // },
   {
-    id: "smaplePage",
-    title: "Sample Page",
-    icon: <Airplay size={20} />,
-    // navLink: "/sample",
-    children: [
-      {
-        id: "invoiceList",
-        title: "List",
-        icon: <Circle size={12} />,
-        navLink: "/apps/invoice/list",
-      },
-    ],
+    id: "comment",
+    title: " مدیریت کامنت ها",
+    icon: <Book size={12} />,
+    navLink: "/comment",
   },
 ];
