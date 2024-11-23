@@ -26,21 +26,29 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCoursesDetail } from "../../../core/services/api/courses/courseDetail.api";
+import { getCoursesDetail } from "../../../core/services/api/courses/courseDetailById.api";
 
 const CoursDetail = () => {
-  // ** States
-  const [data,setData]=useState([]);
-  const {id}=useParams();
-  const hardId="2772aef0-9121-ef11-b6c7-cc06a3e06235";
-  const getcardid= async () =>{
-    const result = await getCoursesDetail(hardId);
-    console.log("hi",result)
-    setData(result);
-  }
-  useEffect(()=> {
-    getcardid();
-    },[]);
+
+
+  const [detail, setDetail] = useState([]);
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const { id } = useParams();
+  console.log(id);
+  const getDetails = async () => {
+    if (token) {
+      const result = await getCoursesDetail(id);
+      console.log("course detail", result);
+      setData(result);
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+  useEffect(() => {
+    getDetails();
+  }, [id]);
+
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -63,7 +71,7 @@ const CoursDetail = () => {
           <CardImg src={data.imageAddress} ></CardImg>
           <CardBody>
             <CardTitle tag="h4" className="border-bottom">
-              جزيیات
+              جزيیات {id}
             </CardTitle>
             <CardColumns>
               <CardText className="d-flex flex-row gap-2">
