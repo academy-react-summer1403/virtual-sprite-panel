@@ -4,6 +4,7 @@ import classnames from "classnames";
 import {  Check, Twitter } from 'react-feather';
 import linkdin from '../../assets/images/detail/linkdin.png';
 import twiter from '../../assets/images/detail/twiter.webp';
+import ModalBasic from "./Modal.jsx";
 // ** Reactstrap Imports
 import {
   Nav,
