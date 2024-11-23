@@ -68,7 +68,7 @@ const Routes = [
   {path: "/course-detail/:id",
   element: <CourseDetail />,
 },
-{path: "/course-edit",
+{path: "/course-edit/:id",
   element: <EditCourse />,
 },
   {

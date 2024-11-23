@@ -1,4 +1,7 @@
-import { useRef, useState } from "react";
+import { Fragment,useRef, useEffect, useState } from "react";
+
+import { getCoursesDetail } from "../../../../core/services/api/courses/courseDetailById.api";
+
 // ** Third Party Components
 import classnames from "classnames";
 import { Check } from "react-feather";
@@ -36,6 +39,22 @@ import Image from "./steps-with-validation/Image";
 import PersonalInfo from "./steps-with-validation/PersonalInfo";
 import AccountDetails from "./steps-with-validation/AccountDetails";
 const EditCourse = () => {
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const { id } = useParams();
+  console.log(id);
+  const getDetails = async () => {
+    if (token) {
+      const result = await getCoursesDetail(id);
+      console.log("course detail", result);
+      setData(result);
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+  useEffect(() => {
+    getDetails();
+  }, [id]);
   const ref = useRef(null);
 
   // ** State
@@ -46,7 +65,7 @@ const EditCourse = () => {
       id: "account-details",
       title: "اطلاعات اولیه",
       subtitle: "اطلاعات اولیه را وارد کنید",
-      content: <AccountDetails stepper={stepper} />,
+      content: <AccountDetails stepper={stepper} getData={data} />,
     },
     {
       id: "personal-info",

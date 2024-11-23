@@ -1,157 +1,201 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
 // ** Utils
-import { isObjEmpty } from '@utils'
+import { isObjEmpty } from "@utils";
 
 // ** Third Party Components
-import * as yup from 'yup'
-import { useForm, Controller } from 'react-hook-form'
-import { ArrowLeft, ArrowRight } from 'react-feather'
-import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from "yup";
+import { useForm, Controller } from "react-hook-form";
+import { ArrowLeft, ArrowRight } from "react-feather";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** Reactstrap Imports
-import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
+import { Form, Label, Input, Row, Col, Button, FormFeedback } from "reactstrap";
 
-const defaultValues = {
-  zar: '',
-  username: '',
-  mony: '',
-  jalasat: '',
-  explane:'',
-  small:''
-}
-
-const AccountDetails = ({ stepper }) => {
+const AccountDetails = ({ stepper, getData }) => {
+  const defaultValues = {
+    zar: getData?.zar || "",
+    username: getData?.title || "",
+    cost: getData?.cost || "",
+    sessions: getData?.sessions || "",
+    explane: getData?.explane || "",
+    small: getData?.small || "",
+  };
   const SignupSchema = yup.object().shape({
     username: yup.string().required(),
-   jalasat: yup.string().required(),
-    mony: yup.string().required(),
-    explane:yup.string().required(),
-    small:yup.string().required(),
-   zar: yup
-      .string()
-      .required()
-     
-  })
+    sessions: yup.string().required(),
+    cost: yup.string().required(),
+    explane: yup.string().required(),
+    small: yup.string().required(),
+    zar: yup.string().required(),
+  });
 
   // ** Hooks
 
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     defaultValues,
-    resolver: yupResolver(SignupSchema)
-  })
+    resolver: yupResolver(SignupSchema),
+  });
 
   const onSubmit = () => {
     if (isObjEmpty(errors)) {
-      stepper.next()
+      stepper.next();
     }
-  }
+  };
 
   return (
-    <Fragment>
-      <div className='content-header'>
-        <h5 className='mb-0'>اضافه کردن اطلاعات دوره</h5>
-       
+    <Fragment> 
+      <div className="content-header">
+        <h5 className="mb-0">اضافه کردن اطلاعات دوره</h5>
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+
+      <Form  onSubmit={handleSubmit(onSubmit)}>
         <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for='username'>
-             نام دوره
+          <Col md="6" className="mb-1">
+            <Label className="form-label" for="username">
+              نام دوره
             </Label>
             <Controller
-              id='username'
-              name='username'
+              id="username"
+              name="username"
               control={control}
-              render={({ field }) => <Input placeholder='نام دوره را وارد کنید' invalid={errors.username && true} {...field} />}
-            />
-            {errors.username && <FormFeedback>{errors.username.message}</FormFeedback>}
-          </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for='zar'>
-             ظرفیت دوره
-            </Label>
-            <Controller
-              control={control}
-              id='zar'
-              name='zar'
               render={({ field }) => (
-                <Input  placeholder='ظرفیت دوره را وارد کنید' invalid={errors.zar && true} {...field} />
+                <Input
+                value={getData?.title || ""}
+                  placeholder="نام دوره را وارد کنید"
+                  invalid={errors.username && true}
+                  {...field}
+                />
+              )}
+            />
+            {errors.username && (
+              <FormFeedback>{errors.username.message}</FormFeedback>
+            )}
+          </Col>
+          <Col md="6" className="mb-1">
+            <Label className="form-label" for="zar">
+              ظرفیت دوره
+            </Label>
+            <Controller
+              control={control}
+              id="zar"
+              name="zar"
+              render={({ field }) => (
+                <Input
+                  placeholder="ظرفیت دوره را وارد کنید"
+                  invalid={errors.zar && true}
+                  {...field}
+                />
               )}
             />
             {errors.zar && <FormFeedback>{errors.zar.message}</FormFeedback>}
           </Col>
         </Row>
         <Row>
-          <div className='form-password-toggle col-md-6 mb-1'>
-            <Label className='form-label' for='jalasat'>
-             تعداد جلسات
+          <div className="form-password-toggle col-md-6 mb-1">
+            <Label className="form-label" for="sessions">
+              تعداد جلسات
             </Label>
             <Controller
-              id='jalasat'
-              name='jalasat'
+              id="sessions"
+              name="sessions"
               control={control}
-              render={({ field }) => <Input  placeholder='  تعداد جلسات دوره را وارد کنید' invalid={errors.jalasat && true} {...field} />}
+              render={({ field }) => (
+                <Input
+                  placeholder="  تعداد جلسات دوره را وارد کنید"
+                  invalid={errors.sessions && true}
+                  {...field}
+                />
+              )}
             />
-            {errors.jalasat && <FormFeedback>{errors.jalasat.message}</FormFeedback>}
+            {errors.sessions && (
+              <FormFeedback>{errors.sessions.message}</FormFeedback>
+            )}
           </div>
-          <div className='form-password-toggle col-md-6 mb-1'>
-            <Label className='form-label' for='mony'>
+          <div className="form-password-toggle col-md-6 mb-1">
+            <Label className="form-label" for="cost">
               قیمت دوره
             </Label>
             <Controller
               control={control}
-              id='mony'
-              name='mony'
-              render={({ field }) => <Input  invalid={errors.mony&& true} {...field} />}
+              id="cost"
+              name="cost"
+              render={({ field }) => (
+                <Input invalid={errors.cost && true} {...field} />
+              )}
             />
-            {errors.mony && <FormFeedback>{errors.mony.message}</FormFeedback>}
+            {errors.cost && <FormFeedback>{errors.cost.message}</FormFeedback>}
           </div>
         </Row>
         <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for='explane'>
-           توضیحات کامل
+          <Col md="6" className="mb-1">
+            <Label className="form-label" for="explane">
+              توضیحات کامل
             </Label>
             <Controller
-              id='explane'
-              name='explane'
+              id="explane"
+              name="explane"
               control={control}
-              render={({ field }) => <Input type='textarea' placeholder='توضیحات را وارد کنید' invalid={errors.explane && true} {...field} />}
+              render={({ field }) => (
+                <Input
+                  type="textarea"
+                  placeholder="توضیحات را وارد کنید"
+                  invalid={errors.explane && true}
+                  {...field}
+                />
+              )}
             />
-            {errors.explane && <FormFeedback>{errors.explane.message}</FormFeedback>}
+            {errors.explane && (
+              <FormFeedback>{errors.explane.message}</FormFeedback>
+            )}
           </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for='small'>
-            توضیحات کوچک
+          <Col md="6" className="mb-1">
+            <Label className="form-label" for="small">
+              توضیحات کوچک
             </Label>
             <Controller
               control={control}
-              id='small'
-              name='small'
-              render={({ field }) => <Input type='textarea' invalid={errors.small&& true} {...field} />}
+              id="small"
+              name="small"
+              render={({ field }) => (
+                <Input
+                  type="textarea"
+                  invalid={errors.small && true}
+                  {...field}
+                />
+              )}
             />
-            {errors.small && <FormFeedback>{errors.small.message}</FormFeedback>}
+            {errors.small && (
+              <FormFeedback>{errors.small.message}</FormFeedback>
+            )}
           </Col>
         </Row>
-        <div className='d-flex justify-content-between'>
-          <Button color='secondary' className='btn-prev' outline disabled>
-            <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
-            <span className='align-middle d-sm-inline-block d-none'>Previous</span>
+        <div className="d-flex justify-content-between">
+          <Button color="secondary" className="btn-prev" outline disabled>
+            <ArrowLeft
+              size={14}
+              className="align-middle me-sm-25 me-0"
+            ></ArrowLeft>
+            <span className="align-middle d-sm-inline-block d-none">
+              Previous
+            </span>
           </Button>
-          <Button type='submit' color='primary' className='btn-next'>
-            <span className='align-middle d-sm-inline-block d-none'>Next</span>
-            <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
+          <Button type="submit" color="primary" className="btn-next">
+            <span className="align-middle d-sm-inline-block d-none">Next</span>
+            <ArrowRight
+              size={14}
+              className="align-middle ms-sm-25 ms-0"
+            ></ArrowRight>
           </Button>
         </div>
       </Form>
     </Fragment>
-  )
-}
+  );
+};
 
-export default AccountDetails
+export default AccountDetails;
