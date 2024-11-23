@@ -4,15 +4,17 @@ import { ChevronDown } from "react-feather";
 import DataTable from "react-data-table-component";
 import ComponentSpinner from "../../../../../@core/components/spinner/Loading-spinner";
 import { Card, Input, Label, Row, Col } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const TableAdvSearch = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5); // مقدار پیش‌فرض 
+  const [rowsPerPage, setRowsPerPage] = useState(5); // مقدار پیش‌فرض
   const [searchValue, setSearchValue] = useState("");
   const [searchField, setSearchField] = useState("title");
   const [filteredData, setFilteredData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -82,7 +84,8 @@ const TableAdvSearch = ({ data }) => {
   };
 
   const handleRowClick = (courseId) => {
-    alert(`Course ID: ${courseId}`);
+    console.log(`Course ID: ${courseId}`);
+    navigate(`/course-detail/${courseId}`);
   };
 
   const CustomPagination = () => {
