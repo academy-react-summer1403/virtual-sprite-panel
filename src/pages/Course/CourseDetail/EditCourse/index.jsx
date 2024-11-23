@@ -55,7 +55,7 @@ const EditCourse = () => {
       content: <PersonalInfo stepper={stepper} />,
     },
     {
-      id: "step-address",
+      id: "step-image",
       title: "عکس دوره",
       subtitle: "عکس دوره را وارد کنیپ",
       content: <Image stepper={stepper} />,

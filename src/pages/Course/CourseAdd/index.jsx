@@ -1,4 +1,6 @@
 import Select from "react-select";
+import BreadCrumbs from '@components/breadcrumbs'
+import WizardModernVertical from './wizard/WizardModernVertical.js'
 import { selectThemeColors } from "@utils";
 import { useEffect, useState } from "react";
 import {
@@ -16,32 +18,33 @@ import {
   Button,
   NavItem,
   NavLink,
+  Input,
 } from "reactstrap";
-import { getCourses } from "../../../core/services/api/courses/createCourseStep1";
+// import { getCourses } from "../../../core/services/api/courses/createCourseStep1";
 
 const CourseAdd = () => {
-  const [createCourse, setCreateCourse] = useState([]);
-  const [typeOptions, setTypeOptions] = useState([]);
-  const [active, setActive] = useState("1");
+  // const [createCourse, setCreateCourse] = useState([]);
+  // const [typeOptions, setTypeOptions] = useState([]);
+  // const [active, setActive] = useState("1");
 
-  const getCreateCourses = async () => {
-    try {
-      const result = await getCourses();
-      setCreateCourse(result.courseTypeDtos);
+  // const getCreateCourses = async () => {
+  //   try {
+  //     const result = await getCourses();
+  //     setCreateCourse(result.courseTypeDtos);
 
-      const options = result.courseTypeDtos.map((item) => ({
-        value: item.id,
-        label: item.typeName,
-      }));
-      setTypeOptions(options);
-    } catch (error) {
-      console.error("خطا در دریافت داده‌ها:", error);
-    }
-  };
+  //     const options = result.courseTypeDtos.map((item) => ({
+  //       value: item.id,
+  //       label: item.typeName,
+  //     }));
+  //     setTypeOptions(options);
+  //   } catch (error) {
+  //     console.error("خطا در دریافت داده‌ها:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getCreateCourses();
-  }, []);
+  // useEffect(() => {
+  //   getCreateCourses();
+  // }, []);
 
   const toggle = (tab) => {
     setActive(tab);
@@ -49,7 +52,7 @@ const CourseAdd = () => {
 
   return (
     <>
-      <Row>
+      {/* <Row>
         <Col lg="11" className=".bg-light-subtle">
           <Nav pills>
             <NavItem>
@@ -110,20 +113,20 @@ const CourseAdd = () => {
                 <div className="d-flex flex-row  justify-content-around">
                   <Card className=" border border-primary">
                     <CardHeader className="text-center">
-                      {/* {data.courseLikeTotal} */}
+                     
                     </CardHeader>
                     <CardBody>تعدادلایک ها</CardBody>
                   </Card>
                   <Card className="border border-danger">
-                    <CardHeader>{/* {data.reserveUserTotal} */}</CardHeader>
+                    <CardHeader></CardHeader>
                     <CardBody>تعداد رزرو ها</CardBody>
                   </Card>
                   <Card className="border border-warning">
-                    <CardHeader>{/* {data.paymentNotDoneTotal} */}</CardHeader>
+                    <CardHeader></CardHeader>
                     <CardBody>تعداد پرداخت های ناموفق</CardBody>
                   </Card>
                   <Card className="border border-success">
-                    <CardHeader>{/* {data.courseUserTotal} */}</CardHeader>
+                    <CardHeader></CardHeader>
                     <CardBody>تعداد دانشجویان</CardBody>
                   </Card>
                 </div>
@@ -134,7 +137,7 @@ const CourseAdd = () => {
                     
                     </CardHeader>
                     <CardBody>
-                      {/* {data.describe} */}
+                      
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
                         <Row className="align-items-center">
@@ -171,6 +174,7 @@ const CourseAdd = () => {
                               }),
                             }}
                           />
+        
                         </Col>
                       </Row>
                         </CardText>
@@ -184,7 +188,7 @@ const CourseAdd = () => {
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
                           <h4 className="mt-2 ">نام گروه:</h4>{" "}
-                          <h5 className="mt-2">{/* {data.title} */}</h5>
+                          <h5 className="mt-2"></h5>
                         </CardText>
                       </CardColumns>
                       <div className="demo-inline-spacing">
@@ -192,7 +196,7 @@ const CourseAdd = () => {
                           حذف
                         </Button>
                         <Button
-                          //  onClick={gotoedit}
+                       
                           color="info"
                         >
                           ویرایش
@@ -223,7 +227,7 @@ const CourseAdd = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="text-start">{/* {data.insertDate} */}</td>
+                      <td className="text-start"></td>
                       <td>jmn</td>
                       <td>
                         <Button.Ripple className="round" color="success">
@@ -233,7 +237,7 @@ const CourseAdd = () => {
                       <td>
                         <div className="d-flex flex-row gap-1 justify-content-center">
                           <Button.Ripple color="success">
-                            {/* <Check size={14} /> */}
+                        
                           </Button.Ripple>
                           <Button.Ripple className="" color="danger">
                             *
@@ -294,7 +298,7 @@ const CourseAdd = () => {
                       <td>
                         <div className="d-flex flex-row gap-1 justify-content-center">
                           <Button.Ripple color="success">
-                            {/* <Check size={14} /> */}
+                         
                           </Button.Ripple>
                           <Button.Ripple className="" color="danger">
                             *
@@ -307,6 +311,12 @@ const CourseAdd = () => {
               </TabPane>
             </TabContent>
           </Card>
+        </Col>
+      </Row> */}
+      <BreadCrumbs title='فرم' data={[{ title: 'دوره ها' }, { title: 'افزودن دوره' }]} />
+      <Row>
+        <Col sm='12'>
+          <WizardModernVertical />
         </Col>
       </Row>
     </>
