@@ -29,7 +29,7 @@ import {
    Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import Select from 'react-select'
+import Select from 'react-select';
 import '@styles/react/libs/react-select/_react-select.scss'
 import { selectThemeColors } from '@utils'
 import { Fragment, useState } from 'react'
