@@ -37,7 +37,7 @@ const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const CourseDetail= lazy(()=>import ("../../pages/Course/CourseDetail/index"));
 const EditCourse= lazy(()=>import ("../../pages/Course/CourseDetail/EditCourse/index.jsx"));
-const UserManagementDetail= lazy(()=>import ("../../pages/UserManagmentDetail/index.jsx"));
+const UserManagementDetail= lazy(()=>import ("../../pages/User/UserManagmentDetail/index.jsx"));
 const Comment= lazy(()=>import ("../../pages/Comment.js"));
 // ** Merge Routes
 const Routes = [
