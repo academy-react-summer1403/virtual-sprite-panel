@@ -27,6 +27,9 @@ const DefaultRoute = "/login";
 //
 const Home = lazy(() => import("../../pages/Home"));
 const UserManagement = lazy(() => import("../../pages/User/UserManagement"));
+const UserManagementEdit = lazy(() =>
+  import("../../pages/User/UserManagementEdit")
+);
 const CourseList = lazy(() => import("../../pages/Course/CourseList"));
 // const CourseDetail = lazy(() => import("../../pages/Course/CourseDetail"));
 const CourseAdd = lazy(() => import("../../pages/Course/CourseAdd"));
@@ -35,10 +38,16 @@ const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
-const CourseDetail= lazy(()=>import ("../../pages/Course/CourseDetail/index"));
-const EditCourse= lazy(()=>import ("../../pages/Course/CourseDetail/EditCourse/index.jsx"));
-const UserManagementDetail= lazy(()=>import ("../../pages/User/UserManagmentDetail"));
-const Comment= lazy(()=>import ("../../pages/Comment.js"));
+const CourseDetail = lazy(() =>
+  import("../../pages/Course/CourseDetail/index")
+);
+const EditCourse = lazy(() =>
+  import("../../pages/Course/CourseDetail/EditCourse/index.jsx")
+);
+const UserManagementDetail = lazy(() =>
+  import("../../pages/User/UserManagmentDetail")
+);
+const Comment = lazy(() => import("../../pages/Comment.js"));
 // ** Merge Routes
 const Routes = [
   {
@@ -56,27 +65,26 @@ const Routes = [
   },
   {
     path: "/user-management",
-    element: <UserManagement />, },
-    {
-      path: "/user-management-detail",
-      element: <UserManagementDetail />,
-   
+    element: <UserManagement />,
+  },
+  {
+    path: "/user-management-detail",
+    element: <UserManagementDetail />,
+  },
+  {
+    path: "/user-management-edit/:id",
+    element: <userManagementEdit />,
   },
   {
     path: "/comment",
-    element: <Comment/>
- 
-},
+    element: <Comment />,
+  },
   {
     path: "/course-list",
     element: <CourseList />,
   },
-  {path: "/course-detail/:id",
-  element: <CourseDetail />,
-},
-{path: "/course-edit/:id",
-  element: <EditCourse />,
-},
+  { path: "/course-detail/:id", element: <CourseDetail /> },
+  { path: "/course-edit/:id", element: <EditCourse /> },
   {
     path: "/course-add",
     element: <CourseAdd />,

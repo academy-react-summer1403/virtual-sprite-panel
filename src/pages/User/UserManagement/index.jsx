@@ -33,15 +33,16 @@ import {
   ModalFooter,
   Alert,
 } from "reactstrap";
-import TableHover from '../UserTables/TableHover'
-import {
-  tableHover
-} from '../UserTables/TableSourceCode'
+import TableHover from "../UserTables/TableHover";
+import tableData from "../UserTables/tableData";
+import { tableHover } from "../UserTables/TableSourceCode";
+import { getTopUsers } from "../../../core/services/api/User/userTop.api";
+
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import "@styles/react/libs/react-select/_react-select.scss";
 import { selectThemeColors } from "@utils";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 const UserManagement = () => {
   const navigate = useNavigate();
@@ -50,6 +51,17 @@ const UserManagement = () => {
   };
 
   const [centeredModal, setCenteredModal] = useState(false);
+
+  const [topUsers, setTopUsers] = useState([]);
+
+  const getUsers = async () => {
+    const result = await getTopUsers();
+    setTopUsers(result.listUser);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <>
@@ -248,11 +260,9 @@ const UserManagement = () => {
             <Col>
               <Card title="Hoverable" code={tableHover} noBody>
                 <CardBody>
-                  <CardText>
-                    Use prop <code>hover</code> to create a hoverable table.
-                  </CardText>
+                  <CardText></CardText>
                 </CardBody>
-                <TableHover />
+                <TableHover data={topUsers} />
               </Card>
             </Col>
           </Row>
