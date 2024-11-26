@@ -26,7 +26,7 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 const DefaultRoute = "/login";
 //
 const Home = lazy(() => import("../../pages/Home"));
-const UserManagement = lazy(() => import("../../pages/UserManagement"));
+const UserManagement = lazy(() => import("../../pages/User/UserManagement"));
 const CourseList = lazy(() => import("../../pages/Course/CourseList"));
 // const CourseDetail = lazy(() => import("../../pages/Course/CourseDetail"));
 const CourseAdd = lazy(() => import("../../pages/Course/CourseAdd"));
@@ -37,7 +37,7 @@ const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const CourseDetail= lazy(()=>import ("../../pages/Course/CourseDetail/index"));
 const EditCourse= lazy(()=>import ("../../pages/Course/CourseDetail/EditCourse/index.jsx"));
-const UserManagementDetail= lazy(()=>import ("../../pages/User/UserManagmentDetail/index.jsx"));
+const UserManagementDetail= lazy(()=>import ("../../pages/User/UserManagmentDetail"));
 const Comment= lazy(()=>import ("../../pages/Comment.js"));
 // ** Merge Routes
 const Routes = [
