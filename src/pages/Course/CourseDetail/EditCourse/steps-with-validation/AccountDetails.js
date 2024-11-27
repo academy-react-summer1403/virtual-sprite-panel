@@ -49,12 +49,12 @@ const AccountDetails = ({ stepper, getData }) => {
   };
 
   return (
-    <Fragment> 
+    <Fragment>
       <div className="content-header">
         <h5 className="mb-0">اضافه کردن اطلاعات دوره</h5>
       </div>
 
-      <Form  onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Col md="6" className="mb-1">
             <Label className="form-label" for="username">
@@ -66,7 +66,7 @@ const AccountDetails = ({ stepper, getData }) => {
               control={control}
               render={({ field }) => (
                 <Input
-                value={getData?.title || ""}
+                  value={getData?.title || ""}
                   placeholder="نام دوره را وارد کنید"
                   invalid={errors.username && true}
                   {...field}
@@ -181,9 +181,7 @@ const AccountDetails = ({ stepper, getData }) => {
               size={14}
               className="align-middle me-sm-25 me-0"
             ></ArrowLeft>
-            <span className="align-middle d-sm-inline-block d-none">
-              Previous
-            </span>
+            <span className="align-middle d-sm-inline-block d-none">قبلی</span>
           </Button>
           <Button type="submit" color="primary" className="btn-next">
             <span className="align-middle d-sm-inline-block d-none">Next</span>

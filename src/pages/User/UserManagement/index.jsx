@@ -1,51 +1,50 @@
 // ** Third Party Components
-import classnames from "classnames";
 import { Search } from "react-feather";
 // ** Reactstrap Imports
 import {
-  Nav,
-  TabPane,
-  NavItem,
-  NavLink,
-  Dropdown,
-  TabContent,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  Table,
-  Form,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardColumns,
-  CardText,
-  Col,
-  Row,
-  CardImg,
-  Label,
-  InputGroup,
-  Input,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardText,
+  CardTitle,
+  Col,
+  Form,
+  FormFeedback,
+  FormGroup,
+  Input,
+  InputGroup,
+  Label,
   Modal,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
-  Alert,
+  ModalHeader,
+  Row,
 } from "reactstrap";
-import TableHover from "../UserTables/TableHover";
-import tableData from "../UserTables/tableData";
-import { tableHover } from "../UserTables/TableSourceCode";
 import { getTopUsers } from "../../../core/services/api/User/userTop.api";
+import TableHover from "../UserTables/TableHover";
+import { tableHover } from "../UserTables/TableSourceCode";
 
-import { useNavigate, useParams } from "react-router-dom";
-import Select from "react-select";
 import "@styles/react/libs/react-select/_react-select.scss";
 import { selectThemeColors } from "@utils";
-import { Fragment, useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { Controller, useForm } from "react-hook-form";
 
 const UserManagement = () => {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   const gotodetail = () => {
     return navigate("/user-management-detail");
   };
@@ -77,24 +76,32 @@ const UserManagement = () => {
           <ModalBody>
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Vertical Form</CardTitle>
+                <CardTitle tag="h4">ایجاد کاربر جدید</CardTitle>
               </CardHeader>
 
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <Row>
                     <Col sm="12" className="mb-1">
-                      <Label className="form-label" for="nameVertical">
-                        نام
-                      </Label>
-                      <Input
-                        type="text"
-                        name="name"
-                        id="nameVertical"
-                        placeholder="First Name"
-                      />
+                      <FormGroup>
+                        <Label for="name">نام</Label>
+                        <Controller
+                          name="name"
+                          control={control}
+                          rules={{ required: "Name is required" }}
+                          render={({ field }) => (
+                            <Input
+                              {...field}
+                              id="name"
+                              type="text"
+                              invalid={errors.name ? true : false}
+                            />
+                          )}
+                        />
+                        <FormFeedback>{errors.name?.message}</FormFeedback>
+                      </FormGroup>
                     </Col>
-                    <Col sm="12" className="mb-1">
+                    {/* <Col sm="12" className="mb-1">
                       <Label className="form-label" for="nameVertical">
                         نام خانوادگی
                       </Label>
@@ -152,14 +159,14 @@ const UserManagement = () => {
                           مرا به خاطر بسپار
                         </Label>
                       </div>
-                    </Col>
+                    </Col> */}
                     <Col sm="12">
                       <div className="d-flex">
                         <Button
                           className="me-1"
                           color="primary"
                           type="submit"
-                          onClick={(e) => e.preventDefault()}
+                          // onClick={(e) => e.preventDefault()}
                         >
                           ثبت
                         </Button>
