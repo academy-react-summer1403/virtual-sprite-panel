@@ -17,7 +17,8 @@ import {
   DropdownToggle,
   DropdownItem,
 } from "reactstrap";
-import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
+import defaultAvatar from "@src/assets/images/portrait/small/adminAvatar.png";
+import guest from "@src/assets/images/portrait/small/guest.png";
 import { clearStorage } from "../../@core/components/common/storage.services";
 
 const UserDropdown = () => {
@@ -52,11 +53,10 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">John Doe</span>
           <span className="user-status">{isLoggedIn ? "ادمین" : "کاربر مهمان"}</span>
         </div>
         <Avatar
-          img={defaultAvatar}
+          img={isLoggedIn ? defaultAvatar : guest}
           imgHeight="40"
           imgWidth="40"
           status={isLoggedIn ? "online" : "offline"}
