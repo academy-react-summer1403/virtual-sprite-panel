@@ -1,5 +1,5 @@
 import instance from "../../interceptor";
-export const createUser = async (userData) => {
+const createUser = async (userData) => {
   try {
     const response = await instance.post("/User/CreateUser", userData);
     return response.data;
@@ -8,3 +8,4 @@ export const createUser = async (userData) => {
     throw error;
   }
 };
+export {createUser};

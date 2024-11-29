@@ -3,7 +3,7 @@ import instance from "../../interceptor";
 export const getTopUsers = async (RowsOfPage) => {
   try {
     const token = localStorage.getItem("token");
-    const roleId = 1;
+    // const roleId = 1;
 
     // let url = `${
     //   import.meta.env.VITE_BASE_URL
@@ -36,7 +36,7 @@ export const getTopUsers = async (RowsOfPage) => {
       }
     );
 
-    console.log("پاسخ :", res.listUser);
+    console.log("پاسخ api  :", res);
     return res;
   } catch (error) {
     console.log("خطا:", error.message);

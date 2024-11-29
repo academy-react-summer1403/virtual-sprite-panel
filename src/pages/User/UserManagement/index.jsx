@@ -1,4 +1,3 @@
-// ** Third Party Components
 import { Search } from "react-feather";
 import { createUser } from "../../../core/services/api/User/CreateUser.api";
 
@@ -32,9 +31,78 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+
+import admin from "@src/assets/images/portrait/small/admin.png";
+import employee from "@src/assets/images/portrait/small/employee.png";
+import mentor from "@src/assets/images/portrait/small/mentor.png";
+import referee from "@src/assets/images/portrait/small/referee.png";
+import student from "@src/assets/images/portrait/small/student.png";
+import support from "@src/assets/images/portrait/small/support.png";
+import teacher from "@src/assets/images/portrait/small/teacher.png";
+import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png";
+import writer from "@src/assets/images/portrait/small/writer.png";
 
 const UserManagement = () => {
   const navigate = useNavigate();
+  const [centeredModal, setCenteredModal] = useState(false);
+  const [topUsers, setTopUsers] = useState([]);
+  // const avatarGroupData = [
+  //   {
+  //     title: "ادمین",
+  //     img: admin,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "کارمند",
+  //     img: employee,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "منتور",
+  //     img: mentor,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "معرف",
+  //     img: referee,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "دانشجو",
+  //     img: student,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "پشتیبان",
+  //     img: support,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "استاد",
+  //     img: teacher,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "ادمین تور",
+  //     img: tourAdmin,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  //   {
+  //     title: "نویسنده",
+  //     img: writer,
+  //     imgHeight: 26,
+  //     imgWidth: 26,
+  //   },
+  // ];
   const {
     register,
     handleSubmit,
@@ -43,9 +111,6 @@ const UserManagement = () => {
     formState: { errors },
   } = useForm();
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
   const onSubmit = async (data) => {
     const userData = {
       firstName: data.firstName,
@@ -58,28 +123,26 @@ const UserManagement = () => {
     };
 
     try {
-      console.log("داده های ارسالی  :", userData);
-
       const response = await createUser(userData);
-      console.log("User created successfully:", response);
+      console.log("کاربر جدید با موفقیت اضافه شد:", response);
+      toast.success("کاربر با موفقیت اضافه شد");
       setCenteredModal(false); // بستن مودال
     } catch (error) {
+      toast.error("افزودن کاربر با خطا مواجه شد");
+
       console.error("ایجاد کاربر با حطا مواجه شد:", error);
     }
-    // console.log('داده ها : ',userData)
+    console.log("داده ها : ", userData);
   };
 
   const gotodetail = () => {
     return navigate("/user-management-detail");
   };
 
-  const [centeredModal, setCenteredModal] = useState(false);
-
-  const [topUsers, setTopUsers] = useState([]);
-
   const getUsers = async () => {
     const result = await getTopUsers();
     setTopUsers(result.listUser);
+    console.log("پاسخ topUsers: ", topUsers);
   };
 
   useEffect(() => {
@@ -88,7 +151,6 @@ const UserManagement = () => {
 
   return (
     <>
-      {/* <div className="vertically-centered-modal"> */}
       <div>
         <Modal
           isOpen={centeredModal}
@@ -164,8 +226,7 @@ const UserManagement = () => {
                         />
                         <FormFeedback>{errors.gmail?.message}</FormFeedback>
                         <Label for="phoneNumber" className="mt-2">
-                          {" "}
-                          شماره موبایل{" "}
+                          شماره موبایل
                         </Label>
                         <Controller
                           name="phoneNumber"
@@ -394,65 +455,6 @@ const UserManagement = () => {
                       </div>
                     </Col>
                   </Row>
-                  {/* <Col sm="12" className="mb-1">
-                      <Label className="form-label" for="nameVertical">
-                        نام خانوادگی
-                      </Label>
-                      <Input
-                        type="text"
-                        name="lastname"
-                        id="nameVertical"
-                        placeholder="First Name"
-                      />
-                    </Col>
-                    <Col sm="12" className="mb-1">
-                      <Label className="form-label" for="EmailVertical">
-                        ایمیل
-                      </Label>
-                      <Input
-                        type="email"
-                        name="Email"
-                        id="EmailVertical"
-                        placeholder="Email"
-                      />
-                    </Col>
-                    <Col sm="12" className="mb-1">
-                      <Label className="form-label" for="mobileVertical">
-                        شماره موبایل
-                      </Label>
-                      <Input
-                        type="number"
-                        name="mobile"
-                        id="mobileVertical"
-                        placeholder="Mobile"
-                      />
-                    </Col>
-                    <Col sm="12" className="mb-1">
-                      <Label className="form-label" for="passwordVertical">
-                        رمز عبور
-                      </Label>
-                      <Input
-                        type="password"
-                        name="password"
-                        id="passwordVertical"
-                        placeholder="Password"
-                      />
-                    </Col>
-                    <Col sm="12" className="mb-1">
-                      <div className="form-check">
-                        <Input
-                          type="checkbox"
-                          id="remember-me-vertical"
-                          defaultChecked={false}
-                        />
-                        <Label
-                          className="form-check-label"
-                          for="remember-me-vertical"
-                        >
-                          مرا به خاطر بسپار
-                        </Label>
-                      </div>
-                    </Col> */}
                 </Form>
               </CardBody>
             </Card>
@@ -542,7 +544,7 @@ const UserManagement = () => {
           </Row>
           <Row>
             <Col>
-              <Card title="Hoverable" code={tableHover} noBody>
+              <Card code={tableHover} noBody>
                 <CardBody>
                   <CardText></CardText>
                 </CardBody>
@@ -550,31 +552,6 @@ const UserManagement = () => {
               </Card>
             </Col>
           </Row>
-          {/* <Table className="text-nowrap text-center border-bottom" responsive> */}
-
-          {/* <thead>
-              <tr>
-                <th className="text-start"> کاربر </th>
-                <th> نام کاربر</th>
-                <th>نقش </th>
-                <th>ایمیل </th>
-                <th>درصد تکمیل پروفایل </th>
-                <th>وضعیت </th>
-                <th>جزییات </th>
-              </tr>
-            </thead> 
-            <tbody>
-              <tr>
-                <td className="text-start"> m ,m</td>
-                <td>0</td>
-                <td>تننتتن</td>
-                <td>تات</td>
-                <td>اتات</td>
-                <td>تننتن</td>
-                <td onClick={gotodetail}>...</td>
-              </tr>
-            </tbody>*/}
-          {/* </Table> */}
         </Col>
       </Col>
     </>
