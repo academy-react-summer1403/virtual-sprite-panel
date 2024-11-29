@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Avatar from "@components/avatar";
 import {
   User,
@@ -20,10 +20,27 @@ import {
 import defaultAvatar from "@src/assets/images/portrait/small/adminAvatar.png";
 import guest from "@src/assets/images/portrait/small/guest.png";
 import { clearStorage } from "../../@core/components/common/storage.services";
+import { getUserDetailWithId } from "../../core/services/api/User/UserDetailsWithId.api";
 
 const UserDropdown = () => {
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
   const navigate = useNavigate();
-
+  // const { id } = useParams();
+  console.log(id);
+  const getDetails = async () => {
+    if (token) {
+      const result = await getUserDetailWithId(id);
+      console.log("what is this rezi", result);
+      setData(result);
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+  useEffect(() => {
+    getDetails();
+  }, [id]);
   // State برای مدیریت وضعیت توکن
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -53,7 +70,13 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-status">{isLoggedIn ? "ادمین" : "کاربر مهمان"}</span>
+          <span className="user-name fw-bold">
+            {" "}
+            {data.fName} {data.lName}
+          </span>
+          <span className="user-status">
+            {isLoggedIn ? "ادمین" : "کاربر مهمان"}
+          </span>
         </div>
         <Avatar
           img={isLoggedIn ? defaultAvatar : guest}

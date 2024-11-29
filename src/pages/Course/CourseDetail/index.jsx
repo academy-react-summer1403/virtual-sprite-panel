@@ -31,6 +31,12 @@ import { getCoursesDetail } from "../../../core/services/api/courses/courseDetai
 const CoursDetail = () => {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");
+
+  const [active, setActive] = useState("1");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const navigate = useNavigate();
+
   const { id } = useParams();
   console.log(id);
   const getDetails = async () => {
@@ -46,15 +52,13 @@ const CoursDetail = () => {
     getDetails();
   }, [id]);
 
-  const [active, setActive] = useState("1");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const toggle = (tab) => {
     setActive(tab);
   };
-  const navigate = useNavigate();
+
   const handleRowClick = (courseId) => {
     if (!courseId) {
       console.error("آی دی پیدا نشد");

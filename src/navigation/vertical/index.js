@@ -9,7 +9,7 @@ export default [
   },
   {
     id: "usermanagement",
-    title: "مدریت کاربران",
+    title: "مدیریت کاربران",
     icon: <Users size={20} />,
     navLink: "/user-management",
   },

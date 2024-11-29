@@ -50,6 +50,9 @@ const Login = () => {
       if (user.message.includes("موفق")) {
         localStorage.setItem("token", user.token);
         console.log("توکن شما", user.token);
+        console.log("آی دی ", user.id);
+        localStorage.setItem("id", user.id);
+
         navigate("/home");
       }
     } else {
