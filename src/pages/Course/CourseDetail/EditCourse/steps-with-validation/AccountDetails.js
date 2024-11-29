@@ -156,7 +156,7 @@ const AccountDetails = ({ stepper, getData }) => {
           </Col>
           <Col md="6" className="mb-1">
             <Label className="form-label" for="small">
-              توضیحات کوچک
+              توضیحات کوتاه
             </Label>
             <Controller
               control={control}
@@ -184,7 +184,7 @@ const AccountDetails = ({ stepper, getData }) => {
             <span className="align-middle d-sm-inline-block d-none">قبلی</span>
           </Button>
           <Button type="submit" color="primary" className="btn-next">
-            <span className="align-middle d-sm-inline-block d-none">Next</span>
+            <span className="align-middle d-sm-inline-block d-none">بعدی</span>
             <ArrowRight
               size={14}
               className="align-middle ms-sm-25 ms-0"

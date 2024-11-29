@@ -71,7 +71,7 @@ const Image = ({ stepper }) => {
             <p className='text-secondary'>
             برای وبرایش عکس کلیک کنید
               <a href='/' onClick={e => e.preventDefault()}>
-                browse
+                جستجو
               </a>{' '}
           
             </p>
@@ -82,15 +82,15 @@ const Image = ({ stepper }) => {
             <ListGroup className='my-2'>{fileList}</ListGroup>
             <div className='d-flex justify-content-end'>
               <Button className='me-1' color='danger' outline onClick={handleRemoveAllFiles}>
-                Remove All
+                حذف همه 
               </Button>
-              <Button color='primary'>Upload Files</Button>
+              <Button color='primary'>آپلود فایل ها</Button>
             </div>
           </Fragment>
         ) : null}
       </CardBody>
       <Button type='submit' color='success' className=''>
-            Submit
+            ثبت
           </Button>
     </Card>
   )

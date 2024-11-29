@@ -76,7 +76,7 @@ const EditCourse = () => {
     {
       id: "step-image",
       title: "عکس دوره",
-      subtitle: "عکس دوره را وارد کنیپ",
+      subtitle: "عکس دوره را وارد کنید",
       content: <Image stepper={stepper} />,
     },
   ];

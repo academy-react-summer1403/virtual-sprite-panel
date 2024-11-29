@@ -59,7 +59,7 @@ const CoursDetail = () => {
     setActive(tab);
   };
 
-  const handleRowClick = (courseId) => {
+  const handleEditClick = (courseId) => {
     if (!courseId) {
       console.error("آی دی پیدا نشد");
       return;
@@ -102,10 +102,9 @@ const CoursDetail = () => {
               </CardColumns>
               <div className="demo-inline-spacing">
                 <Button
-                  onClick={() => handleRowClick(data.courseId)}
+                  onClick={() => handleEditClick(data.courseId)}
                   color="relief-primary"
                 >
-                  {" "}
                   ویرایش
                 </Button>
                 <Button outline color="warning">
