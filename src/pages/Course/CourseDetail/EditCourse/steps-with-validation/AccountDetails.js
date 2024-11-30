@@ -22,6 +22,7 @@ const AccountDetails = ({ stepper, getData }) => {
     explane: getData?.explane || "",
     small: getData?.small || "",
   };
+  console.log("My Data : ", getData);
   const SignupSchema = yup.object().shape({
     username: yup.string().required(),
     sessions: yup.string().required(),

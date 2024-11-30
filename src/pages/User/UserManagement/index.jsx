@@ -51,6 +51,8 @@ const UserManagement = () => {
   const [topUsers, setTopUsers] = useState([]);
   const [topRoles, setTopRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  // const [query, setQuery] = useState(second)
+  // const [roleId, setRoleId] = useState(null)
 
   // const avatarGroupData = [
   //   {
@@ -145,8 +147,20 @@ const UserManagement = () => {
   };
 
   const fetchData = async () => {
+    const params = {
+      PageNumber: 1,
+      RowsOfPage: 400,
+      SortingCol: "DESC",
+      SortType: "InsertDate",
+    };
+    if (!!selectedRole) {
+      params.roleId = selectedRole.value;
+    }
+    if (!!searchTerm) {
+      params.Query = searchTerm;
+    }
     try {
-      const result = await getTopUsers();
+      const result = await getTopUsers(params);
       setTopRoles(
         result.roles.map((role) => ({
           value: role.id,
@@ -164,6 +178,7 @@ const UserManagement = () => {
   };
 
   const handleRoleChange = (selectedOption) => {
+    console.log("selectedOption", selectedOption);
     setSelectedRole(selectedOption);
 
     if (selectedOption) {
@@ -202,7 +217,7 @@ const UserManagement = () => {
   // topUsers.forEach((user) => console.log(user.fname));getTopUsers
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedRole, searchTerm]);
 
   return (
     <>

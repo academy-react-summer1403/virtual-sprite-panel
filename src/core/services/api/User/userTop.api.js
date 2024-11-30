@@ -1,6 +1,6 @@
 import instance from "../../interceptor";
 
-export const getTopUsers = async (RowsOfPage) => {
+export const getTopUsers = async (params) => {
   try {
     const token = localStorage.getItem("token");
     // const roleId = 1;
@@ -22,12 +22,7 @@ export const getTopUsers = async (RowsOfPage) => {
     const res = await instance.get(
       `/User/UserMannage`,
       {
-        params: {
-          PageNumber: 1,
-          RowsOfPage: RowsOfPage ? RowsOfPage : 100,
-          SortingCol: "DESC",
-          SortType: "InsertDate",
-        },
+        params: params,
       },
       {
         headers: {
@@ -39,7 +34,7 @@ export const getTopUsers = async (RowsOfPage) => {
     console.log("پاسخ api  :", res);
     // console.log("پاسخ res.roles  :", res.roles);
     // console.log("پاسخ res.listUser  :", res.listUser);
-    
+
     return res;
   } catch (error) {
     console.log("خطا:", error.message);
