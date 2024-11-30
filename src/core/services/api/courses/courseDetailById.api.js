@@ -18,3 +18,13 @@ export const courseEditApi = async (formdata) => {
     return [];
   }
 };
+
+export const CourseReserveApi = async (courseId) => {
+  try {
+    const res = await instance.get(`/CourseReserve/${courseId}` );
+    return res;
+  } catch (error) {
+    console.log( error); 
+    return [];
+  }
+};
