@@ -25,7 +25,7 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 // ** Default Route
 const DefaultRoute = "/login";
 //
-const Home = lazy(() => import("../../pages/Home"));
+const Dashboard = lazy(() => import("../../pages/Dashboard"));
 const UserManagement = lazy(() => import("../../pages/User/UserManagement"));
 const UserManagementEdit = lazy(() =>
   import("../../pages/User/UserManagementEdit")
@@ -58,8 +58,8 @@ const Routes = [
     element: <Navigate replace to={DefaultRoute} />,
   },
   {
-    path: "/home",
-    element: <Home />,
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   {
     path: "/sample",

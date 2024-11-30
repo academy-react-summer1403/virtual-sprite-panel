@@ -2,10 +2,10 @@ import { Mail, Home, Users, Airplay,BookOpen, Circle, Book, PlusCircle } from "r
 // import { FaPager } from "react-icons/fa6";
 export default [
   {
-    id: "home",
-    title: "Home",
+    id: "dashboard",
+    title: "داشبورد",
     icon: <Home size={20} />,
-    navLink: "/home",
+    navLink: "/dashboard",
   },
   {
     id: "usermanagement",

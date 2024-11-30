@@ -53,7 +53,7 @@ const Login = () => {
         console.log("آی دی ", user.id);
         localStorage.setItem("id", user.id);
 
-        navigate("/home");
+        navigate("/dashboard");
       }
     } else {
       console.log("توکن موجود نیست");

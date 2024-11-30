@@ -107,7 +107,7 @@ const NotAuthorized = () => {
             className="btn-sm-block mb-1"
             to={"/"}
           >
-            Back to Home
+            بازگشت
           </Button>
           <img className="img-fluid" src={source} alt="Not authorized page" />
         </div>

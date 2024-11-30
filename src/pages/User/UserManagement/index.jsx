@@ -142,9 +142,9 @@ const UserManagement = () => {
     console.log("داده ها : ", userData);
   };
 
-  const gotodetail = () => {
-    return navigate("/user-management-detail");
-  };
+  // const gotodetail = () => {
+  //   return navigate("/user-management-detail");
+  // };
 
   const fetchData = async () => {
     const params = {

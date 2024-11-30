@@ -8,7 +8,7 @@ import {
 } from "reactstrap";
 import CardMedal from "../@core/components/card-medal/CardMedal";
 
-const Home = () => {
+const Dashboard = () => {
   return (
     <div>
       <CardMedal />
@@ -55,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
