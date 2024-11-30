@@ -44,9 +44,14 @@ import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png";
 import writer from "@src/assets/images/portrait/small/writer.png";
 
 const UserManagement = () => {
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
   const [centeredModal, setCenteredModal] = useState(false);
   const [topUsers, setTopUsers] = useState([]);
+  const [topRoles, setTopRoles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   // const avatarGroupData = [
   //   {
   //     title: "ادمین",
@@ -139,16 +144,64 @@ const UserManagement = () => {
     return navigate("/user-management-detail");
   };
 
-  const getUsers = async () => {
-    const result = await getTopUsers();
-    setTopUsers(result.listUser);
-  
-    console.log("پاسخ topUsers: ", topUsers);
-    // console.log("پاسخ topUsers.id: ", result.listUser.map(user => user.id));
+  const fetchData = async () => {
+    try {
+      const result = await getTopUsers();
+      setTopRoles(
+        result.roles.map((role) => ({
+          value: role.id,
+          label: role.roleName,
+        }))
+      );
+      setTopUsers(result.listUser);
+      setFilteredUsers(result.listUser);
+
+      console.log("لیست یوزرهایی که گرفتم  :", result.listUser);
+      console.log("لیست رول هایی که دارم :", result.roles);
+    } catch (error) {
+      console.error("خطا در دریافت اطلاعات:", error);
+    }
   };
 
+  const handleRoleChange = (selectedOption) => {
+    setSelectedRole(selectedOption);
+
+    if (selectedOption) {
+      const filtered = topUsers.filter((user) => {
+        return user.userRoles && user.userRoles.includes(selectedOption);
+      });
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(topUsers);
+    }
+  };
+
+  const handleSearch = () => {
+    console.log("لیست کاربران:", topUsers);
+    console.log("عبارت جستجو:", searchTerm);
+
+    if (!topUsers || topUsers.length === 0) {
+      console.log("لیست کاربران خالی است.");
+      return;
+    }
+
+    if (searchTerm.trim()) {
+      const filtered = topUsers.filter(
+        (user) =>
+          user.fname &&
+          user.fname.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      console.log("کاربران فیلتر شده:", filtered);
+      setFilteredUsers(filtered);
+    } else {
+      console.log("نمایش تمام کاربران");
+      setFilteredUsers(topUsers);
+    }
+  };
+
+  // topUsers.forEach((user) => console.log(user.fname));getTopUsers
   useEffect(() => {
-    getUsers();
+    fetchData();
   }, []);
 
   return (
@@ -207,7 +260,6 @@ const UserManagement = () => {
                         />
                         <FormFeedback>{errors.lastName?.message}</FormFeedback>
                         <Label for="gmail" className="mt-2">
-                          {" "}
                           پست الکترونیکی
                         </Label>
                         <Controller
@@ -470,12 +522,22 @@ const UserManagement = () => {
               نقش
             </Label>
             <Select
-              theme={selectThemeColors}
-              isClearable={false}
-              id={`level`}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 6,
+                colors: {
+                  ...theme.colors,
+                  primary25: "#f3f4f6",
+                  primary: "#7367f0",
+                },
+              })}
+              isClearable={true}
+              id="role"
               className="react-select"
               classNamePrefix="select"
-              // options={termOptions}
+              options={topRoles}
+              placeholder="نقش مورد نظر را انتخاب کنید"
+              onChange={handleRoleChange}
             />
           </Col>
           <Col md="4" className="mb-1">
@@ -524,11 +586,17 @@ const UserManagement = () => {
               <Row>
                 <Col className="mt-2" lg={8}>
                   <InputGroup>
-                    <Button color="primary" outline>
+                    <Button color="primary" outline onClick={handleSearch}>
                       <Search size={12} />
                     </Button>
-                    <Input type="text" placeholder="عبارت مورد جستجو" />
-                    <Button color="primary" outline>
+                    <Input
+                      type="text"
+                      placeholder="نام مورد جستجو"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                    <Button color="primary" outline onClick={handleSearch}>
                       جستجو
                     </Button>
                   </InputGroup>
@@ -550,7 +618,7 @@ const UserManagement = () => {
                 <CardBody>
                   <CardText></CardText>
                 </CardBody>
-                <TableHover data={topUsers} />
+                <TableHover data={filteredUsers} />
               </Card>
             </Col>
           </Row>

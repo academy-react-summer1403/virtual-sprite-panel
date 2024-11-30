@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import { Check, Twitter } from "react-feather";
+import noUserPhoto from "../../../assets/images/portrait/small/no-user-photo.png";
 import linkdin from "../../../assets/images/detail/linkdin.png";
 import twiter from "../../../assets/images/detail/twiter.webp";
 // import ModalBasic from "./Modal.jsx";
@@ -50,7 +51,10 @@ const UserManagementEdit = () => {
   useEffect(() => {
     getUserDetails();
   }, [id]);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); // اسکرول به بالای صفحه
+  }, [active]); // هر زمان که active تغییر کند، اسکرول انجام می‌شود
+  
   return (
     <>
       <Row>
@@ -66,7 +70,14 @@ const UserManagementEdit = () => {
                   <Row>
                     <Col>
                       <img
-                        src={data.currentPictureAddress || "مسیر پیش‌فرض تصویر"}
+                        src={
+                          data?.currentPictureAddress &&
+                          data.currentPictureAddress.includes(
+                            "https://classapi.sepehracademy.ir/\\Pictures\\ProfileImageThumbnail"
+                          )
+                            ? data.currentPictureAddress
+                            : noUserPhoto
+                        }
                         alt="عکس کاربر"
                         style={{
                           width: "100px",

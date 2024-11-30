@@ -22,12 +22,12 @@ import teacher from "@src/assets/images/portrait/small/teacher.png"; //
 import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png"; //
 import writer from "@src/assets/images/portrait/small/writer.png"; //
 import { MoreVertical, Edit, Trash } from "react-feather";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const TableHover = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState(1); // صفحه فعلی
-  const rowsPerPage = 5; // تعداد رکوردهای هر صفحه
-  const navigate = useNavigate(); // Instantiate useNavigate
+  const [currentPage, setCurrentPage] = useState(1);  
+  const rowsPerPage = 5; 
+  const navigate = useNavigate(); 
 
   // محاسبه داده‌های صفحه فعلی
   const indexOfLastRow = currentPage * rowsPerPage;

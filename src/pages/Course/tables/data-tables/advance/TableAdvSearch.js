@@ -51,7 +51,7 @@ const TableAdvSearch = ({ data }) => {
             .includes(searchValue.toLowerCase());
         }) || [];
 
-      setFilteredData(newFilteredData); // به‌روزرسانی داده‌ها
+      setFilteredData(newFilteredData);
       setIsSearching(false);
       setIsLoading(false);
     }, 1000);
