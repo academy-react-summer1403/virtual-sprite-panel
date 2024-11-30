@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import { Check } from "react-feather";
@@ -75,28 +75,29 @@ const CoursDetail = () => {
           <Card>
             <CardImg src={data.imageAddress}></CardImg>
             <CardBody>
-              <CardTitle tag="h4" className="border-bottom">
-                جزيیات {id}
+              <CardTitle tag="h4" className="border-bottom boldYekan">
+                جزيیات 
+                {/* {id} */}
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام دوره:</h3>{" "}
+                  <h5 className="mt-2 ">نام دوره:</h5>{" "}
                   <h5 className="mt-2">{data.title}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام استاد:</h3>{" "}
+                  <h5 className="mt-2 ">نام استاد:</h5>{" "}
                   <h5 className="mt-2">{data.teacherName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام کلاس:</h3>{" "}
+                  <h5 className="mt-2 ">نام کلاس:</h5>{" "}
                   <h5 className="mt-2">{data.courseClassRoomName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">وضعیت:</h3>{" "}
+                  <h5 className="mt-2 ">وضعیت:</h5>{" "}
                   <h5 className="mt-2">{data.courseLevelName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نحوه برگزاری:</h3>{" "}
+                  <h5 className="mt-2 ">نحوه برگزاری:</h5>{" "}
                   <h5 className="mt-2">{data.courseTypeName}</h5>
                 </CardText>
               </CardColumns>
@@ -199,30 +200,30 @@ const CoursDetail = () => {
                 <div>
                   <Card>
                     <CardHeader className="text-center text-lg">
-                      <h2>توضیحات</h2>
+                      <h4 className="boldYekan" >توضیحات</h4>
                     </CardHeader>
                     <CardBody>
                       {data.describe}
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
-                          <h3 className="mt-2 ">قیمت:</h3>{" "}
+                          <h5 className="mt-2 ">قیمت:</h5>{" "}
                           <h4 className="mt-2">{data.cost}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h3 className="mt-2 ">گروه های دوره:</h3>{" "}
+                          <h5 className="mt-2 ">گروه های دوره:</h5>{" "}
                           <h4 className="mt-2">{data.courseGroupTotal}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h3 className="mt-2 ">شناسه گروه :</h3>{" "}
+                          <h5 className="mt-2 ">شناسه گروه :</h5>{" "}
                           <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h3 className="mt-2 ">ظرفیت:</h3>{" "}
+                          <h5 className="mt-2 ">ظرفیت:</h5>{" "}
                           <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h3 className="mt-2 ">نام گروه:</h3>{" "}
-                          <h4 className="mt-2">{data.title}</h4>
+                          <h5 className="mt-2 ">نام گروه:</h5>{" "}
+                          <h5 className="mt-2">{data.title}</h5>
                         </CardText>
                       </CardColumns>
                       <div className="demo-inline-spacing">

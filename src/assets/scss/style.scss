@@ -9,3 +9,19 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+@font-face {
+  font-family: "yekanReg";
+  src: url("../../@core/assets/fonts/Yekan_Bakh_Fanum_Regular.TTF")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "yekanBold";
+  src: url("../../@core/assets/fonts/Yekan_Bakh_Fanum_Bold.TTF") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+.boldYekan {
+  font-family: "yekanBold", sans-serif;
+}

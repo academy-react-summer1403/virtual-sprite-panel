@@ -250,7 +250,8 @@
   }
 
   .navigation-header {
-    font-family: inherit;
+    // font-family: inherit;
+    font-family: $font-family-monospace;
     color: #929292;
     padding: 8px 20px;
     font-size: 1rem;

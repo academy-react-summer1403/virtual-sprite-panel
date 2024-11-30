@@ -30,6 +30,7 @@ const UserManagement = lazy(() => import("../../pages/User/UserManagement"));
 const UserManagementEdit = lazy(() =>
   import("../../pages/User/UserManagementEdit")
 );
+
 const CourseList = lazy(() => import("../../pages/Course/CourseList"));
 // const CourseDetail = lazy(() => import("../../pages/Course/CourseDetail"));
 const CourseAdd = lazy(() => import("../../pages/Course/CourseAdd"));
@@ -47,6 +48,7 @@ const EditCourse = lazy(() =>
 const UserManagementDetail = lazy(() =>
   import("../../pages/User/UserManagmentDetail")
 );
+
 const Comment = lazy(() => import("../../pages/Comment.js"));
 // ** Merge Routes
 const Routes = [
@@ -73,7 +75,7 @@ const Routes = [
   },
   {
     path: "/user-management-edit/:id",
-    element: <userManagementEdit />,
+    element: <UserManagementEdit />,
   },
   {
     path: "/comment",
