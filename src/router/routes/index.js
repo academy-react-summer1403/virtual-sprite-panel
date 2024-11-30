@@ -47,7 +47,7 @@ const EditCourse = lazy(() =>
 const UserManagementDetail = lazy(() =>
   import("../../pages/User/UserManagmentDetail")
 );
-const Comment = lazy(() => import("../../pages/Comment.js"));
+const Comment = lazy(() => import("../../pages/comment/index.jsx"));
 // ** Merge Routes
 const Routes = [
   {
