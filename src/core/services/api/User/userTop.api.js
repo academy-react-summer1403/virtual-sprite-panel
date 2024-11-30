@@ -24,7 +24,7 @@ export const getTopUsers = async (RowsOfPage) => {
       {
         params: {
           PageNumber: 1,
-          RowsOfPage: RowsOfPage ? RowsOfPage : 10,
+          RowsOfPage: RowsOfPage ? RowsOfPage : 100,
           SortingCol: "DESC",
           SortType: "InsertDate",
         },

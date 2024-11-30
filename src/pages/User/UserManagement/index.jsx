@@ -142,7 +142,9 @@ const UserManagement = () => {
   const getUsers = async () => {
     const result = await getTopUsers();
     setTopUsers(result.listUser);
+  
     console.log("پاسخ topUsers: ", topUsers);
+    // console.log("پاسخ topUsers.id: ", result.listUser.map(user => user.id));
   };
 
   useEffect(() => {

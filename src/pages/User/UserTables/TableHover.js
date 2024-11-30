@@ -42,7 +42,7 @@ const TableHover = ({ data }) => {
 
   // هدایت به صفحه ویرایش
   const handleEdit = (userId) => {
-    navigate(`/userManagementEdit/${userId}`);
+    navigate(`/user-management-edit/${userId}`);
   };
   const avatarGroupData = [
     {
@@ -284,11 +284,11 @@ const TableHover = ({ data }) => {
                         handleEdit(user.id);
                       }}
                     >
-                      <Edit className="me-50" size={15} />{" "}
-                      <span className="align-middle">ویرایش</span>
+                      <Edit className="me-50" size={15} />
+                      <span className="align-middle"  onClick={() => console.log(` انتخابی منID: ${user.id}`)}>ویرایش</span>
                     </DropdownItem>
                     <DropdownItem href="#" onClick={(e) => e.preventDefault()}>
-                      <Trash className="me-50" size={15} />{" "}
+                      <Trash className="me-50" size={15} />
                       <span className="align-middle">حذف</span>
                     </DropdownItem>
                   </DropdownMenu>

@@ -116,7 +116,7 @@ const Login = () => {
             <CardTitle tag="h2" className="fw-bold mb-1">
               به پنل ادمین Virtual Sprite خوش آمدید
             </CardTitle>
-            <CardText className="mb-2 yekanR">
+            <CardText className="mb-2 yekanReg">
               لطفاً اطلاعات مورد نیاز را پر کنید
             </CardText>
             <Formik
