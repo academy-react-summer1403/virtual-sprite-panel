@@ -72,8 +72,8 @@ const TableAdvSearch = ({ data }) => {
   };
 
   const handlePerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value)); // تغییر تعداد رکوردها
-    setCurrentPage(1); // ریست کردن به صفحه اول
+    setRowsPerPage(parseInt(e.target.value));   
+    setCurrentPage(1); 
   };
 
   const dataToRender = () => {
@@ -121,7 +121,7 @@ const TableAdvSearch = ({ data }) => {
       <Card>
         <Row className="mx-0 mt-1 mb-50">
           <Col sm="4" className="d-flex align-items-center">
-            <Label for="sort-select">مرتب سازی</Label>
+            <Label for="sort-select">نمایش</Label>
             <Input
               className="dataTable-select"
               type="select"

@@ -23,12 +23,12 @@ import teacher from "@src/assets/images/portrait/small/teacher.png";
 import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png"; 
 import writer from "@src/assets/images/portrait/small/writer.png"; 
 import { MoreVertical, Edit, Trash } from "react-feather";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const TableHover = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState(1);  
-  const rowsPerPage = 5; 
-  const navigate = useNavigate(); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+  const navigate = useNavigate();
 
   // محاسبه داده‌های صفحه فعلی
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -37,10 +37,28 @@ const TableHover = ({ data }) => {
 
   // تعداد صفحات
   const totalPages = Math.ceil(data.length / rowsPerPage);
+  const maxPagesToShow = 20;
 
+  const getPaginationPages = () => {
+    if (totalPages <= maxPagesToShow) {
+      return [...Array(totalPages)].map((_, index) => index + 1);
+    } else {
+      const pages = [];
+      const startPage = Math.max(currentPage - 5, 1); // صفحه شروع
+      const endPage = Math.min(currentPage + 5, totalPages); // صفحه پایان
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (startPage > 1) pages.unshift(1, "..."); // اضافه کردن صفحه اول
+      if (endPage < totalPages) pages.push("...", totalPages); // اضافه کردن صفحه آخر
+      return pages;
+    }
+  };
   // تغییر صفحه
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    if (typeof pageNumber === "number") setCurrentPage(pageNumber);
+  };
   // هدایت به صفحه ویرایش
   const handleEdit = (userId) => {
     navigate(`/user-management-edit/${userId}`);
@@ -115,12 +133,12 @@ const TableHover = ({ data }) => {
           <tr>
             <th>نام</th>
             <th>ایمیل</th>
-            <th>شماره تلفن</th>
+            <th>شماره موبایل</th>
             <th>نقش کاربر</th>
             <th>عملیات</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="fs-6 fw-bold">
           {currentRows.map((user) => (
             <tr key={user.id}>
               <td>
@@ -150,7 +168,6 @@ const TableHover = ({ data }) => {
                           alt="استاد"
                           style={{ width: "15px", height: "15px" }}
                           title="استاد"
-
                         />
                       )}
                       {user.userRoles.includes("Employee.Admin") && (
@@ -211,72 +228,6 @@ const TableHover = ({ data }) => {
                     </>
                   )}
                 </Badge>
-
-                {/* <Badge color="light-primary">
-                  {user?.userRoles?.includes("Administrator") ? (
-                    <img
-                      src={admin}
-                      alt="ادمین"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  ) : user?.userRoles?.includes("Teacher") ? (
-                    <img
-                      src={teacher}
-                      alt="استاد"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  )  : user?.userRoles?.includes("Employee.Admin") ? (
-                    <img
-                      src={employee}
-                      alt="کارمند"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  ) 
-                  : user?.userRoles?.includes("Employee.Writer") ? (
-                    <img
-                      src={writer}
-                      alt="نویسنده"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  ) : user?.userRoles?.includes("Student") ? (
-                    <img
-                      src={student}
-                      alt="دانشجو"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  ) 
-                  : (
-                    user?.userRoles || ""
-                  )}
-                </Badge> */}
-                {/* <Badge
-                  color="light-primary"
-                  style={{ display: "flex", gap: "5px" }}
-                >
-                  {(Array.isArray(user?.userRoles) ? user.userRoles : []).map(
-                    (role) => {
-                      // نقشه نقش‌ها به تصاویر
-                      const roleImages = {
-                        Administrator: admin,
-                        Teacher: teacher,
-                        "Employee.Admin": employee,
-                        "Employee.Writer": writer,
-                        Student: student,
-                      };
-
-                      return (
-                        roleImages[role] && (
-                          <img
-                            key={role}
-                            src={roleImages[role]}
-                            alt={role} // می‌توانید alt فارسی برای هر نقش تنظیم کنید
-                            style={{ width: "20px", height: "20px" }}
-                          />
-                        )
-                      );
-                    }
-                  )}
-                </Badge> */}
               </td>
               <td>
                 <UncontrolledDropdown>
@@ -297,7 +248,12 @@ const TableHover = ({ data }) => {
                       }}
                     >
                       <Edit className="me-50" size={15} />
-                      <span className="align-middle"  onClick={() => console.log(` انتخابی منID: ${user.id}`)}>ویرایش</span>
+                      <span
+                        className="align-middle"
+                        onClick={() => console.log(` انتخابی منID: ${user.id}`)}
+                      >
+                        ویرایش
+                      </span>
                     </DropdownItem>
                     <DropdownItem href="#" onClick={(e) => e.preventDefault()}>
                       <Trash className="me-50" size={15} />
@@ -311,19 +267,49 @@ const TableHover = ({ data }) => {
         </tbody>
       </Table>
       <Pagination className="d-flex justify-content-center mt-3">
-        {[...Array(totalPages)].map((_, index) => (
-          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
-            <PaginationLink
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                paginate(index + 1);
-              }}
-            >
-              {index + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+        <PaginationItem disabled={currentPage === 1}>
+          <PaginationLink
+            previous
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage > 1) paginate(currentPage - 1);
+            }}
+          />
+        </PaginationItem>
+
+        {getPaginationPages().map((page, index) =>
+          typeof page === "number" ? (
+            <PaginationItem key={index} active={page === currentPage}>
+              <PaginationLink
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  paginate(page);
+                }}
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={index} disabled>
+              <PaginationLink href="#" onClick={(e) => e.preventDefault()}>
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          )
+        )}
+
+        <PaginationItem disabled={currentPage === totalPages}>
+          <PaginationLink
+            next
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage < totalPages) paginate(currentPage + 1);
+            }}
+          />
+        </PaginationItem>
       </Pagination>
     </>
   );
