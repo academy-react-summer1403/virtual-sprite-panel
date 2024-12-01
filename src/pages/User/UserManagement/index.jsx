@@ -33,16 +33,6 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 
-import admin from "@src/assets/images/portrait/small/admin.png";
-import employee from "@src/assets/images/portrait/small/employee.png";
-import mentor from "@src/assets/images/portrait/small/mentor.png";
-import referee from "@src/assets/images/portrait/small/referee.png";
-import student from "@src/assets/images/portrait/small/student.png";
-import support from "@src/assets/images/portrait/small/support.png";
-import teacher from "@src/assets/images/portrait/small/teacher.png";
-import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png";
-import writer from "@src/assets/images/portrait/small/writer.png";
-
 const UserManagement = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -51,65 +41,7 @@ const UserManagement = () => {
   const [topUsers, setTopUsers] = useState([]);
   const [topRoles, setTopRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  // const [query, setQuery] = useState(second)
-  // const [roleId, setRoleId] = useState(null)
 
-  // const avatarGroupData = [
-  //   {
-  //     title: "ادمین",
-  //     img: admin,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "کارمند",
-  //     img: employee,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "منتور",
-  //     img: mentor,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "معرف",
-  //     img: referee,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "دانشجو",
-  //     img: student,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "پشتیبان",
-  //     img: support,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "استاد",
-  //     img: teacher,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "ادمین تور",
-  //     img: tourAdmin,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  //   {
-  //     title: "نویسنده",
-  //     img: writer,
-  //     imgHeight: 26,
-  //     imgWidth: 26,
-  //   },
-  // ];
   const {
     register,
     handleSubmit,
@@ -117,7 +49,13 @@ const UserManagement = () => {
     control,
     formState: { errors },
   } = useForm();
-
+  const options = [
+    { value: 5, label: "5" },
+    { value: 10, label: "10" },
+    { value: 25, label: "25" },
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
+  ];
   const onSubmit = async (data) => {
     const userData = {
       firstName: data.firstName,
@@ -141,10 +79,6 @@ const UserManagement = () => {
     }
     console.log("داده ها : ", userData);
   };
-
-  // const gotodetail = () => {
-  //   return navigate("/user-management-detail");
-  // };
 
   const fetchData = async () => {
     const params = {
@@ -176,7 +110,14 @@ const UserManagement = () => {
       console.error("خطا در دریافت اطلاعات:", error);
     }
   };
-
+  const handlePerPage = (selectedOption) => {
+    if (selectedOption) {
+      setRowsPerPage(selectedOption.value); // مقدار را از selectedOption بگیرید
+      setCurrentPage(1);
+      console.log("تعداد نمایش در هر صفحه:", selectedOption.value);
+    }
+  };
+  
   const handleRoleChange = (selectedOption) => {
     console.log("selectedOption", selectedOption);
     setSelectedRole(selectedOption);
@@ -588,14 +529,33 @@ const UserManagement = () => {
               <Label className="form-label" for="level">
                 نمایش
               </Label>
+              {/* 
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
                 id={`level`}
                 className="react-select"
                 classNamePrefix="select"
-                // options={termOptions}
-              />
+                onChange={handlePerPage}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+              </Select>
+ */}
+            <Select
+  theme={selectThemeColors}
+  isClearable={false}
+  id="level"
+  className="react-select"
+  classNamePrefix="select"
+  options={options} // تنظیم گزینه‌ها به‌صورت صحیح
+  onChange={handlePerPage} // تابع مدیریت تغییرات
+/>
+
+              ;
             </Col>
             <Col lg={7}>
               <Row>
