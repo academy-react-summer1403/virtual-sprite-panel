@@ -49,13 +49,7 @@ const UserManagement = () => {
     control,
     formState: { errors },
   } = useForm();
-  const options = [
-    { value: 5, label: "5" },
-    { value: 10, label: "10" },
-    { value: 25, label: "25" },
-    { value: 50, label: "50" },
-    { value: 100, label: "100" },
-  ];
+  
   const onSubmit = async (data) => {
     const userData = {
       firstName: data.firstName,
@@ -82,17 +76,20 @@ const UserManagement = () => {
 
   const fetchData = async () => {
     const params = {
-      PageNumber: 1,
-      RowsOfPage: 400,
+      PageNumber: currentPage,
+      RowsOfPage: rowsPerPage, // مقدار از state
       SortingCol: "DESC",
       SortType: "InsertDate",
     };
+  
     if (!!selectedRole) {
       params.roleId = selectedRole.value;
     }
+  
     if (!!searchTerm) {
       params.Query = searchTerm;
     }
+  
     try {
       const result = await getTopUsers(params);
       setTopRoles(
@@ -102,21 +99,27 @@ const UserManagement = () => {
         }))
       );
       setTopUsers(result.listUser);
-      setFilteredUsers(result.listUser);
+      setFilteredUsers(result.listUser.slice(0, rowsPerPage));
 
-      console.log("لیست یوزرهایی که گرفتم  :", result.listUser);
-      console.log("لیست رول هایی که دارم :", result.roles);
-      console.log("تعداد یوزرهایی که دارم :", result.totalCount);
+  
+      console.log("لیست کاربران:", result.listUser);
+      console.log("لیست نقش‌ها:", result.roles);
+      console.log("تعداد کاربران:", result.totalCount);
     } catch (error) {
       console.error("خطا در دریافت اطلاعات:", error);
     }
   };
-  const handlePerPage = (selectedOption) => {
-    if (selectedOption) {
-      setRowsPerPage(selectedOption.value); // مقدار را از selectedOption بگیرید
-      setCurrentPage(1);
-      console.log("تعداد نمایش در هر صفحه:", selectedOption.value);
-    }
+  
+  const [rowsPerPage, setRowsPerPage] = useState(10); // مقدار پیش‌فرض: 10
+  const [currentPage, setCurrentPage] = useState(1); // مقدار پیش‌فرض صفحه فعلی
+
+ 
+  const handlePerPage = (event) => {
+    const selectedValue = parseInt(event.target.value, 10); // مقدار جدید
+    setRowsPerPage(selectedValue); // به‌روزرسانی تعداد نمایش
+    setCurrentPage(1); // بازگشت به صفحه اول
+    fetchData(); // فراخوانی دوباره داده‌ها
+    console.log("تعداد نمایش در هر صفحه:", selectedValue);
   };
   
   const handleRoleChange = (selectedOption) => {
@@ -159,7 +162,7 @@ const UserManagement = () => {
   // topUsers.forEach((user) => console.log(user.fname));getTopUsers
   useEffect(() => {
     fetchData();
-  }, [selectedRole, searchTerm]);
+  }, [selectedRole, searchTerm,rowsPerPage, currentPage]);
 
   return (
     <>
@@ -546,7 +549,7 @@ const UserManagement = () => {
               <option value={100}>100</option>
               </Select>
  */}
-            <Select
+              {/* <Select
   theme={selectThemeColors}
   isClearable={false}
   id="level"
@@ -554,9 +557,21 @@ const UserManagement = () => {
   classNamePrefix="select"
   options={options} // تنظیم گزینه‌ها به‌صورت صحیح
   onChange={handlePerPage} // تابع مدیریت تغییرات
-/>
+/> */}
+<Input
+  className="dataTable-select"
+  type="select"
+  id="level"
+  value={rowsPerPage} // مقدار کنونی
+  onChange={handlePerPage} // تابع مدیریت تغییر
+>
+  <option value={5}>5</option>
+  <option value={10}>10</option>
+  <option value={25}>25</option>
+  <option value={50}>50</option>
+  <option value={100}>100</option>
+</Input>
 
-              ;
             </Col>
             <Col lg={7}>
               <Row>
