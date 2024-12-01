@@ -7,12 +7,13 @@ import {
   CardLink,
 } from "reactstrap";
 import { User } from "react-feather";
-import allUsers from "../assets/images/portrait/small/all-users.png";
+import allUsers from "../../assets/images/portrait/small/all-users.png";
+import activeUser from "../../assets/images/portrait/small/active-user.png";
 
-import CardMedal from "../@core/components/card-medal/CardMedal";
-import StatsHorizontal from "../@core/components/widgets/stats/StatsHorizontal";
+import CardMedal from "../../@core/components/card-medal/CardMedal";
+import StatsHorizontal from "../../@core/components/widgets/stats/StatsHorizontal";
 import { useState, useEffect } from "react";
-import { getTopUsers } from "../core/services/api/User/userTop.api";
+import { getTopUsers } from "../../core/services/api/User/userTop.api";
 
 const Dashboard = () => {
   const [count, setCount] = useState();
@@ -44,8 +45,8 @@ const Dashboard = () => {
         (user) => user.active === "True"
       ).length;
 
-      setCount(totalCount); // تعداد کل کاربران
-      setActiveCount(activeUsersCount); // تعداد کاربران فعال
+      setCount(totalCount); 
+      setActiveCount(activeUsersCount);   
 
       console.log(`تعداد کاربران فعال: ${activeUsersCount}`);
       console.log("تعداد کل کاربران:", totalCount);
@@ -70,7 +71,7 @@ const Dashboard = () => {
         <StatsHorizontal
           color="primary"
           statTitle="تعداد کاربران فعال"
-          icon={<User size={20} />}
+          icon={activeUser}
           renderStats={<h3 className="fw-bolder mb-75">{activeCount}</h3>}
         />
       </div>
