@@ -33,16 +33,6 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 
-import admin from "@src/assets/images/portrait/small/admin.png";
-import employee from "@src/assets/images/portrait/small/employee.png";
-import mentor from "@src/assets/images/portrait/small/mentor.png";
-import referee from "@src/assets/images/portrait/small/referee.png";
-import student from "@src/assets/images/portrait/small/student.png";
-import support from "@src/assets/images/portrait/small/support.png";
-import teacher from "@src/assets/images/portrait/small/teacher.png";
-import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png";
-import writer from "@src/assets/images/portrait/small/writer.png";
-
 const UserManagement = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -172,6 +162,7 @@ const UserManagement = () => {
 
       console.log("لیست یوزرهایی که گرفتم  :", result.listUser);
       console.log("لیست رول هایی که دارم :", result.roles);
+      console.log("تعداد یوزرهایی که دارم :", result.totalCount);
     } catch (error) {
       console.error("خطا در دریافت اطلاعات:", error);
     }

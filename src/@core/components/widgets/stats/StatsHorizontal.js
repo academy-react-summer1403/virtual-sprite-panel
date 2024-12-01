@@ -15,10 +15,11 @@ const StatsHorizontal = ({
   statsMargin,
 }) => {
   return (
-    <Card>
+    <Card className="col-sm-4">
       <CardBody className={className}>
         <div className="d-flex justify-content-between align-items-center">
           <div>
+            <p className="card-text">{statTitle}</p>
             {renderStats ? (
               renderStats
             ) : (
@@ -31,15 +32,20 @@ const StatsHorizontal = ({
                 {stats}
               </h2>
             )}
-
-            <p className="card-text">{statTitle}</p>
           </div>
           <div
             className={`avatar avatar-stats p-50 m-0 ${
               color ? `bg-light-${color}` : "bg-light-primary"
             }`}
           >
-            <div className="avatar-content">{icon}</div>
+            <div className="avatar-content">
+              <img
+                src={icon}
+                className="img-fluid"
+                style={{ width: "40px", height: "40px" }}
+                alt="icon"
+              />
+            </div>
           </div>
         </div>
       </CardBody>
