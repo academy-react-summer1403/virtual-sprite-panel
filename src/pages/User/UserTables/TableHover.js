@@ -12,15 +12,16 @@ import {
 } from "reactstrap";
 // import AvatarGroup from "@components/avatar-group";
 
-import admin from "@src/assets/images/portrait/small/admin.png"; //
-import employee from "@src/assets/images/portrait/small/employee.png"; //
+import admin from "@src/assets/images/portrait/small/admin.png"; 
+import employee from "@src/assets/images/portrait/small/employee.png"; 
 import mentor from "@src/assets/images/portrait/small/mentor.png";
 import referee from "@src/assets/images/portrait/small/referee.png";
-import student from "@src/assets/images/portrait/small/student.png"; //
+import student from "@src/assets/images/portrait/small/student.png"; 
 import support from "@src/assets/images/portrait/small/support.png";
-import teacher from "@src/assets/images/portrait/small/teacher.png"; //
-import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png"; //
-import writer from "@src/assets/images/portrait/small/writer.png"; //
+import assistance from "@src/assets/images/portrait/small/assistance.png"; 
+import teacher from "@src/assets/images/portrait/small/teacher.png"; 
+import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png"; 
+import writer from "@src/assets/images/portrait/small/writer.png"; 
 import { MoreVertical, Edit, Trash } from "react-feather";
 import { useNavigate } from "react-router-dom"; 
 
@@ -98,6 +99,11 @@ const TableHover = ({ data }) => {
       img: writer,
       imgHeight: 26,
       imgWidth: 26,
+    },{
+      title: "دستیار",
+      img: assistance,
+      imgHeight: 26,
+      imgWidth: 26,
     },
   ];
   console.log("پاسخ TableHover data : ", data);
@@ -154,7 +160,13 @@ const TableHover = ({ data }) => {
                           style={{ width: "15px", height: "15px" }}
                         />
                       )}
-                      {user.userRoles.includes("Employee.Writer") && (
+                      {user.userRoles.includes("CourseAssistance") && (
+                        <img
+                          src={assistance}
+                          alt="دستیار"
+                          style={{ width: "15px", height: "15px" }}
+                        />
+                      )} {user.userRoles.includes("Employee.Writer") && (
                         <img
                           src={writer}
                           alt="نویسنده"
@@ -171,28 +183,28 @@ const TableHover = ({ data }) => {
                       {user.userRoles.includes("TournamentAdmin") && (
                         <img
                           src={tourAdmin}
-                          alt="تور"
+                          alt="ادمین تور"
                           style={{ width: "15px", height: "15px" }}
                         />
                       )}
                       {user.userRoles.includes("Referee") && (
                         <img
                           src={referee}
-                          alt="نویسنده"
+                          alt="معرف"
                           style={{ width: "15px", height: "15px" }}
                         />
                       )}
                       {user.userRoles.includes("TournamentMentor") && (
                         <img
                           src={mentor}
-                          alt="دانشجو"
+                          alt="منتور"
                           style={{ width: "15px", height: "15px" }}
                         />
                       )}
                       {user.userRoles.includes("Support") && (
                         <img
                           src={support}
-                          alt="تور"
+                          alt="پشتیبان"
                           style={{ width: "15px", height: "15px" }}
                         />
                       )}

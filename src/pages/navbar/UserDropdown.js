@@ -75,7 +75,7 @@ const UserDropdown = () => {
             {data.fName} {data.lName}
           </span>
           <span className="user-status">
-            {isLoggedIn ? "ادمین" : "کاربر مهمان"}
+            {isLoggedIn ? data.gmail : "کاربر مهمان"}
           </span>
         </div>
         <Avatar
