@@ -44,18 +44,17 @@ const TableHover = ({ data }) => {
       return [...Array(totalPages)].map((_, index) => index + 1);
     } else {
       const pages = [];
-      const startPage = Math.max(currentPage - 5, 1); // صفحه شروع
-      const endPage = Math.min(currentPage + 5, totalPages); // صفحه پایان
+      const startPage = Math.max(currentPage - 5, 1);
+      const endPage = Math.min(currentPage + 5, totalPages); 
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
-      if (startPage > 1) pages.unshift(1, "..."); // اضافه کردن صفحه اول
-      if (endPage < totalPages) pages.push("...", totalPages); // اضافه کردن صفحه آخر
+      if (startPage > 1) pages.unshift(1, "..."); 
+      if (endPage < totalPages) pages.push("...", totalPages); 
       return pages;
     }
   };
-  // تغییر صفحه
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const paginate = (pageNumber) => {
     if (typeof pageNumber === "number") setCurrentPage(pageNumber);
   };

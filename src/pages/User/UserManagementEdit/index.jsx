@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-// ** Third Party Components
 import classnames from "classnames";
 import { Check, Twitter } from "react-feather";
 import noUserPhoto from "../../../assets/images/portrait/small/no-user-photo.png";
@@ -8,7 +7,7 @@ import twiter from "../../../assets/images/detail/twiter.webp";
 import activeCourse from "../../../assets/images/course/active-course.png";
 import reservedCourse from "../../../assets/images/course/reserved-course.png";
 // import ModalBasic from "./Modal.jsx";
-// ** Reactstrap Imports
+
 import {
   Nav,
   TabPane,
@@ -43,19 +42,28 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDetailWithId } from "../../../core/services/api/User/UserDetailsWithId.api";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const UserManagementEdit = () => {
   const [active, setActive] = useState("1");
   const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [centeredModal, setCenteredModal] = useState(false);
+  const { id } = useParams();
+  // console.log(id);
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      gender: null,
+    },
+  });
 
   const onSubmit = async (data) => {
     const userData = {
@@ -66,13 +74,15 @@ const UserManagementEdit = () => {
       phoneNumber: data.phoneNumber,
       isStudent: !!data.isStudent,
       isTeacher: !!data.isTeacher,
+      gender: !!data.gender,
+      nationalCode: !!data.nationalCode,
     };
 
     try {
-      const response = await createUser(userData);
-      console.log("کاربر جدید با موفقیت اضافه شد:", response);
-      toast.success("کاربر با موفقیت اضافه شد");
-      setCenteredModal(false); // بستن مودال
+      // const response = await createUser(userData);
+      console.log("ویرایش:");
+      // toast.success("کاربر با موفقیت اضافه شد");
+      setCenteredModal(false);
     } catch (error) {
       toast.error("افزودن کاربر با خطا مواجه شد");
 
@@ -80,8 +90,7 @@ const UserManagementEdit = () => {
     }
     console.log("داده ها : ", userData);
   };
-  const { id } = useParams();
-  console.log(id);
+
   const getUserDetails = async () => {
     if (token) {
       const result = await getUserDetailWithId(id);
@@ -91,6 +100,28 @@ const UserManagementEdit = () => {
       console.log("توکن وجود ندارد");
     }
   };
+
+  const handleEditUser = (user) => {
+    setSelectedUser(user);
+    setCenteredModal(true);
+  };
+  // وقتی مودال باز می‌شود، اطلاعات را در فرم ست می‌کنیم
+  useEffect(() => {
+    if (selectedUser) {
+      setValue("firstName", selectedUser?.fName || "");
+      setValue("lastName", selectedUser?.lName || "");
+      setValue("gmail", selectedUser?.gmail || "");
+      setValue("phoneNumber", selectedUser?.phoneNumber || "");
+      setValue("password", selectedUser?.password || "");
+      setValue("isStudent", selectedUser?.isStudent || false);
+      setValue("isTeacher", selectedUser?.isTeacher || false);
+      setValue(
+        "gender",
+        selectedUser?.gender !== undefined ? selectedUser.gender : null
+      );
+      setValue("nationalCode", selectedUser?.nationalCode || "");
+    }
+  }, [selectedUser, setValue]);
   useEffect(() => {
     getUserDetails();
   }, [id]);
@@ -107,7 +138,7 @@ const UserManagementEdit = () => {
           className="modal-dialog-centered"
         >
           <ModalHeader toggle={() => setCenteredModal(!centeredModal)}>
-            لطفا اطلاعات کاربر را وارد نمایید
+            اطلاعات کاربر
           </ModalHeader>
           <ModalBody>
             <Card>
@@ -173,214 +204,94 @@ const UserManagementEdit = () => {
                           )}
                         />
                         <FormFeedback>{errors.gmail?.message}</FormFeedback>
-                        <Label for="phoneNumber" className="mt-2">
-                          شماره موبایل
+                        <Label for="gender" className="mt-2">
+                          جنسیت
                         </Label>
                         <Controller
-                          name="phoneNumber"
+                          name="gender"
                           control={control}
                           rules={{
-                            required: "شماره موبایل ضروری است",
+                            validate: (value) =>
+                              value !== undefined && value !== null
+                                ? true
+                                : "وارد کردن جنسیت ضروری است",
+                          }}
+                          render={({ field }) => (
+                            <div>
+                              <div className="form-check">
+                                <input
+                                  type="radio"
+                                  id="gender-male"
+                                  value="true"
+                                  checked={field.value === true}
+                                  onChange={() => {
+                                    console.log("Selected value:", true); // نمایش مقدار انتخابی
+                                    field.onChange(true);
+                                  }}
+                                  className="form-check-input"
+                                />
+                                <label
+                                  htmlFor="gender-male"
+                                  className="form-check-label"
+                                >
+                                  مرد
+                                </label>
+                              </div>
+                              <div className="form-check">
+                                <input
+                                  type="radio"
+                                  id="gender-female"
+                                  value="false"
+                                  checked={field.value === false}
+                                  onChange={() => {
+                                    console.log("Selected value:", false); // نمایش مقدار انتخابی
+                                    field.onChange(false);
+                                  }}
+                                  className="form-check-input"
+                                />
+                                <label
+                                  htmlFor="gender-female"
+                                  className="form-check-label"
+                                >
+                                  زن
+                                </label>
+                              </div>
+                              {errors.gender && (
+                                <span className="text-danger">
+                                  {errors.gender.message}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        />
+
+                        <FormFeedback>{errors.gender?.message}</FormFeedback>
+
+                        <Label for="nationalCode" className="mt-2">
+                          کد ملی
+                        </Label>
+                        <Controller
+                          name="nationalCode"
+                          control={control}
+                          rules={{
+                            required: "  کد ملی عبور ضروری است",
                           }}
                           render={({ field }) => (
                             <Input
                               {...field}
-                              id="phoneNumber"
-                              placeholder="09111111111"
+                              id="nationalCode"
+                              placeholder="123456"
                               type="text"
-                              invalid={errors.phoneNumber ? true : false}
+                              invalid={errors.nationalCode ? true : false}
                             />
                           )}
                         />
                         <FormFeedback>
-                          {errors.phoneNumber?.message}
+                          {errors.nationalCode?.message}
                         </FormFeedback>
-                        <Label for="password" className="mt-2">
-                          رمز عبور
-                        </Label>
-                        <Controller
-                          name="password"
-                          control={control}
-                          rules={{
-                            required: "  رمز عبور ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="password"
-                              placeholder="******"
-                              type="password"
-                              invalid={errors.password ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.password?.message}</FormFeedback>
                       </Col>
-                      <Row className="mt-2">
-                        <Col>
-                          <Label for="isStudent" className="mx-1">
-                            دانشجو
-                          </Label>
-                          <Controller
-                            name="isStudent"
-                            control={control}
-                            render={({ field }) => (
-                              <Input
-                                {...field}
-                                id="isStudent"
-                                type="checkbox"
-                                invalid={errors.isStudent ? true : false}
-                              />
-                            )}
-                          />
-                          <Label for="isTeacher" className="mx-1">
-                            استاد
-                          </Label>
-                          <Controller
-                            name="isTeacher"
-                            control={control}
-                            render={({ field }) => (
-                              <Input
-                                {...field}
-                                id="isTeacher"
-                                type="checkbox"
-                                invalid={errors.isTeacher ? true : false}
-                              />
-                            )}
-                          />
-                        </Col>
-                      </Row>
                     </FormGroup>
                   </Row>
-                  {/* <Row>
-                    <Col sm="12">
-                      <FormGroup >
-                        <Label for="lastName">نام خانوادگی</Label>
-                        <Controller
-                          name="lastName"
-                          control={control}
-                          rules={{ required: "نام خانوادگی ضروری است" }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="lastName"
-                              placeholder="علوی"
-                              type="text"
-                              invalid={errors.lastName ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.lastName?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-                  {/* <Row>
-                    <Col sm="12">
-                      <FormGroup>
-                        <Label for="email"> پست الکترونیکی</Label>
-                        <Controller
-                          name="email"
-                          control={control}
-                          rules={{
-                            required: "پست الکترونیکی ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="email"
-                              placeholder="virtualsprite@gmail.com"
-                              type="text"
-                              invalid={errors.email ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.email?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-
-                  {/* <Row>
-                    <Col sm="12" className="mb-1">
-                      <FormGroup>
-                        <Label for="mobile"> شماره موبایل </Label>
-                        <Controller
-                          name="mobile"
-                          control={control}
-                          rules={{
-                            required: "شماره موبایل ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="mobile"
-                              placeholder="09111111111"
-                              type="text"
-                              invalid={errors.mobile ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.mobile?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-
-                  {/* <Row>
-                    <Col sm="12" className="mb-1">
-                      <FormGroup>
-                        <Label for="pass">رمز عبور</Label>
-                        <Controller
-                          name="pass"
-                          control={control}
-                          rules={{
-                            required: "  رمز عبور ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="pass"
-                              placeholder="******"
-                              type="password"
-                              invalid={errors.pass ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.pass?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-                  {/* <Row>
-                    <Col sm="4">
-                      <Label> تعیین نقش</Label>{" "}
-                      <FormGroup  className="d-flex">
-                        <Label for="roleStudent"  className="mx-1"> دانشجو</Label>
-                        <Controller
-                          name="roleStudent"
-                          control={control}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="roleStudent"
-                              type="checkbox"
-                              invalid={errors.roleStudent ? true : false}
-                            />
-                          )}
-                        />
-                        <Label for="roleTeacher" className="mx-1"> استاد</Label>
-                        <Controller
-                          name="roleTeacher"
-                          control={control}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="roleTeacher"
-                              type="checkbox"
-                              invalid={errors.roleTeacher ? true : false}
-                            />
-                          )}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
                   <Row>
                     <Col sm="12">
                       <div className="d-flex">
@@ -390,7 +301,7 @@ const UserManagementEdit = () => {
                           type="submit"
                           // onClick={(e) => e.preventDefault()}
                         >
-                          ثبت
+                          اعمال ویرایش
                         </Button>
                         <Button
                           outline
@@ -412,7 +323,6 @@ const UserManagementEdit = () => {
       <Row>
         <Col lg="4">
           <Card>
-            {/* <CardImg src=""></CardImg> */}
             <CardBody>
               <CardTitle tag="h4" className="border-bottom boldYekan">
                 جزییات کاربر
@@ -495,11 +405,16 @@ const UserManagementEdit = () => {
                     {data?.active && data.active ? "فعال" : "غیرفعال"}
                   </h5>
                 </CardText>
-
                 <CardText className="d-flex flex-row gap-1 align-items-center">
                   <h5 className="boldYekan text-align-fix">جنسیت:</h5>
                   <h5 className="regYekan text-align-fix">
                     {data?.gender && data.gender ? "مرد" : "زن"}
+                  </h5>
+                </CardText>
+                <CardText className="d-flex flex-row gap-1 align-items-center">
+                  <h5 className="boldYekan text-align-fix">کد ملی:</h5>
+                  <h5 className="regYekan text-align-fix">
+                    {data.nationalCode}
                   </h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-1 align-items-center">
@@ -515,8 +430,8 @@ const UserManagementEdit = () => {
                 <Button
                   // onClick={() => handleEditClick(data.courseId)}
                   color="relief-primary"
-                  onClick={() => setCenteredModal(!centeredModal)}
-
+                  // onClick={() => setCenteredModal(!centeredModal)}
+                  onClick={() => handleEditUser(data)}
                 >
                   ویرایش
                 </Button>
