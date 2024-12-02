@@ -73,7 +73,6 @@ const Login = () => {
     <div className="auth-wrapper auth-cover text-end">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
-          <svg viewBox="0 0 139 95" version="1.1" height="28">
             <defs>
               <linearGradient
                 x1="100%"
@@ -103,8 +102,7 @@ const Login = () => {
               fill="none"
               fillRule="evenodd"
             ></g>
-          </svg>
-          {/* <h2 className="brand-text text-primary ms-1">Vuexy</h2> */}
+          
         </Link>
 
         <Col

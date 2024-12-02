@@ -41,7 +41,8 @@ const UserManagement = () => {
   const [topUsers, setTopUsers] = useState([]);
   const [topRoles, setTopRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [rowsPerPage, setRowsPerPage] = useState(Infinity);
+  const [currentPage, setCurrentPage] = useState(1);
   const {
     register,
     handleSubmit,
@@ -49,7 +50,7 @@ const UserManagement = () => {
     control,
     formState: { errors },
   } = useForm();
-  
+
   const onSubmit = async (data) => {
     const userData = {
       firstName: data.firstName,
@@ -65,7 +66,7 @@ const UserManagement = () => {
       const response = await createUser(userData);
       console.log("کاربر جدید با موفقیت اضافه شد:", response);
       toast.success("کاربر با موفقیت اضافه شد");
-      setCenteredModal(false); // بستن مودال
+      setCenteredModal(false);
     } catch (error) {
       toast.error("افزودن کاربر با خطا مواجه شد");
 
@@ -77,19 +78,19 @@ const UserManagement = () => {
   const fetchData = async () => {
     const params = {
       PageNumber: currentPage,
-      RowsOfPage: rowsPerPage, // مقدار از state
+      RowsOfPage: rowsPerPage === Infinity ? 1000000 : rowsPerPage,
       SortingCol: "DESC",
       SortType: "InsertDate",
     };
-  
+
     if (!!selectedRole) {
       params.roleId = selectedRole.value;
     }
-  
+
     if (!!searchTerm) {
       params.Query = searchTerm;
     }
-  
+
     try {
       const result = await getTopUsers(params);
       setTopRoles(
@@ -99,9 +100,12 @@ const UserManagement = () => {
         }))
       );
       setTopUsers(result.listUser);
-      setFilteredUsers(result.listUser.slice(0, rowsPerPage));
+      setFilteredUsers(
+        rowsPerPage === Infinity
+          ? result.listUser
+          : result.listUser.slice(0, rowsPerPage)
+      );
 
-  
       console.log("لیست کاربران:", result.listUser);
       console.log("لیست نقش‌ها:", result.roles);
       console.log("تعداد کاربران:", result.totalCount);
@@ -109,19 +113,17 @@ const UserManagement = () => {
       console.error("خطا در دریافت اطلاعات:", error);
     }
   };
-  
-  const [rowsPerPage, setRowsPerPage] = useState(10); // مقدار پیش‌فرض: 10
-  const [currentPage, setCurrentPage] = useState(1); // مقدار پیش‌فرض صفحه فعلی
-
- 
   const handlePerPage = (event) => {
-    const selectedValue = parseInt(event.target.value, 10); // مقدار جدید
-    setRowsPerPage(selectedValue); // به‌روزرسانی تعداد نمایش
-    setCurrentPage(1); // بازگشت به صفحه اول
-    fetchData(); // فراخوانی دوباره داده‌ها
+    const selectedValue =
+      event.target.value === "all"
+        ? Infinity
+        : parseInt(event.target.value, 10);
+    setRowsPerPage(selectedValue);
+    setCurrentPage(1);
+    fetchData();
     console.log("تعداد نمایش در هر صفحه:", selectedValue);
   };
-  
+
   const handleRoleChange = (selectedOption) => {
     console.log("selectedOption", selectedOption);
     setSelectedRole(selectedOption);
@@ -158,11 +160,13 @@ const UserManagement = () => {
       setFilteredUsers(topUsers);
     }
   };
-
+  const handleNavigate = () => {
+    navigate("/prof");
+  };
   // topUsers.forEach((user) => console.log(user.fname));getTopUsers
   useEffect(() => {
     fetchData();
-  }, [selectedRole, searchTerm,rowsPerPage, currentPage]);
+  }, [selectedRole, searchTerm, rowsPerPage, currentPage]);
 
   return (
     <>
@@ -318,135 +322,6 @@ const UserManagement = () => {
                       </Row>
                     </FormGroup>
                   </Row>
-                  {/* <Row>
-                    <Col sm="12">
-                      <FormGroup >
-                        <Label for="lastName">نام خانوادگی</Label>
-                        <Controller
-                          name="lastName"
-                          control={control}
-                          rules={{ required: "نام خانوادگی ضروری است" }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="lastName"
-                              placeholder="علوی"
-                              type="text"
-                              invalid={errors.lastName ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.lastName?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-                  {/* <Row>
-                    <Col sm="12">
-                      <FormGroup>
-                        <Label for="email"> پست الکترونیکی</Label>
-                        <Controller
-                          name="email"
-                          control={control}
-                          rules={{
-                            required: "پست الکترونیکی ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="email"
-                              placeholder="virtualsprite@gmail.com"
-                              type="text"
-                              invalid={errors.email ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.email?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-
-                  {/* <Row>
-                    <Col sm="12" className="mb-1">
-                      <FormGroup>
-                        <Label for="mobile"> شماره موبایل </Label>
-                        <Controller
-                          name="mobile"
-                          control={control}
-                          rules={{
-                            required: "شماره موبایل ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="mobile"
-                              placeholder="09111111111"
-                              type="text"
-                              invalid={errors.mobile ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.mobile?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-
-                  {/* <Row>
-                    <Col sm="12" className="mb-1">
-                      <FormGroup>
-                        <Label for="pass">رمز عبور</Label>
-                        <Controller
-                          name="pass"
-                          control={control}
-                          rules={{
-                            required: "  رمز عبور ضروری است",
-                          }}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="pass"
-                              placeholder="******"
-                              type="password"
-                              invalid={errors.pass ? true : false}
-                            />
-                          )}
-                        />
-                        <FormFeedback>{errors.pass?.message}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
-                  {/* <Row>
-                    <Col sm="4">
-                      <Label> تعیین نقش</Label>{" "}
-                      <FormGroup  className="d-flex">
-                        <Label for="roleStudent"  className="mx-1"> دانشجو</Label>
-                        <Controller
-                          name="roleStudent"
-                          control={control}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="roleStudent"
-                              type="checkbox"
-                              invalid={errors.roleStudent ? true : false}
-                            />
-                          )}
-                        />
-                        <Label for="roleTeacher" className="mx-1"> استاد</Label>
-                        <Controller
-                          name="roleTeacher"
-                          control={control}
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="roleTeacher"
-                              type="checkbox"
-                              invalid={errors.roleTeacher ? true : false}
-                            />
-                          )}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row> */}
                   <Row>
                     <Col sm="12">
                       <div className="d-flex">
@@ -533,36 +408,11 @@ const UserManagement = () => {
               <Label className="form-label" for="level">
                 نمایش
               </Label>
-              {/* 
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                id={`level`}
-                className="react-select"
-                classNamePrefix="select"
-                onChange={handlePerPage}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-              </Select>
- */}
-              {/* <Select
-  theme={selectThemeColors}
-  isClearable={false}
-  id="level"
-  className="react-select"
-  classNamePrefix="select"
-  options={options} // تنظیم گزینه‌ها به‌صورت صحیح
-  onChange={handlePerPage} // تابع مدیریت تغییرات
-/> */}
-<Input
+              <Input
   className="dataTable-select"
   type="select"
   id="level"
-  value={rowsPerPage} // مقدار کنونی
+  value={rowsPerPage === Infinity ? "all" : rowsPerPage} // مقدار پیش‌فرض
   onChange={handlePerPage} // تابع مدیریت تغییر
 >
   <option value={5}>5</option>
@@ -570,6 +420,7 @@ const UserManagement = () => {
   <option value={25}>25</option>
   <option value={50}>50</option>
   <option value={100}>100</option>
+  <option value="all">همه</option> {/* گزینه "همه" */}
 </Input>
 
             </Col>
@@ -598,6 +449,9 @@ const UserManagement = () => {
                     onClick={() => setCenteredModal(!centeredModal)}
                   >
                     اضافه کردن کاربر جدید
+                  </Button>
+                  <Button color="primary" onClick={handleNavigate}>
+                    پروفایل
                   </Button>
                 </Col>
               </Row>
