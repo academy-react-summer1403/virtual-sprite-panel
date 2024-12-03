@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
@@ -14,6 +14,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Form, Label, Input, Row, Col, Button, FormFeedback } from "reactstrap";
 
 const AccountDetails = ({ stepper, getData }) => {
+  const [initialValues, setInitialValues] = useState({});
+
+  useEffect(() => {
+    console.log("getData11111",getData)
+    if (getData) {
+      const obj = {
+        zar: getData?.zar || "",
+        username: getData?.title || "",
+        cost: getData?.cost || "",
+        sessions: getData?.sessions || "",
+        explane: getData?.explane || "",
+        small: getData?.small || "",
+      };
+      setInitialValues(obj);
+    }
+  }, [getData]);
+
   const defaultValues = {
     zar: getData?.zar || "",
     username: getData?.title || "",
