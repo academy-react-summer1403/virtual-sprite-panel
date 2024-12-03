@@ -87,7 +87,9 @@ const CoursDetail = () => {
       try {
         const result = await CourseReserveApi(courseId);
         console.log("course reserve", result);
-        setReserve(result);
+        if (result) {
+          setReserve(result);
+        }
       } catch (error) {
         console.error("Error fetching course reserve:", error);
       }
@@ -107,7 +109,9 @@ const CoursDetail = () => {
       try {
         const result = await CourseGroup(data.teacherId, data.courseId);
         console.log("course group", result);
-        setGroup(result);
+        if (result) {
+          setGroup(result[0]);
+        }
       } catch (error) {
         console.error("Error fetching course group:", error);
       }
@@ -124,11 +128,11 @@ const CoursDetail = () => {
         const obj = {
           courseId: group?.courseId,
           courseGroupId: group?.groupId,
-          studentId: reserve?.studentId,
+          studentId: reserve[0]?.studentId,
         };
         console.log("obj", obj);
         const result = await ChangeCourseReserve(obj);
-        console.log("change", result);
+        // console.log("change", result);
       } catch (error) {
         console.error("Error fetching course change:", error);
       }
@@ -137,7 +141,6 @@ const CoursDetail = () => {
     }
   };
   const getstudent = async () => {
-    
     if (token) {
       try {
         const result = await Studentapi(id);
@@ -158,9 +161,9 @@ const CoursDetail = () => {
 
     if (token) {
       try {
-        const result = await getCommentCourses(data?.teacherId, userId);
-        setComment(result);
-        console.log("result", result);
+      if(data?.teacherId) {const result = await getCommentCourses(data?.teacherId, userId);
+        setComment(result.comments);
+        console.log("result comment", result);}
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -370,7 +373,7 @@ const CoursDetail = () => {
                         <td>
                           <Button.Ripple
                             className="round"
-                            color={item.accept ? "success" : "danger"}
+                            color={item.accept == true ? "success" : "danger"}
                           >
                             {item.accept ? "پذیرفته شده" : "منتظر تایید"}
                           </Button.Ripple>
@@ -431,43 +434,24 @@ const CoursDetail = () => {
                       <th className="text-start"> نویسنده</th>
                       <th>عنوان</th>
                       <th>متن </th>
-                      <th>وضعیت</th>
+                      {/* <th>وضعیت</th> */}
                     </tr>
                   </thead>
-                  {/* <tbody>
-                    <tr>
-                      <td className="text-start"> m ,m</td>
-                      <td>jmn</td>
-                      <td>
-                        <Button.Ripple className="round" color="danger">
-                          تایید نشده
-                        </Button.Ripple>
-                      </td>
-                      <td>
-                        <div className="d-flex flex-row gap-1 justify-content-center">
-                          <Button.Ripple color="success">
-                            <Check size={14} />
-                          </Button.Ripple>
-                          <Button.Ripple className="" color="danger">
-                            *
-                          </Button.Ripple>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody> */}
 
-                  <tbody>
-                    <tr>
-                      <td className="text-start"></td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <Button.Ripple className="round">
-                          {/* {item.isApproved ? "تایید شده" : "تایید نشده"} */}
-                        </Button.Ripple>
-                      </td>
-                    </tr>
-                  </tbody>
+                  {comment?.map((item, index) => (
+                    <tbody>
+                      <tr key={index}>
+                        <td className="text-start">{item.userFullName}	</td>
+                        <td>{item.commentTitle}</td>
+                        <td>{item.describe}</td>
+                        {/* <td>
+                          <Button.Ripple className="round">
+                            {item.isApproved ? "تایید شده" : "تایید نشده"}
+                          </Button.Ripple>
+                        </td> */}
+                      </tr>
+                    </tbody>
+                  ))}
                 </Table>
               </TabPane>
             </TabContent>
