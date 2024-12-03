@@ -26,7 +26,13 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { CourseReserveApi, getCoursesDetail } from "../../../core/services/api/courses/courseDetailById.api";
+import {
+  ChangeCourseReserve,
+  CourseGroup,
+  CourseReserveApi,
+  getCoursesDetail,
+  Studentapi,
+} from "../../../core/services/api/courses/courseDetailById.api";
 import { getCommentCourses } from "../../../core/services/api/comment/Comment";
 
 const CoursDetail = () => {
@@ -34,8 +40,12 @@ const CoursDetail = () => {
   const token = localStorage.getItem("token");
   const [reserve, setReserve] = useState([]);
   const [comment, setComment] = useState([]);
+  const [group, setGroup] = useState([]);
+  const [student, setStudent] = useState([]);
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const userId = localStorage.getItem("id");
 
   const navigate = useNavigate();
 
@@ -43,9 +53,12 @@ const CoursDetail = () => {
   console.log(id);
   const getDetails = async () => {
     if (token) {
-      const result = await getCoursesDetail(id);
-      console.log("course detail", result);
-      setData(result);
+      try {
+        const result = await getCoursesDetail(id);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
     } else {
       console.log("توکن وجود ندارد");
     }
@@ -69,32 +82,96 @@ const CoursDetail = () => {
     navigate(`/course-edit/${courseId}`);
   };
   const getreserve = async () => {
-  const courseId = data.courseId;
+    const courseId = data.courseId;
     if (token) {
-      const result = await CourseReserveApi(courseId);
-      console.log("course reserve", result);
-      setReserve(result);
+      try {
+        const result = await CourseReserveApi(courseId);
+        console.log("course reserve", result);
+        setReserve(result);
+      } catch (error) {
+        console.error("Error fetching course reserve:", error);
+      }
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+
+  useEffect(() => {
+    if (data?.courseId) {
+      getreserve(data.courseId);
+    }
+  }, [data]);
+
+  const getGroupApi = async () => {
+    if (data?.teacherId && data?.courseId) {
+      try {
+        const result = await CourseGroup(data.teacherId, data.courseId);
+        console.log("course group", result);
+        setGroup(result);
+      } catch (error) {
+        console.error("Error fetching course group:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getGroupApi();
+  }, [data.teacherId, data.courseId]);
+
+  const changereserveapi = async () => {
+    if (token) {
+      try {
+        const obj = {
+          courseId: group?.courseId,
+          courseGroupId: group?.groupId,
+          studentId: reserve?.studentId,
+        };
+        console.log("obj", obj);
+        const result = await ChangeCourseReserve(obj);
+        console.log("change", result);
+      } catch (error) {
+        console.error("Error fetching course change:", error);
+      }
+    } else {
+      // return <Notification>لطفا لاگین کنید</Notification>;
+    }
+  };
+  const getstudent = async () => {
+    
+    if (token) {
+      try {
+        const result = await Studentapi(id);
+        console.log("course student", result);
+        setStudent(result);
+      } catch (error) {
+        console.error("Error fetching course student:", error);
+      }
     } else {
       console.log("توکن وجود ندارد");
     }
   };
   useEffect(() => {
-    getreserve(data.courseId);
-  }, [data?.courseId]);
-
+    getstudent();
+  }, [id]);
   const getcomment = async () => {
-    const teacherId=data.teacherId
+    // const teacherId = data.teacherId;
+
     if (token) {
-      const result = await getCommentCourses(teacherId);
-      console.log("course comment", result);
-      setComment(result);
+      try {
+        const result = await getCommentCourses(data?.teacherId, userId);
+        setComment(result);
+        console.log("result", result);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
     } else {
       console.log("توکن وجود ندارد");
     }
   };
+
   useEffect(() => {
     getcomment();
-  }, []);
+  }, [data.teacherId, userId]);
   return (
     <>
       <Row>
@@ -273,7 +350,8 @@ const CoursDetail = () => {
                 <h1 className="m-2">کاربرانی که این دوره را رزرو کرده اند</h1>
                 <Table
                   className="text-nowrap text-center border-bottom"
-                  hover responsive
+                  hover
+                  responsive
                 >
                   <thead>
                     <tr>
@@ -283,26 +361,35 @@ const CoursDetail = () => {
                       <th>پذیرش</th>
                     </tr>
                   </thead>
+
                   <tbody>
-                    <tr>
-                      <td className="text-start"> {reserve.studentName}</td>
-                      <td>{reserve.reserverDate}</td>
-                      <td>
-                        <Button.Ripple className="round" color="reserve.accept == true ? success : danger">
-                          {reserve.accept}
-                        </Button.Ripple>
-                      </td>
-                      <td>
-                        <div className="d-flex flex-row gap-1 justify-content-center">
-                          <Button.Ripple color="success">
-                            <Check size={14} />
+                    {reserve.map((item, index) => (
+                      <tr key={index}>
+                        <td className="text-start">{item.studentName}</td>
+                        <td>{item.reserverDate}</td>
+                        <td>
+                          <Button.Ripple
+                            className="round"
+                            color={item.accept ? "success" : "danger"}
+                          >
+                            {item.accept ? "پذیرفته شده" : "منتظر تایید"}
                           </Button.Ripple>
-                          <Button.Ripple className="" color="danger">
-                            *
-                          </Button.Ripple>
-                        </div>
-                      </td>
-                    </tr>
+                        </td>
+                        <td>
+                          <div className="d-flex flex-row gap-1 justify-content-center">
+                            <Button.Ripple
+                              color="success"
+                              onClick={changereserveapi}
+                            >
+                              <Check size={10} />
+                            </Button.Ripple>
+                            {/* <Button.Ripple className="" color="danger">
+            *
+          </Button.Ripple> */}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
               </TabPane>
@@ -336,6 +423,7 @@ const CoursDetail = () => {
                 <h1 className="m-2">کامنت های مربوط به این دوره</h1>
                 <Table
                   className="text-nowrap text-center border-bottom"
+                  hover
                   responsive
                 >
                   <thead>
@@ -346,7 +434,7 @@ const CoursDetail = () => {
                       <th>وضعیت</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  {/* <tbody>
                     <tr>
                       <td className="text-start"> m ,m</td>
                       <td>jmn</td>
@@ -364,6 +452,19 @@ const CoursDetail = () => {
                             *
                           </Button.Ripple>
                         </div>
+                      </td>
+                    </tr>
+                  </tbody> */}
+
+                  <tbody>
+                    <tr>
+                      <td className="text-start"></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <Button.Ripple className="round">
+                          {/* {item.isApproved ? "تایید شده" : "تایید نشده"} */}
+                        </Button.Ripple>
                       </td>
                     </tr>
                   </tbody>
