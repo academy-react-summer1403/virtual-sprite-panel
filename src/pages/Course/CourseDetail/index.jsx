@@ -31,9 +31,14 @@ import { getCoursesDetail } from "../../../core/services/api/courses/courseDetai
 const CoursDetail = () => {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");
-
+  const [reserve, setReserve] = useState([]);
+  const [comment, setComment] = useState([]);
+  const [group, setGroup] = useState([]);
+  const [student, setStudent] = useState([]);
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const userId = localStorage.getItem("id");
 
   const navigate = useNavigate();
 
@@ -41,9 +46,12 @@ const CoursDetail = () => {
   console.log(id);
   const getDetails = async () => {
     if (token) {
-      const result = await getCoursesDetail(id);
-      console.log("course detail", result);
-      setData(result);
+      try {
+        const result = await getCoursesDetail(id);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
     } else {
       console.log("توکن وجود ندارد");
     }
@@ -66,7 +74,6 @@ const CoursDetail = () => {
     console.log(`آی دی: ${courseId}`);
     navigate(`/course-edit/${courseId}`);
   };
-
   const getreserve = async () => {
     const courseId = data.courseId;
     if (token) {
@@ -163,6 +170,143 @@ const CoursDetail = () => {
   useEffect(() => {
     getcomment();
   }, [data.teacherId, userId]);
+
+  /********* merge changes */
+
+  // const [data, setData] = useState([]);
+  // const token = localStorage.getItem("token");
+
+  // const [active, setActive] = useState("1");
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // const navigate = useNavigate();
+
+  // const { id } = useParams();
+  // console.log(id);
+  // const getDetails = async () => {
+  //   if (token) {
+  //     const result = await getCoursesDetail(id);
+  //     console.log("course detail", result);
+  //     setData(result);
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getDetails();
+  // }, [id]);
+
+  // const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  // const toggle = (tab) => {
+  //   setActive(tab);
+  // };
+
+  // const handleEditClick = (courseId) => {
+  //   if (!courseId) {
+  //     console.error("آی دی پیدا نشد");
+  //     return;
+  //   }
+  //   console.log(`آی دی: ${courseId}`);
+  //   navigate(`/course-edit/${courseId}`);
+  // };
+
+  // const getreserve = async () => {
+  //   const courseId = data.courseId;
+  //   if (token) {
+  //     try {
+  //       const result = await CourseReserveApi(courseId);
+  //       console.log("course reserve", result);
+  //       if (result) {
+  //         setReserve(result);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching course reserve:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (data?.courseId) {
+  //     getreserve(data.courseId);
+  //   }
+  // }, [data]);
+
+  // const getGroupApi = async () => {
+  //   if (data?.teacherId && data?.courseId) {
+  //     try {
+  //       const result = await CourseGroup(data.teacherId, data.courseId);
+  //       console.log("course group", result);
+  //       if (result) {
+  //         setGroup(result[0]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching course group:", error);
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getGroupApi();
+  // }, [data.teacherId, data.courseId]);
+
+  // const changereserveapi = async () => {
+  //   if (token) {
+  //     try {
+  //       const obj = {
+  //         courseId: group?.courseId,
+  //         courseGroupId: group?.groupId,
+  //         studentId: reserve[0]?.studentId,
+  //       };
+  //       console.log("obj", obj);
+  //       const result = await ChangeCourseReserve(obj);
+  //       // console.log("change", result);
+  //     } catch (error) {
+  //       console.error("Error fetching course change:", error);
+  //     }
+  //   } else {
+  //     // return <Notification>لطفا لاگین کنید</Notification>;
+  //   }
+  // };
+  // const getstudent = async () => {
+  //   if (token) {
+  //     try {
+  //       const result = await Studentapi(id);
+  //       console.log("course student", result);
+  //       setStudent(result);
+  //     } catch (error) {
+  //       console.error("Error fetching course student:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getstudent();
+  // }, [id]);
+  // const getcomment = async () => {
+  //   // const teacherId = data.teacherId;
+
+  //   if (token) {
+  //     try {
+  //       if (data?.teacherId) {
+  //         const result = await getCommentCourses(data?.teacherId, userId);
+  //         setComment(result.comments);
+  //         console.log("result comment", result);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching comments:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getcomment();
+  // }, [data.teacherId, userId]);
   return (
     <>
       <Row>
