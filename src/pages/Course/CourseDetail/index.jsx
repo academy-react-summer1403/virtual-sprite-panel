@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import { Check } from "react-feather";
@@ -26,14 +26,12 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { CourseReserveApi, getCoursesDetail } from "../../../core/services/api/courses/courseDetailById.api";
-import { getCommentCourses } from "../../../core/services/api/comment/Comment";
+import { getCoursesDetail } from "../../../core/services/api/courses/courseDetailById.api";
 
 const CoursDetail = () => {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");
-  const [reserve, setReserve] = useState([]);
-  const [comment, setComment] = useState([]);
+
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -54,6 +52,7 @@ const CoursDetail = () => {
     getDetails();
   }, [id]);
 
+
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const toggle = (tab) => {
@@ -68,33 +67,7 @@ const CoursDetail = () => {
     console.log(`آی دی: ${courseId}`);
     navigate(`/course-edit/${courseId}`);
   };
-  const getreserve = async () => {
-  const courseId = data.courseId;
-    if (token) {
-      const result = await CourseReserveApi(courseId);
-      console.log("course reserve", result);
-      setReserve(result);
-    } else {
-      console.log("توکن وجود ندارد");
-    }
-  };
-  useEffect(() => {
-    getreserve(data.courseId);
-  }, [data?.courseId]);
 
-  const getcomment = async () => {
-    const teacherId=data.teacherId
-    if (token) {
-      const result = await getCommentCourses(teacherId);
-      console.log("course comment", result);
-      setComment(result);
-    } else {
-      console.log("توکن وجود ندارد");
-    }
-  };
-  useEffect(() => {
-    getcomment();
-  }, []);
   return (
     <>
       <Row>
@@ -102,32 +75,29 @@ const CoursDetail = () => {
           <Card>
             <CardImg src={data.imageAddress}></CardImg>
             <CardBody>
-              <CardTitle tag="h4" className="border-bottom boldYekan">
-                جزيیات 
-                {/* {id} */}
+              <CardTitle tag="h4" className="border-bottom">
+                جزيیات {id}
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-2">
-
-                  <h4 className="mt-2 ">نام دوره:</h4>{" "}
-                  <h6 className="mt-2">{data.title}</h6>
+                  <h3 className="mt-2 ">نام دوره:</h3>{" "}
+                  <h5 className="mt-2">{data.title}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نام استاد:</h4>{" "}
-                  <h6 className="mt-2">{data.teacherName}</h6>
+                  <h3 className="mt-2 ">نام استاد:</h3>{" "}
+                  <h5 className="mt-2">{data.teacherName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نام کلاس:</h4>{" "}
-                  <h6 className="mt-2">{data.courseClassRoomName}</h6>
+                  <h3 className="mt-2 ">نام کلاس:</h3>{" "}
+                  <h5 className="mt-2">{data.courseClassRoomName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">وضعیت:</h4>{" "}
-                  <h6 className="mt-2">{data.courseLevelName}</h6>
+                  <h3 className="mt-2 ">وضعیت:</h3>{" "}
+                  <h5 className="mt-2">{data.courseLevelName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نحوه برگزاری:</h4>{" "}
-                  <h6 className="mt-2">{data.courseTypeName}</h6>
-
+                  <h3 className="mt-2 ">نحوه برگزاری:</h3>{" "}
+                  <h5 className="mt-2">{data.courseTypeName}</h5>
                 </CardText>
               </CardColumns>
               <div className="demo-inline-spacing">
@@ -228,34 +198,30 @@ const CoursDetail = () => {
                 <div>
                   <Card>
                     <CardHeader className="text-center text-lg">
-
-                      <h4 className="boldYekan" >توضیحات</h4>
-
+                      <h2>توضیحات</h2>
                     </CardHeader>
                     <CardBody>
                       {data.describe}
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
-
-                          <h4 className="mt-2 ">قیمت:</h4>{" "}
-                          <h6 className="mt-2">{data.cost}</h6>
+                          <h3 className="mt-2 ">قیمت:</h3>{" "}
+                          <h4 className="mt-2">{data.cost}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">گروه های دوره:</h4>{" "}
-                          <h6 className="mt-2">{data.courseGroupTotal}</h6>
+                          <h3 className="mt-2 ">گروه های دوره:</h3>{" "}
+                          <h4 className="mt-2">{data.courseGroupTotal}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">شناسه گروه :</h4>{" "}
-                          <h6 className="mt-2">5</h6>
+                          <h3 className="mt-2 ">شناسه گروه :</h3>{" "}
+                          <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">ظرفیت:</h4>{" "}
-                          <h6 className="mt-2">5</h6>
+                          <h3 className="mt-2 ">ظرفیت:</h3>{" "}
+                          <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">نام گروه:</h4>{" "}
-                          <h6 className="mt-2">{data.title}</h6>
-
+                          <h3 className="mt-2 ">نام گروه:</h3>{" "}
+                          <h4 className="mt-2">{data.title}</h4>
                         </CardText>
                       </CardColumns>
                       <div className="demo-inline-spacing">
@@ -279,7 +245,7 @@ const CoursDetail = () => {
                 <h1 className="m-2">کاربرانی که این دوره را رزرو کرده اند</h1>
                 <Table
                   className="text-nowrap text-center border-bottom"
-                  hover responsive
+                  responsive
                 >
                   <thead>
                     <tr>
@@ -291,11 +257,11 @@ const CoursDetail = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="text-start"> {reserve.studentName}</td>
-                      <td>{reserve.reserverDate}</td>
+                      <td className="text-start"> {data.insertDate}</td>
+                      <td>jmn</td>
                       <td>
-                        <Button.Ripple className="round" color="reserve.accept == true ? success : danger">
-                          {reserve.accept}
+                        <Button.Ripple className="round" color="success">
+                          تایید شده
                         </Button.Ripple>
                       </td>
                       <td>
