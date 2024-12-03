@@ -67,6 +67,102 @@ const CoursDetail = () => {
     navigate(`/course-edit/${courseId}`);
   };
 
+  const getreserve = async () => {
+    const courseId = data.courseId;
+    if (token) {
+      try {
+        const result = await CourseReserveApi(courseId);
+        console.log("course reserve", result);
+        if (result) {
+          setReserve(result);
+        }
+      } catch (error) {
+        console.error("Error fetching course reserve:", error);
+      }
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+
+  useEffect(() => {
+    if (data?.courseId) {
+      getreserve(data.courseId);
+    }
+  }, [data]);
+
+  const getGroupApi = async () => {
+    if (data?.teacherId && data?.courseId) {
+      try {
+        const result = await CourseGroup(data.teacherId, data.courseId);
+        console.log("course group", result);
+        if (result) {
+          setGroup(result[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching course group:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getGroupApi();
+  }, [data.teacherId, data.courseId]);
+
+  const changereserveapi = async () => {
+    if (token) {
+      try {
+        const obj = {
+          courseId: group?.courseId,
+          courseGroupId: group?.groupId,
+          studentId: reserve[0]?.studentId,
+        };
+        console.log("obj", obj);
+        const result = await ChangeCourseReserve(obj);
+        // console.log("change", result);
+      } catch (error) {
+        console.error("Error fetching course change:", error);
+      }
+    } else {
+      // return <Notification>لطفا لاگین کنید</Notification>;
+    }
+  };
+  const getstudent = async () => {
+    if (token) {
+      try {
+        const result = await Studentapi(id);
+        console.log("course student", result);
+        setStudent(result);
+      } catch (error) {
+        console.error("Error fetching course student:", error);
+      }
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+  useEffect(() => {
+    getstudent();
+  }, [id]);
+  const getcomment = async () => {
+    // const teacherId = data.teacherId;
+
+    if (token) {
+      try {
+        if (data?.teacherId) {
+          const result = await getCommentCourses(data?.teacherId, userId);
+          setComment(result.comments);
+          console.log("result comment", result);
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    } else {
+      console.log("توکن وجود ندارد");
+    }
+  };
+
+  useEffect(() => {
+    getcomment();
+  }, [data.teacherId, userId]);
   return (
     <>
       <Row>
@@ -75,7 +171,7 @@ const CoursDetail = () => {
             <CardImg src={data.imageAddress}></CardImg>
             <CardBody>
               <CardTitle tag="h4" className="border-bottom">
-                جزییات دوره 
+                جزییات دوره
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-2">
@@ -255,25 +351,23 @@ const CoursDetail = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-start"> {data.insertDate}</td>
-                      <td>jmn</td>
-                      <td>
-                        <Button.Ripple className="round" color="success">
-                          تایید شده
-                        </Button.Ripple>
-                      </td>
-                      <td>
-                        <div className="d-flex flex-row gap-1 justify-content-center">
-                          <Button.Ripple color="success">
-                            <Check size={14} />
+                    {reserve.map((item, index) => (
+                      <tr key={index}>
+                        <td className="text-start">{item.studentName}</td>
+                        <td>{item.reserverDate}</td>
+                        <td>
+                          <Button.Ripple
+                            className="round"
+                            color={item.accept == true ? "success" : "danger"}
+                          >
+                            {item.accept ? "پذیرفته شده" : "منتظر تایید"}
                           </Button.Ripple>
                           <Button.Ripple className="" color="danger">
                             *
                           </Button.Ripple>
-                        </div>
-                      </td>
-                    </tr>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
               </TabPane>
@@ -314,30 +408,24 @@ const CoursDetail = () => {
                       <th className="text-start"> نویسنده</th>
                       <th>عنوان</th>
                       <th>متن </th>
-                      <th>وضعیت</th>
+                      {/* <th>وضعیت</th> */}
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-start"> m ,m</td>
-                      <td>jmn</td>
-                      <td>
-                        <Button.Ripple className="round" color="danger">
-                          تایید نشده
-                        </Button.Ripple>
-                      </td>
-                      <td>
-                        <div className="d-flex flex-row gap-1 justify-content-center">
-                          <Button.Ripple color="success">
-                            <Check size={14} />
+
+                  {comment?.map((item, index) => (
+                    <tbody>
+                      <tr key={index}>
+                        <td className="text-start">{item.userFullName} </td>
+                        <td>{item.commentTitle}</td>
+                        <td>{item.describe}</td>
+                        {/* <td>
+                          <Button.Ripple className="round">
+                            {item.isApproved ? "تایید شده" : "تایید نشده"}
                           </Button.Ripple>
-                          <Button.Ripple className="" color="danger">
-                            *
-                          </Button.Ripple>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                        </td> */}
+                      </tr>
+                    </tbody>
+                  ))}
                 </Table>
               </TabPane>
             </TabContent>
