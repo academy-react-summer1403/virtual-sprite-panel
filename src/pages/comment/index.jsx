@@ -38,7 +38,6 @@ import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import TableHover from "./Table";
 const Comment = () => {
-
   return (
     <>
       <Col>
@@ -159,7 +158,7 @@ const Comment = () => {
                   </tr>
                 </tbody>
               </Table> */}
-              <TableHover/>
+              <TableHover />
             </CardBody>
           </Card>
         </Col>
