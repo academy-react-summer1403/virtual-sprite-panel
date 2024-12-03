@@ -52,7 +52,6 @@ const CoursDetail = () => {
     getDetails();
   }, [id]);
 
-
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const toggle = (tab) => {
@@ -76,7 +75,7 @@ const CoursDetail = () => {
             <CardImg src={data.imageAddress}></CardImg>
             <CardBody>
               <CardTitle tag="h4" className="border-bottom">
-                جزيیات {id}
+                جزییات دوره 
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-2">
