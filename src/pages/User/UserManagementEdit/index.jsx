@@ -41,6 +41,7 @@ import {
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDetailWithId } from "../../../core/services/api/User/UserDetailsWithId.api";
+import { UpdateUser } from "../../../core/services/api/User/UpdateUser.api.js";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -51,18 +52,24 @@ const UserManagementEdit = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [centeredModal, setCenteredModal] = useState(false);
   const { id } = useParams();
+  
+
   // console.log(id);
   const {
     register,
-    handleSubmit,
+    handleSubmit: handleFormSubmit,
+    getValues,
     setValue,
     watch,
     control,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      firstName: "",
+      lastName: "",
+      gmail: "",
       gender: null,
-    },
+      nationalCode: "",    },
   });
 
   const onSubmit = async (data) => {
@@ -105,7 +112,27 @@ const UserManagementEdit = () => {
     setSelectedUser(user);
     setCenteredModal(true);
   };
-  // وقتی مودال باز می‌شود، اطلاعات را در فرم ست می‌کنیم
+   const handleSubmit = async () => {
+    const obj = {
+      active: false,
+      id: "30258",
+      firstName: getValues("firstName"),
+      lastName: getValues("lastName"),
+      gmail: getValues("gmail"),
+      gender: getValues("gender"),
+      nationalCode: getValues("nationalCode"),
+    };
+    try {
+      console.log("داده‌های ارسالی:", obj);
+      const result1 = await UpdateUser(obj);
+      console.log("نتیجه ویرایش:", result1);
+      setCenteredModal(false); // بستن مودال
+    } catch (error) {
+      console.error("خطا در ویرایش اطلاعات", error);
+    }
+  };
+  
+  
   useEffect(() => {
     if (selectedUser) {
       setValue("firstName", selectedUser?.fName || "");
@@ -146,8 +173,7 @@ const UserManagementEdit = () => {
                 <CardTitle tag="h4">ایجاد کاربر جدید</CardTitle>
               </CardHeader> */}
               <CardBody>
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Row>
+              <Form onSubmit={handleFormSubmit(handleSubmit)}>                  <Row>
                     <FormGroup>
                       <Col sm="12">
                         <Label for="firstName">نام</Label>
@@ -299,7 +325,7 @@ const UserManagementEdit = () => {
                           className="me-1"
                           color="primary"
                           type="submit"
-                          // onClick={(e) => e.preventDefault()}
+                          onClick={handleSubmit}
                         >
                           اعمال ویرایش
                         </Button>

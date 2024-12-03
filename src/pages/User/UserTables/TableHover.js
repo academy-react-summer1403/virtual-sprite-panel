@@ -24,7 +24,7 @@ import tourAdmin from "@src/assets/images/portrait/small/tourAdmin.png";
 import writer from "@src/assets/images/portrait/small/writer.png"; 
 import { MoreVertical, Edit, Trash } from "react-feather";
 import { useNavigate } from "react-router-dom";
-
+import { DeleteUser } from "../../../core/services/api/User/DeleteUser.api";
 const TableHover = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
@@ -124,7 +124,19 @@ const TableHover = ({ data }) => {
     },
   ];
   console.log("پاسخ TableHover data : ", data);
-
+  const handleDelete = async (userId) => {
+    try {
+      const response = await DeleteUser({ userId });
+      if (response.status === 200) {
+        const updatedData = data.filter((user) => user.id !== userId);
+        setData(updatedData);
+        alert("کاربر با موفقیت حذف شد.");
+      }
+    } catch (error) {
+      console.error("خطا در حذف کاربر:", error);
+      alert("مشکلی در حذف کاربر رخ داده است.");
+    }
+  };
   return (
     <>
       <Table hover responsive>
@@ -254,7 +266,15 @@ const TableHover = ({ data }) => {
                         ویرایش
                       </span>
                     </DropdownItem>
-                    <DropdownItem href="#" onClick={(e) => e.preventDefault()}>
+                    <DropdownItem
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (window.confirm("آیا از حذف این کاربر اطمینان دارید؟")) {
+                          handleDelete(user.id);
+                        }
+                      }}
+                    >
                       <Trash className="me-50" size={15} />
                       <span className="align-middle">حذف</span>
                     </DropdownItem>
