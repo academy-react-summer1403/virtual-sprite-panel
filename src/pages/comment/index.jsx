@@ -37,7 +37,27 @@ import { Edit, Edit2, Trash2, Search } from "react-feather";
 import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import TableHover from "./Table";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getCommentManeger } from "../../core/services/api/comment/Comment";
 const Comment = () => {
+  const [comment, setComment] = useState([]);
+
+  const userId = localStorage.getItem("id");
+  const fetchData = async () => {
+    try {
+      const result = await getCommentManeger(userId);
+      console.log("commenttt", result);
+      setComment(result);
+    } catch (error) {
+      console.error("Error fetching comment manager:", error);
+      return [];
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <Col>

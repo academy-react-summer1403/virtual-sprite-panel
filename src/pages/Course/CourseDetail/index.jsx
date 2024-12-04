@@ -390,7 +390,7 @@ const CoursDetail = () => {
                               color="success"
                               onClick={changereserveapi}
                             >
-                              <Check size={10} />
+                              تایید
                             </Button.Ripple>
                             {/* <Button.Ripple className="" color="danger">
             *
@@ -417,12 +417,12 @@ const CoursDetail = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="text-start"> m ,m</td>
-                      <td>0</td>
+                      <td className="text-start"> </td>
+                      <td></td>
                       <td>
-                        <Button.Ripple className="round" color="danger">
+                        {/* <Button.Ripple className="round" color="danger">
                           پرداخت نشده
-                        </Button.Ripple>
+                        </Button.Ripple> */}
                       </td>
                     </tr>
                   </tbody>
