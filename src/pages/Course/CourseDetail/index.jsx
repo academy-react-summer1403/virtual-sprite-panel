@@ -48,6 +48,7 @@ const CoursDetail = () => {
     if (token) {
       try {
         const result = await getCoursesDetail(id);
+        console.log("course detail", result);
         setData(result);
       } catch (error) {
         console.error("Error fetching course details:", error);
@@ -552,7 +553,7 @@ const CoursDetail = () => {
                       <th className="text-start"> نویسنده</th>
                       <th>عنوان</th>
                       <th>متن </th>
-                      {/* <th>وضعیت</th> */}
+                      <th>وضعیت</th>
                     </tr>
                   </thead>
 
