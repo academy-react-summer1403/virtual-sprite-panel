@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import { Check } from "react-feather";
+import noPhoto from "../../../assets/images/course/noPhoto.jpg";
 // ** Reactstrap Imports
 import {
   Nav,
@@ -26,14 +27,7 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  ChangeCourseReserve,
-  CourseGroup,
-  CourseReserveApi,
-  getCoursesDetail,
-  Studentapi,
-} from "../../../core/services/api/courses/courseDetailById.api";
-import { getCommentCourses } from "../../../core/services/api/comment/Comment";
+import { getCoursesDetail } from "../../../core/services/api/courses/courseDetailById.api";
 
 const CoursDetail = () => {
   const [data, setData] = useState([]);
@@ -50,11 +44,12 @@ const CoursDetail = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const getDetails = async () => {
     if (token) {
       try {
         const result = await getCoursesDetail(id);
+        console.log("course detail", result);
         setData(result);
       } catch (error) {
         console.error("Error fetching course details:", error);
@@ -161,9 +156,11 @@ const CoursDetail = () => {
 
     if (token) {
       try {
-      if(data?.teacherId) {const result = await getCommentCourses(data?.teacherId, userId);
-        setComment(result.comments);
-        console.log("result comment", result);}
+        if (data?.teacherId) {
+          const result = await getCommentCourses(data?.teacherId, userId);
+          setComment(result.comments);
+          console.log("result comment", result);
+        }
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -175,39 +172,188 @@ const CoursDetail = () => {
   useEffect(() => {
     getcomment();
   }, [data.teacherId, userId]);
+
+  /********* merge changes */
+
+  // const [data, setData] = useState([]);
+  // const token = localStorage.getItem("token");
+
+  // const [active, setActive] = useState("1");
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // const navigate = useNavigate();
+
+  // const { id } = useParams();
+  // console.log(id);
+  // const getDetails = async () => {
+  //   if (token) {
+  //     const result = await getCoursesDetail(id);
+  //     console.log("course detail", result);
+  //     setData(result);
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getDetails();
+  // }, [id]);
+
+  // const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  // const toggle = (tab) => {
+  //   setActive(tab);
+  // };
+
+  // const handleEditClick = (courseId) => {
+  //   if (!courseId) {
+  //     console.error("آی دی پیدا نشد");
+  //     return;
+  //   }
+  //   console.log(`آی دی: ${courseId}`);
+  //   navigate(`/course-edit/${courseId}`);
+  // };
+
+  // const getreserve = async () => {
+  //   const courseId = data.courseId;
+  //   if (token) {
+  //     try {
+  //       const result = await CourseReserveApi(courseId);
+  //       console.log("course reserve", result);
+  //       if (result) {
+  //         setReserve(result);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching course reserve:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (data?.courseId) {
+  //     getreserve(data.courseId);
+  //   }
+  // }, [data]);
+
+  // const getGroupApi = async () => {
+  //   if (data?.teacherId && data?.courseId) {
+  //     try {
+  //       const result = await CourseGroup(data.teacherId, data.courseId);
+  //       console.log("course group", result);
+  //       if (result) {
+  //         setGroup(result[0]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching course group:", error);
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getGroupApi();
+  // }, [data.teacherId, data.courseId]);
+
+  // const changereserveapi = async () => {
+  //   if (token) {
+  //     try {
+  //       const obj = {
+  //         courseId: group?.courseId,
+  //         courseGroupId: group?.groupId,
+  //         studentId: reserve[0]?.studentId,
+  //       };
+  //       console.log("obj", obj);
+  //       const result = await ChangeCourseReserve(obj);
+  //       // console.log("change", result);
+  //     } catch (error) {
+  //       console.error("Error fetching course change:", error);
+  //     }
+  //   } else {
+  //     // return <Notification>لطفا لاگین کنید</Notification>;
+  //   }
+  // };
+  // const getstudent = async () => {
+  //   if (token) {
+  //     try {
+  //       const result = await Studentapi(id);
+  //       console.log("course student", result);
+  //       setStudent(result);
+  //     } catch (error) {
+  //       console.error("Error fetching course student:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getstudent();
+  // }, [id]);
+  // const getcomment = async () => {
+  //   // const teacherId = data.teacherId;
+
+  //   if (token) {
+  //     try {
+  //       if (data?.teacherId) {
+  //         const result = await getCommentCourses(data?.teacherId, userId);
+  //         setComment(result.comments);
+  //         console.log("result comment", result);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching comments:", error);
+  //     }
+  //   } else {
+  //     console.log("توکن وجود ندارد");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getcomment();
+  // }, [data.teacherId, userId]);
   return (
     <>
-      <Row>
+      <Row className="regYekan">
         <Col lg="4">
           <Card>
-            <CardImg src={data.imageAddress}></CardImg>
+            <CardImg
+              src={
+                data.imageAddress &&
+                data.imageAddress.includes("https://classapi.sepehracademy.ir")
+                  ? data.imageAddress
+                  : noPhoto
+              }
+            />
             <CardBody>
-              <CardTitle tag="h4" className="border-bottom boldYekan">
-                جزيیات 
-                {/* {id} */}
+              <CardTitle tag="h5" className="border-bottom boldYekan">
+                جزییات دوره
               </CardTitle>
               <CardColumns>
-                <CardText className="d-flex flex-row gap-2">
-
-                  <h4 className="mt-2 ">نام دوره:</h4>{" "}
-                  <h6 className="mt-2">{data.title}</h6>
+                <CardText className="d-flex flex-row gap-1">
+                  <h4 className="mt-2 text-align-fix boldYekan">نام دوره:</h4>{" "}
+                  <h5 className="mt-2 text-align-fix">{data.title}</h5>
+                </CardText>
+                <CardText className="d-flex flex-row gap-2 ">
+                  <h4 className="mt-2  text-align-fix boldYekan">نام استاد:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">{data.teacherName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نام استاد:</h4>{" "}
-                  <h6 className="mt-2">{data.teacherName}</h6>
+                  <h4 className="mt-2  text-align-fix boldYekan">نام کلاس:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseClassRoomName}
+                  </h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نام کلاس:</h4>{" "}
-                  <h6 className="mt-2">{data.courseClassRoomName}</h6>
+                  <h4 className="mt-2 text-align-fix boldYekan ">وضعیت:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseLevelName}
+                  </h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">وضعیت:</h4>{" "}
-                  <h6 className="mt-2">{data.courseLevelName}</h6>
-                </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 ">نحوه برگزاری:</h4>{" "}
-                  <h6 className="mt-2">{data.courseTypeName}</h6>
-
+                  <h4 className="mt-2 text-align-fix boldYekan ">
+                    نحوه برگزاری:
+                  </h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseTypeName}
+                  </h5>
                 </CardText>
               </CardColumns>
               <div className="demo-inline-spacing">
@@ -308,34 +454,30 @@ const CoursDetail = () => {
                 <div>
                   <Card>
                     <CardHeader className="text-center text-lg">
-
-                      <h4 className="boldYekan" >توضیحات</h4>
-
+                      <h2>توضیحات</h2>
                     </CardHeader>
                     <CardBody>
                       {data.describe}
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
-
-                          <h4 className="mt-2 ">قیمت:</h4>{" "}
-                          <h6 className="mt-2">{data.cost}</h6>
+                          <h3 className="mt-2 ">قیمت:</h3>{" "}
+                          <h4 className="mt-2">{data.cost}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">گروه های دوره:</h4>{" "}
-                          <h6 className="mt-2">{data.courseGroupTotal}</h6>
+                          <h3 className="mt-2 ">گروه های دوره:</h3>{" "}
+                          <h4 className="mt-2">{data.courseGroupTotal}</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">شناسه گروه :</h4>{" "}
-                          <h6 className="mt-2">5</h6>
+                          <h3 className="mt-2 ">شناسه گروه :</h3>{" "}
+                          <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">ظرفیت:</h4>{" "}
-                          <h6 className="mt-2">5</h6>
+                          <h3 className="mt-2 ">ظرفیت:</h3>{" "}
+                          <h4 className="mt-2">5</h4>
                         </CardText>
                         <CardText className="d-flex flex-row gap-2">
-                          <h4 className="mt-2 ">نام گروه:</h4>{" "}
-                          <h6 className="mt-2">{data.title}</h6>
-
+                          <h3 className="mt-2 ">نام گروه:</h3>{" "}
+                          <h4 className="mt-2">{data.title}</h4>
                         </CardText>
                       </CardColumns>
                       <div className="demo-inline-spacing">
@@ -359,7 +501,6 @@ const CoursDetail = () => {
                 <h1 className="m-2">کاربرانی که این دوره را رزرو کرده اند</h1>
                 <Table
                   className="text-nowrap text-center border-bottom"
-                  hover
                   responsive
                 >
                   <thead>
@@ -370,7 +511,6 @@ const CoursDetail = () => {
                       <th>پذیرش</th>
                     </tr>
                   </thead>
-
                   <tbody>
                     {reserve.map((item, index) => (
                       <tr key={index}>
@@ -383,6 +523,7 @@ const CoursDetail = () => {
                           >
                             {item.accept ? "پذیرفته شده" : "منتظر تایید"}
                           </Button.Ripple>
+
                         </td>
                         <td>
                           <div className="d-flex flex-row gap-1 justify-content-center">
@@ -396,6 +537,7 @@ const CoursDetail = () => {
             *
           </Button.Ripple> */}
                           </div>
+
                         </td>
                       </tr>
                     ))}
@@ -432,7 +574,6 @@ const CoursDetail = () => {
                 <h1 className="m-2">کامنت های مربوط به این دوره</h1>
                 <Table
                   className="text-nowrap text-center border-bottom"
-                  hover
                   responsive
                 >
                   <thead>
@@ -440,14 +581,14 @@ const CoursDetail = () => {
                       <th className="text-start"> نویسنده</th>
                       <th>عنوان</th>
                       <th>متن </th>
-                      {/* <th>وضعیت</th> */}
+                      <th>وضعیت</th>
                     </tr>
                   </thead>
 
                   {comment?.map((item, index) => (
                     <tbody>
                       <tr key={index}>
-                        <td className="text-start">{item.userFullName}	</td>
+                        <td className="text-start">{item.userFullName} </td>
                         <td>{item.commentTitle}</td>
                         <td>{item.describe}</td>
                         {/* <td>
