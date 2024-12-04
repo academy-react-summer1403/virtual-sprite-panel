@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 // ** Third Party Components
 import classnames from "classnames";
 import { Check } from "react-feather";
+import noPhoto from "../../../assets/images/course/noPhoto.jpg";
 // ** Reactstrap Imports
 import {
   Nav,
@@ -43,7 +44,7 @@ const CoursDetail = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const getDetails = async () => {
     if (token) {
       try {
@@ -310,34 +311,49 @@ const CoursDetail = () => {
   // }, [data.teacherId, userId]);
   return (
     <>
-      <Row>
+      <Row className="regYekan">
         <Col lg="4">
           <Card>
-            <CardImg src={data.imageAddress}></CardImg>
+            <CardImg
+              src={
+                data.imageAddress &&
+                data.imageAddress.includes("https://classapi.sepehracademy.ir")
+                  ? data.imageAddress
+                  : noPhoto
+              }
+            />
             <CardBody>
-              <CardTitle tag="h4" className="border-bottom">
+              <CardTitle tag="h5" className="border-bottom boldYekan">
                 جزییات دوره
               </CardTitle>
               <CardColumns>
-                <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام دوره:</h3>{" "}
-                  <h5 className="mt-2">{data.title}</h5>
+                <CardText className="d-flex flex-row gap-1">
+                  <h4 className="mt-2 text-align-fix boldYekan">نام دوره:</h4>{" "}
+                  <h5 className="mt-2 text-align-fix">{data.title}</h5>
+                </CardText>
+                <CardText className="d-flex flex-row gap-2 ">
+                  <h4 className="mt-2  text-align-fix boldYekan">نام استاد:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">{data.teacherName}</h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام استاد:</h3>{" "}
-                  <h5 className="mt-2">{data.teacherName}</h5>
+                  <h4 className="mt-2  text-align-fix boldYekan">نام کلاس:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseClassRoomName}
+                  </h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نام کلاس:</h3>{" "}
-                  <h5 className="mt-2">{data.courseClassRoomName}</h5>
+                  <h4 className="mt-2 text-align-fix boldYekan ">وضعیت:</h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseLevelName}
+                  </h5>
                 </CardText>
                 <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">وضعیت:</h3>{" "}
-                  <h5 className="mt-2">{data.courseLevelName}</h5>
-                </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h3 className="mt-2 ">نحوه برگزاری:</h3>{" "}
-                  <h5 className="mt-2">{data.courseTypeName}</h5>
+                  <h4 className="mt-2 text-align-fix boldYekan ">
+                    نحوه برگزاری:
+                  </h4>{" "}
+                  <h5 className="mt-2  text-align-fix">
+                    {data.courseTypeName}
+                  </h5>
                 </CardText>
               </CardColumns>
               <div className="demo-inline-spacing">
