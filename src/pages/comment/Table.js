@@ -23,91 +23,9 @@ import {
   DropdownToggle,
 } from "reactstrap";
 
-const avatarGroupData1 = [
-  {
-    title: "Griffith",
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Hu",
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Felicia",
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-];
 
-const avatarGroupData2 = [
-  {
-    title: "Quinlan",
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Patrick",
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Castor",
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-];
 
-const avatarGroupData3 = [
-  {
-    title: "Mohammad",
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Isabella",
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Michael",
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-];
-
-const avatarGroupData4 = [
-  {
-    title: "Lavinia",
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Nelle",
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-  {
-    title: "Virginia",
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26,
-  },
-];
-
-const TableHover = () => {
+const TableHover = ({comment}) => {
   return (
     <Table hover responsive>
       <thead>
@@ -131,11 +49,11 @@ const TableHover = () => {
               height="20"
               width="20"
             />
-            <span className="align-middle fw-bold">Angular Project</span>
+            <span className="align-middle fw-bold">{comment.userFullName}</span>
           </td>
-          <td>Peter Charles</td>
+          <td>{comment.commentTitle}</td>
           <td>
-            <AvatarGroup data={avatarGroupData1} />
+          {comment.describe	}
           </td>
           <td>
             <Badge pill color="light-primary" className="me-1">
@@ -178,7 +96,7 @@ const TableHover = () => {
           </td>
           <td>Ronald Frest</td>
           <td>
-            <AvatarGroup data={avatarGroupData2} />
+            
           </td>
           <td>
             <Badge pill color="light-success" className="me-1">
@@ -221,7 +139,7 @@ const TableHover = () => {
           </td>
           <td>Jack Obes</td>
           <td>
-            <AvatarGroup data={avatarGroupData3} />
+            
           </td>
           <td>
             <Badge pill color="light-info" className="me-1">
@@ -264,7 +182,7 @@ const TableHover = () => {
           </td>
           <td>Jerry Milton</td>
           <td>
-            <AvatarGroup data={avatarGroupData4} />
+       
           </td>
           <td>
             <Badge pill color="light-warning" className="me-1">

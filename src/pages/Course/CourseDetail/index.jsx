@@ -45,10 +45,8 @@ const CoursDetail = () => {
   const [active, setActive] = useState("1");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const userId = localStorage.getItem("id");
-
   const navigate = useNavigate();
-
+  const userId = localStorage.getItem("id");
   const { id } = useParams();
   console.log(id);
   const getDetails = async () => {
@@ -161,9 +159,11 @@ const CoursDetail = () => {
 
     if (token) {
       try {
-      if(data?.teacherId) {const result = await getCommentCourses(data?.teacherId, userId);
-        setComment(result.comments);
-        console.log("result comment", result);}
+        if (data.courseId) {
+          const result = await getCommentCourses(data.courseId);
+          setComment(result);
+          console.log("result comment", result);
+        }
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -174,7 +174,7 @@ const CoursDetail = () => {
 
   useEffect(() => {
     getcomment();
-  }, [data.teacherId, userId]);
+  }, [data.courseId]);
   return (
     <>
       <Row>
@@ -183,12 +183,11 @@ const CoursDetail = () => {
             <CardImg src={data.imageAddress}></CardImg>
             <CardBody>
               <CardTitle tag="h4" className="border-bottom boldYekan">
-                جزيیات 
+                جزيیات
                 {/* {id} */}
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-2">
-
                   <h4 className="mt-2 ">نام دوره:</h4>{" "}
                   <h6 className="mt-2">{data.title}</h6>
                 </CardText>
@@ -207,7 +206,6 @@ const CoursDetail = () => {
                 <CardText className="d-flex flex-row gap-2">
                   <h4 className="mt-2 ">نحوه برگزاری:</h4>{" "}
                   <h6 className="mt-2">{data.courseTypeName}</h6>
-
                 </CardText>
               </CardColumns>
               <div className="demo-inline-spacing">
@@ -308,15 +306,12 @@ const CoursDetail = () => {
                 <div>
                   <Card>
                     <CardHeader className="text-center text-lg">
-
-                      <h4 className="boldYekan" >توضیحات</h4>
-
+                      <h4 className="boldYekan">توضیحات</h4>
                     </CardHeader>
                     <CardBody>
                       {data.describe}
                       <CardColumns>
                         <CardText className="d-flex flex-row gap-2">
-
                           <h4 className="mt-2 ">قیمت:</h4>{" "}
                           <h6 className="mt-2">{data.cost}</h6>
                         </CardText>
@@ -335,7 +330,6 @@ const CoursDetail = () => {
                         <CardText className="d-flex flex-row gap-2">
                           <h4 className="mt-2 ">نام گروه:</h4>{" "}
                           <h6 className="mt-2">{data.title}</h6>
-
                         </CardText>
                       </CardColumns>
                       <div className="demo-inline-spacing">
@@ -440,6 +434,7 @@ const CoursDetail = () => {
                       <th className="text-start"> نویسنده</th>
                       <th>عنوان</th>
                       <th>متن </th>
+                      <th>تاریخ</th>
                       {/* <th>وضعیت</th> */}
                     </tr>
                   </thead>
@@ -447,9 +442,10 @@ const CoursDetail = () => {
                   {comment?.map((item, index) => (
                     <tbody>
                       <tr key={index}>
-                        <td className="text-start">{item.userFullName}	</td>
-                        <td>{item.commentTitle}</td>
+                        <td className="text-start">{item.author} </td>
+                        <td>{item.title}</td>
                         <td>{item.describe}</td>
+                        <td>{item.insertDate}</td>
                         {/* <td>
                           <Button.Ripple className="round">
                             {item.isApproved ? "تایید شده" : "تایید نشده"}
