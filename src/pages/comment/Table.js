@@ -23,9 +23,7 @@ import {
   DropdownToggle,
 } from "reactstrap";
 
-
-
-const TableHover = ({comment}) => {
+const TableHover = ({ comment }) => {
   return (
     <Table hover responsive>
       <thead>
@@ -52,9 +50,7 @@ const TableHover = ({comment}) => {
             <span className="align-middle fw-bold">{comment.userFullName}</span>
           </td>
           <td>{comment.commentTitle}</td>
-          <td>
-          {comment.describe	}
-          </td>
+          <td>{comment.describe}</td>
           <td>
             <Badge pill color="light-primary" className="me-1">
               Active
@@ -95,9 +91,7 @@ const TableHover = ({comment}) => {
             <span className="align-middle fw-bold">React Project</span>
           </td>
           <td>Ronald Frest</td>
-          <td>
-            
-          </td>
+          <td></td>
           <td>
             <Badge pill color="light-success" className="me-1">
               Completed
@@ -138,9 +132,7 @@ const TableHover = ({comment}) => {
             <span className="align-middle fw-bold">Vuejs Project</span>
           </td>
           <td>Jack Obes</td>
-          <td>
-            
-          </td>
+          <td></td>
           <td>
             <Badge pill color="light-info" className="me-1">
               Scheduled
@@ -181,9 +173,7 @@ const TableHover = ({comment}) => {
             <span className="align-middle fw-bold">Bootstrap Project</span>
           </td>
           <td>Jerry Milton</td>
-          <td>
-       
-          </td>
+          <td></td>
           <td>
             <Badge pill color="light-warning" className="me-1">
               Pending
