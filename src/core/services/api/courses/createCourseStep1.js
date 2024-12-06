@@ -1,10 +1,13 @@
 import instance from "../../interceptor";
 
-export const getCourses = async () => {
+export const getCourses = async (params) => {
   try {
     const token = localStorage.getItem("token");
     const res = await instance.get(
-      `${import.meta.env.VITE_BASE_URL}/Course/GetCreate`,
+      `/Course/GetCreate`,
+      {
+        params: params,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -13,7 +16,7 @@ export const getCourses = async () => {
     );
     return res;
   } catch (error) {
-    console.log("خطا:", error.message);   
+    console.log("خطا در دریافت اطلاعات دوره ها:", error.message);   
     return [];
   }
 };

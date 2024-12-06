@@ -199,14 +199,14 @@ const CoursDetail = () => {
                   <h6 className="mt-2">{data.title}</h6>
 
                 </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2  text-align-fix boldYekan">نام کلاس:</h4>{" "}
+                <CardText className="d-flex flex-row gap-1">
+                  <h5 className="mt-2  text-align-fix boldYekan">نام کلاس:</h5>{" "}
                   <h5 className="mt-2  text-align-fix">
                     {data.courseClassRoomName}
                   </h5>
                 </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 text-align-fix boldYekan ">وضعیت:</h4>{" "}
+                <CardText className="d-flex flex-row gap-1">
+                  <h5 className="mt-2 text-align-fix boldYekan ">وضعیت:</h5>{" "}
                   <h5 className="mt-2  text-align-fix">
                     {data.courseLevelName}
                   </h5>
