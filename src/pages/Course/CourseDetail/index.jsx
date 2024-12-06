@@ -273,16 +273,7 @@ const CoursDetail = () => {
                 رزرو کننده ها
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink
-                active={active === "4"}
-                onClick={() => {
-                  toggle("4");
-                }}
-              >
-                دانشجویان
-              </NavLink>
-            </NavItem>
+
             <NavItem>
               <NavLink
                 active={active === "5"}
@@ -415,32 +406,7 @@ const CoursDetail = () => {
                   </tbody>
                 </Table>
               </TabPane>
-              <TabPane tabId="4">
-                <h1 className="m-2">دانشجویان مربوط به این دوره</h1>
-                <Table
-                  className="text-nowrap text-center border-bottom"
-                  responsive
-                >
-                  <thead>
-                    <tr>
-                      <th className="text-start">نام دانشجو </th>
-                      <th> نمره</th>
-                      <th>وضعیت پرداخت</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-start"> </td>
-                      <td></td>
-                      <td>
-                        {/* <Button.Ripple className="round" color="danger">
-                          پرداخت نشده
-                        </Button.Ripple> */}
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </TabPane>
+
               <TabPane tabId="5">
                 <h1 className="m-2">کامنت های مربوط به این دوره</h1>
                 <Table
