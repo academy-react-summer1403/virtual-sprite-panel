@@ -1,33 +1,9 @@
-import { Fragment,useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getCoursesDetail } from "../../../../core/services/api/courses/courseDetailById.api";
 
 // ** Third Party Components
-import classnames from "classnames";
-import { Check } from "react-feather";
 // ** Reactstrap Imports
-import {
-  Nav,
-  TabPane,
-  NavItem,
-  NavLink,
-  Dropdown,
-  TabContent,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  Table,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardColumns,
-  CardText,
-  Col,
-  Row,
-  CardImg,
-  Button,
-} from "reactstrap";
 import { useParams } from "react-router-dom";
 
 // ** Custom Components
@@ -36,8 +12,8 @@ import Wizard from "@components/wizard";
 // ** Steps
 import Image from "./steps-with-validation/Image";
 
-import PersonalInfo from "./steps-with-validation/PersonalInfo";
 import AccountDetails from "./steps-with-validation/AccountDetails";
+import PersonalInfo from "./steps-with-validation/PersonalInfo";
 const EditCourse = () => {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");

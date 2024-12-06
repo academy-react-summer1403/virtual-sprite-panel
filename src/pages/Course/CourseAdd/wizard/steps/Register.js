@@ -9,7 +9,7 @@ import { getCourses } from "../../../../../core/services/api/courses/createCours
 import { Formik } from "formik";
 import { createCourse } from "../../../../../core/services/api/courses/CreateCourseStep2.api";
 
-const Technology = ({ stepper, type, formData, setFormData }) => {
+const Register = ({ stepper, type, formData, setFormData }) => {
   const [techOptions, setTechOptions] = useState([]);
   const [error, setError] = useState(null);
 
@@ -19,7 +19,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
   // console.log("formData test", formData);
 
   const onSubmit = async (values) => {
-    setFormData((prev) => ({ ...prev, technology: values }));
+    setFormData((prev) => ({ ...prev, register: values }));
     try {
       // console.log("formData", formData);
       const obj = {
@@ -41,30 +41,30 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
     }
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const signal = controller.signal;
 
-    const fetchCourseData = async () => {
-      try {
-        const result = await getCourses(signal);
-        const techOptions = result.technologyDtos.map((item) => ({
-          value: item.id,
-          label: item.techName,
-        }));
-        setTechOptions(techOptions);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setError("خطا در دریافت داده‌ها");
-          console.error("خطا در دریافت داده‌ها:", error);
-        }
-      }
-    };
+  //   const fetchCourseData = async () => {
+  //     try {
+  //       const result = await getCourses(signal);
+  //       const techOptions = result.technologyDtos.map((item) => ({
+  //         value: item.id,
+  //         label: item.techName,
+  //       }));
+  //       setTechOptions(techOptions);
+  //     } catch (error) {
+  //       if (error.name !== "AbortError") {
+  //         setError("خطا در دریافت داده‌ها");
+  //         console.error("خطا در دریافت داده‌ها:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchCourseData();
+  //   fetchCourseData();
 
-    return () => controller.abort();
-  }, []);
+  //   return () => controller.abort();
+  // }, []);
   return (
     <Fragment>
       <Formik
@@ -74,7 +74,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
         {({ handleSubmit, values, handleChange }) => (
           <Form onSubmit={onSubmit}>
             <Row>
-              <Col md="6" className="mb-1">
+              {/* <Col md="6" className="mb-1">
                 <Label className="form-label" for="tech">
                   انتخاب تکنولوژی
                 </Label>
@@ -110,7 +110,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
                     });
                   }}
                 />
-              </Col>
+              </Col> */}
             </Row>
             <div className="d-flex justify-content-between">
               <Button
@@ -130,11 +130,11 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
               <Button
                 onClick={() => {
                   handleSubmit();
-                  console.log("Form tech:", values); // لاگ فرم دیتا
+                  // console.log("Form tech:", values); 
                   setFormData((prev) => ({
                     ...prev,
-                    technology: values,
-                  })); // ذخیره داده در استیت اصلی
+                    // technology: values,
+                  }));
                   stepper.next();
                 }}
                 color="success"
@@ -150,4 +150,4 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
   );
 };
 
-export default Technology;
+export default Register;

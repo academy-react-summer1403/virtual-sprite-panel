@@ -5,7 +5,7 @@ import { createCourse } from "../../../../core/services/api/courses/CreateCourse
 import AccountDetails from "../wizard/steps/AccountDetails";
 import SecondInfo from "../wizard/steps/SecondInfo";
 import VisualInfo from "../wizard/steps/VisualInfo";
-import Technology from "../wizard/steps/Technology";
+import Register from "../wizard/steps/Register";
 
 const WizardModernVertical = () => {
   const ref = useRef(null);
@@ -83,12 +83,12 @@ const WizardModernVertical = () => {
       ),
     },
     {
-      id: "technology",
-      title: "تکنولوژی",
-      subtitle: "تکنولوژی را انتخاب کنید",
+      id: "register",
+      title: "ثبت اطلاعات",
+      subtitle: "",
       icon: <Link size={18} />,
       content: (
-        <Technology
+        <Register
           formData={formData}
           setFormData={setFormData}
           stepper={stepper}
@@ -112,9 +112,7 @@ const WizardModernVertical = () => {
         }}
         instance={(el) => setStepper(el)}
       />
-      <button className="btn btn-primary mt-2" onClick={handleCreateCourse}>
-        ایجاد دوره
-      </button>
+      
     </div>
   );
 };

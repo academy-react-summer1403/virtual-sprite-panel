@@ -450,9 +450,7 @@ const UserManagement = () => {
                   >
                     اضافه کردن کاربر جدید
                   </Button>
-                  <Button color="primary" onClick={handleNavigate}>
-                    پروفایل
-                  </Button>
+                 
                 </Col>
               </Row>
             </Col>

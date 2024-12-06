@@ -1,27 +1,30 @@
 // ** React Imports
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 // ** Icons Imports
 import { ArrowLeft, ArrowRight } from "react-feather";
 
 // ** Reactstrap Imports
-import { Label, Row, Col, Input, Form, Button } from "reactstrap";
-import FileUploaderSingle from "../../../../../views/apps/forms/form-elemenst/file-uploader/FileUploaderSingle";
 import { Formik } from "formik";
+import { Button, Col, Form, Label, Row } from "reactstrap";
+import FileUploaderSingle from "../../../../../views/apps/forms/form-elemenst/file-uploader/FileUploaderSingle";
+// import { useState } from "react";
 
 const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
   const handleFormChange = (values) => {
     // setFormData((prev) => ({ ...prev, visualInfo: values }));
     const obj = {
-      Image: "fakestringInageAddress1",
-      TumbImageAddress: "fakestringInageAddress2",
-      ImageAddress: "fakestringInageAddress3",
-      ShortLink: "fakeShortLink",
-      UniqeUrlString: "fakeUniqeUrlString",
-      CurrentCoursePaymentNumber: 3,
+      Image: "fagbvbss1",
+      TumbImageAddress: "fakgfkjljklj",
+      ImageAddress: "tytytyt",
+      ShortLink: "wertyu",
+      UniqeUrlString: "asdfgh",
+      CurrentCoursePaymentNumber: 1,
     };
     setFormData((prev) => ({ ...prev, visualInfo: obj }));
   };
+  const [img, setImg] = useState();
+  console.log('عکس ما',img)
   return (
     <Fragment>
       <div className="content-header">
@@ -38,7 +41,7 @@ const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
                 <Label className="form-label" for={`pincode-${type}`}>
                   آپلود عکس دوره
                 </Label>
-                <FileUploaderSingle />
+                <FileUploaderSingle setImg={setImg}/>
               </Col>
             </Row>
 
@@ -69,7 +72,7 @@ const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
                       TumbImageAddress: "fakestringInageAddress2",
                       ImageAddress: "fakestringInageAddress3",
                       ShortLink: "fakeShortLink",
-                      UniqeUrlString: "fakeUniqeUrlString",
+                      UniqeUrlString: "jfdnhkjdfnkd",
                       CurrentCoursePaymentNumber: 3,
                     },
                   })); // ذخیره داده در استیت اصلی
