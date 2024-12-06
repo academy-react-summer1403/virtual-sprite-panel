@@ -48,9 +48,7 @@ const EditCourse = lazy(() =>
 const UserManagementDetail = lazy(() =>
   import("../../pages/User/UserManagmentDetail")
 );
-const UserProfile = lazy(() =>
-  import("../../pages/UserProfile")
-);
+
 const Comment = lazy(() => import("../../pages/comment/index.jsx"));
 
 // ** Merge Routes
@@ -76,10 +74,7 @@ const Routes = [
     path: "/user-management-detail",
     element: <UserManagementDetail />,
   },
-  {
-    path: "/prof",
-    element: <UserProfile />,
-  },
+ 
   {
     path: "/user-management-edit/:id",
     element: <UserManagementEdit />,
