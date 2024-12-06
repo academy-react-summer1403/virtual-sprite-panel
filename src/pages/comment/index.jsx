@@ -143,7 +143,7 @@ const Comment = () => {
                         </Button>
                         <Input type="text" placeholder="Button on both sides" />
                         <Button color="primary" outline>
-                          Search !
+                          Search 
                         </Button>
                       </InputGroup>
                     </Col>
