@@ -16,10 +16,24 @@ const TableAdvSearch = ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // مقداردهی اولیه داده‌ها
   useEffect(() => {
-    setIsLoading(true);
-    setIsSearching(true);
+    if (data) {
+      setFilteredData(data);
+      setIsLoading(false);
+    }
+  }, [data]);
 
+  // فیلترسازی داده‌ها بر اساس جستجو
+  useEffect(() => {
+    if (searchValue.trim() === "") {
+      setFilteredData(data || []);
+      setIsSearching(false);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsSearching(true);
     const timer = setTimeout(() => {
       const newFilteredData =
         data?.filter((item) => {
@@ -72,8 +86,8 @@ const TableAdvSearch = ({ data }) => {
   };
 
   const handlePerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value));   
-    setCurrentPage(1); 
+    setRowsPerPage(parseInt(e.target.value));
+    setCurrentPage(1);
   };
 
   const dataToRender = () => {

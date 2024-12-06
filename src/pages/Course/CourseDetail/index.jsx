@@ -328,29 +328,29 @@ const CoursDetail = () => {
               </CardTitle>
               <CardColumns>
                 <CardText className="d-flex flex-row gap-1">
-                  <h4 className="mt-2 text-align-fix boldYekan">نام دوره:</h4>{" "}
+                  <h5 className="mt-2 text-align-fix boldYekan">نام دوره:</h5>{" "}
                   <h5 className="mt-2 text-align-fix">{data.title}</h5>
                 </CardText>
-                <CardText className="d-flex flex-row gap-2 ">
-                  <h4 className="mt-2  text-align-fix boldYekan">نام استاد:</h4>{" "}
+                <CardText className="d-flex flex-row gap-1 ">
+                  <h5 className="mt-2  text-align-fix boldYekan">نام استاد:</h5>{" "}
                   <h5 className="mt-2  text-align-fix">{data.teacherName}</h5>
                 </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2  text-align-fix boldYekan">نام کلاس:</h4>{" "}
+                <CardText className="d-flex flex-row gap-1">
+                  <h5 className="mt-2  text-align-fix boldYekan">نام کلاس:</h5>{" "}
                   <h5 className="mt-2  text-align-fix">
                     {data.courseClassRoomName}
                   </h5>
                 </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 text-align-fix boldYekan ">وضعیت:</h4>{" "}
+                <CardText className="d-flex flex-row gap-1">
+                  <h5 className="mt-2 text-align-fix boldYekan ">وضعیت:</h5>{" "}
                   <h5 className="mt-2  text-align-fix">
                     {data.courseLevelName}
                   </h5>
                 </CardText>
-                <CardText className="d-flex flex-row gap-2">
-                  <h4 className="mt-2 text-align-fix boldYekan ">
+                <CardText className="d-flex flex-row gap-1">
+                  <h5 className="mt-2 text-align-fix boldYekan ">
                     نحوه برگزاری:
-                  </h4>{" "}
+                  </h5>{" "}
                   <h5 className="mt-2  text-align-fix">
                     {data.courseTypeName}
                   </h5>
