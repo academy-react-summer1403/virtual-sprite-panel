@@ -1,30 +1,30 @@
 // ** React Imports
-import { Fragment, useState, forwardRef } from 'react'
+import { forwardRef, Fragment, useState } from 'react'
 
 // ** Table Data & Columns
-import { data, columns } from '../data'
+import { columns, data } from '../data'
 
 // ** Add New Modal Component
 import AddNewModal from './AddNewModal'
 
 // ** Third Party Components
-import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, Plus } from 'react-feather'
+import { ChevronDown, Copy, File, FileText, Grid, Plus, Printer, Share } from 'react-feather'
+import ReactPaginate from 'react-paginate'
 
 // ** Reactstrap Imports
 import {
-  Row,
-  Col,
+  Button,
   Card,
+  CardHeader,
+  CardTitle,
+  Col,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Input,
   Label,
-  Button,
-  CardTitle,
-  CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
+  Row,
   UncontrolledButtonDropdown
 } from 'reactstrap'
 
