@@ -8,8 +8,9 @@ import { Label, Row, Col, Form, Input, Button } from "reactstrap";
 import { getCourses } from "../../../../../core/services/api/courses/createCourseStep1";
 import { Formik } from "formik";
 import { createCourse } from "../../../../../core/services/api/courses/CreateCourseStep2.api";
+import toast from "react-hot-toast";
 
-const Technology = ({ stepper, type, formData, setFormData }) => {
+const Register = ({ stepper, type, formData, setFormData }) => {
   const [techOptions, setTechOptions] = useState([]);
   const [error, setError] = useState(null);
 
@@ -19,7 +20,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
   // console.log("formData test", formData);
 
   const onSubmit = async (values) => {
-    setFormData((prev) => ({ ...prev, technology: values }));
+    setFormData((prev) => ({ ...prev, register: values }));
     try {
       // console.log("formData", formData);
       const obj = {
@@ -29,42 +30,43 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
         ...formData.technology,
       };
       console.log("obj", obj);
-      const newFormData = new FormData()
+      const newFormData = new FormData();
       Object.entries(obj).forEach(([key, value]) => {
         newFormData.append(key, value);
       });
       await createCourse(newFormData);
-      // alert("دوره با موفقیت ثبت شد");
+      toast.success("دوره با موفقیت ثبت شد");
     } catch (error) {
       console.error("خطا در ثبت دوره:", error);
-      alert("مشکلی در ثبت دوره به وجود آمده است");
+      toast.error("دوره با موفقیت ثبت شد");
+
     }
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const signal = controller.signal;
 
-    const fetchCourseData = async () => {
-      try {
-        const result = await getCourses(signal);
-        const techOptions = result.technologyDtos.map((item) => ({
-          value: item.id,
-          label: item.techName,
-        }));
-        setTechOptions(techOptions);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setError("خطا در دریافت داده‌ها");
-          console.error("خطا در دریافت داده‌ها:", error);
-        }
-      }
-    };
+  //   const fetchCourseData = async () => {
+  //     try {
+  //       const result = await getCourses(signal);
+  //       const techOptions = result.technologyDtos.map((item) => ({
+  //         value: item.id,
+  //         label: item.techName,
+  //       }));
+  //       setTechOptions(techOptions);
+  //     } catch (error) {
+  //       if (error.name !== "AbortError") {
+  //         setError("خطا در دریافت داده‌ها");
+  //         console.error("خطا در دریافت داده‌ها:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchCourseData();
+  //   fetchCourseData();
 
-    return () => controller.abort();
-  }, []);
+  //   return () => controller.abort();
+  // }, []);
   return (
     <Fragment>
       <Formik
@@ -74,7 +76,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
         {({ handleSubmit, values, handleChange }) => (
           <Form onSubmit={onSubmit}>
             <Row>
-              <Col md="6" className="mb-1">
+              {/* <Col md="6" className="mb-1">
                 <Label className="form-label" for="tech">
                   انتخاب تکنولوژی
                 </Label>
@@ -110,7 +112,7 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
                     });
                   }}
                 />
-              </Col>
+              </Col> */}
             </Row>
             <div className="d-flex justify-content-between">
               <Button
@@ -130,11 +132,11 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
               <Button
                 onClick={() => {
                   handleSubmit();
-                  console.log("Form tech:", values); // لاگ فرم دیتا
+                  // console.log("Form tech:", values);
                   setFormData((prev) => ({
                     ...prev,
-                    technology: values,
-                  })); // ذخیره داده در استیت اصلی
+                    // technology: values,
+                  }));
                   stepper.next();
                 }}
                 color="success"
@@ -150,4 +152,4 @@ const Technology = ({ stepper, type, formData, setFormData }) => {
   );
 };
 
-export default Technology;
+export default Register;

@@ -22,6 +22,7 @@ import "@styles/react/libs/editor/editor.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import EditorControlled from "../../EditorControlled";
 
+
 const SecondInfo = ({ stepper, type, formData, setFormData }) => {
   const [classOptions, setClassOptions] = useState([]);
   const [teacherOptions, setTeacherOptions] = useState([]);
@@ -29,6 +30,11 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [error, setError] = useState(null);
+
+  const formatDate = (date) => {
+    const isoString = date.toISOString();
+    return isoString.slice(0, 23);
+  };
 
   const handleFormChange = (values) => {
     setFormData((prev) => ({ ...prev, secondInfo: values }));
@@ -126,7 +132,7 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                 <Input
                   type="text"
                   name="SessionNumber"
-                  id="SessionNumber+++++++"
+                  id="SessionNumber"
                   placeholder="تعداد جلسات"
                   value={values.SessionNumber || ""}
                   onChange={handleChange}
@@ -172,17 +178,19 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                 />
               </Col>
               <Col md="6" className="mb-1">
-                <Label className="form-label" for="TermId">
+                <Label className="form-label" for="TremId">
                   ترم دوره
                 </Label>
                 <Select
                   theme={selectThemeColors}
+                  id="TremId"
+                  name="TremId"
                   className="react-select w-100"
                   classNamePrefix="select"
                   placeholder="انتخاب  ترم  ... "
                   value={
                     termOptions.find(
-                      (option) => option.value === values.TermId
+                      (option) => option.value === values.TremId
                     ) || null
                   }
                   options={termOptions}
@@ -201,7 +209,7 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                   onChange={(selectedOption) => {
                     handleChange({
                       target: {
-                        name: "TermId",
+                        name: "TremId",
                         value: selectedOption?.value || "",
                       },
                     });
@@ -220,14 +228,13 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                   selected={startDate}
                   onChange={(date) => {
                     setStartDate(date);
-                    // console.log("date data", date);
-                    setFieldValue("StartTime", date);
+                    const standardDate = formatDate(date);
+                    setFieldValue("StartTime", standardDate);
                   }}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="تاریخ را انتخاب کنید"
                   className="form-control"
                   isClearable
-                  // maxDate={endDate}
                 />
               </Col>
               <Col md="6" className="mb-1">
@@ -240,14 +247,15 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                   // onChange={(date) => setEndDate(date)}
                   onChange={(date) => {
                     setEndDate(date);
-                    console.log("date data", date);
-                    setFieldValue("EndTime", date);
+                    // console.log("date data", date);
+                    const standardDate = formatDate(date)
+                    setFieldValue("EndTime", standardDate);
                   }}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="تاریخ را انتخاب کنید"
                   className="form-control"
                   isClearable
-                  minDate={startDate} // حداقل تاریخ پایان برابر تاریخ شروع
+                  minDate={startDate} 
                 />
               </Col>
             </Row>
@@ -255,7 +263,7 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
             <Row>
               <Col md="12" className="mb-1">
                 <Label className="form-label" for="Describe">
-                  توضیحات کامل دوره++++++++++++++++++++++++++++
+                  توضیحات کامل دوره
                 </Label>
                 <EditorControlled setFieldValue={setFieldValue} />
               </Col>
@@ -279,7 +287,7 @@ const SecondInfo = ({ stepper, type, formData, setFormData }) => {
                 className="btn-next"
                 onClick={() => {
                   handleSubmit();
-                  console.log("Form Data1:", values); // لاگ فرم دیتا
+                  console.log("Form Data second:", values); 
                   setFormData((prev) => ({
                     ...prev,
                     secondInfo: values,
