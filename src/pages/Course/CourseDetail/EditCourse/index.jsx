@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { getCoursesDetail } from "../../../../core/services/api/courses/courseDetailById.api";
+import { courseEditApi, getCoursesDetail } from "../../../../core/services/api/courses/courseDetailById.api";
 
 // ** Third Party Components
 // ** Reactstrap Imports
@@ -32,7 +32,18 @@ const EditCourse = () => {
     getDetails();
   }, [id]);
   const ref = useRef(null);
+ const editcourse=async()=>{
+ 
 
+    const formdata = new FormData();
+    formdata.append("cost");
+    formdata.append("title");
+
+  
+    const editapi = await courseEditApi(formdata);
+    
+  
+ }
   // ** State
   const [stepper, setStepper] = useState(null);
 

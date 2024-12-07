@@ -49,6 +49,7 @@ import { useEffect, useState } from "react";
 import { getCommentManeger } from "../../core/services/api/comment/Comment";
 import ReactPaginate from "react-paginate";
 const Comment = () => {
+  
   const [comment, setComment] = useState([]);
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState(10);
@@ -88,25 +89,14 @@ const Comment = () => {
                   <Select
                     theme={selectThemeColors}
                     isClearable={false}
-                    id={`level`}
+                    id='level'
+                    name="level"
                     className="react-select"
                     classNamePrefix="select"
                     // options={termOptions}
                   />
                 </Col>
-                <Col md="4" className="mb-1">
-                  <Label className="form-label" for="level">
-                    وضعیت
-                  </Label>
-                  <Select
-                    theme={selectThemeColors}
-                    isClearable={false}
-                    id={`level`}
-                    className="react-select"
-                    classNamePrefix="select"
-                    // options={termOptions}
-                  />
-                </Col>
+                
               </Row>
             </CardBody>
           </Card>
@@ -153,7 +143,7 @@ const Comment = () => {
             </CardBody>
           </Card>
         </Col>
-        <Table
+        <Table id="totalTable"
           className="text-nowrap text-center border-bottom "
           hover
           responsive
