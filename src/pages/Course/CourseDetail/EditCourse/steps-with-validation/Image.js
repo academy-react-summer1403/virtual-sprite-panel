@@ -9,6 +9,20 @@ import { useDropzone } from 'react-dropzone'
 import { FileText, X, DownloadCloud } from 'react-feather'
 
 const Image = ({ stepper }) => {
+  const onSubmit = data => {
+    if (Object.values(data).every(field => field.length > 0)) {
+      alert('submitted')
+    } else {
+      for (const key in data) {
+        if (data[key].length === 0) {
+          setError(key, {
+            type: 'manual',
+            message: `Please enter a valid ${key} url`
+          })
+        }
+      }
+    }
+  }
   const [files, setFiles] = useState([])
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -89,7 +103,7 @@ const Image = ({ stepper }) => {
           </Fragment>
         ) : null}
       </CardBody>
-      <Button type='submit' color='success' className=''>
+      <Button  type='submit' color='success' className=''>
             ثبت
           </Button>
     </Card>
