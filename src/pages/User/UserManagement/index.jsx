@@ -375,7 +375,7 @@ const UserManagement = () => {
               onChange={handleRoleChange}
             />
           </Col>
-          <Col md="4" className="mb-1">
+          {/* <Col md="4" className="mb-1">
             <Label className="form-label" for="level">
               وضعیت
             </Label>
@@ -400,7 +400,7 @@ const UserManagement = () => {
               classNamePrefix="select"
               // options={termOptions}
             />
-          </Col>
+          </Col> */}
         </Row>
         <Col className="mt-1">
           <Row lg={4} className="justify-content-between">
