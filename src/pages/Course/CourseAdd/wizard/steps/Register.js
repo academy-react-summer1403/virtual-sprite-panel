@@ -8,6 +8,7 @@ import { Label, Row, Col, Form, Input, Button } from "reactstrap";
 import { getCourses } from "../../../../../core/services/api/courses/createCourseStep1";
 import { Formik } from "formik";
 import { createCourse } from "../../../../../core/services/api/courses/CreateCourseStep2.api";
+import toast from "react-hot-toast";
 
 const Register = ({ stepper, type, formData, setFormData }) => {
   const [techOptions, setTechOptions] = useState([]);
@@ -29,15 +30,16 @@ const Register = ({ stepper, type, formData, setFormData }) => {
         ...formData.technology,
       };
       console.log("obj", obj);
-      const newFormData = new FormData()
+      const newFormData = new FormData();
       Object.entries(obj).forEach(([key, value]) => {
         newFormData.append(key, value);
       });
       await createCourse(newFormData);
-      // alert("دوره با موفقیت ثبت شد");
+      toast.success("دوره با موفقیت ثبت شد");
     } catch (error) {
       console.error("خطا در ثبت دوره:", error);
-      alert("مشکلی در ثبت دوره به وجود آمده است");
+      toast.error("دوره با موفقیت ثبت شد");
+
     }
   };
 
@@ -130,7 +132,7 @@ const Register = ({ stepper, type, formData, setFormData }) => {
               <Button
                 onClick={() => {
                   handleSubmit();
-                  // console.log("Form tech:", values); 
+                  // console.log("Form tech:", values);
                   setFormData((prev) => ({
                     ...prev,
                     // technology: values,

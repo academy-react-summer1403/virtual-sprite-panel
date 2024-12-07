@@ -9,22 +9,26 @@ import { Formik } from "formik";
 import { Button, Col, Form, Label, Row } from "reactstrap";
 import FileUploaderSingle from "../../../../../views/apps/forms/form-elemenst/file-uploader/FileUploaderSingle";
 // import { useState } from "react";
-
+const generateUniqueString = () => {
+  return `unique_${Math.random().toString(36).substr(2, 9)}_${Date.now()}`;
+};
 const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
+  const uniqueString = generateUniqueString();
+
   const handleFormChange = (values) => {
     // setFormData((prev) => ({ ...prev, visualInfo: values }));
     const obj = {
-      Image: "fagbvbss1",
-      TumbImageAddress: "fakgfkjljklj",
-      ImageAddress: "tytytyt",
-      ShortLink: "wertyu",
-      UniqeUrlString: "asdfgh",
+      Image: img,
+      TumbImageAddress: img,
+      ImageAddress: img,
+      ShortLink: "wegnfghrtyu",
+      UniqeUrlString: uniqueString, // رشته یکتا
       CurrentCoursePaymentNumber: 1,
     };
     setFormData((prev) => ({ ...prev, visualInfo: obj }));
   };
   const [img, setImg] = useState();
-  console.log('عکس ما',img)
+  console.log("عکس ما", img);
   return (
     <Fragment>
       <div className="content-header">
@@ -41,7 +45,7 @@ const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
                 <Label className="form-label" for={`pincode-${type}`}>
                   آپلود عکس دوره
                 </Label>
-                <FileUploaderSingle setImg={setImg}/>
+                <FileUploaderSingle setImg={setImg} />
               </Col>
             </Row>
 
@@ -63,16 +67,15 @@ const VisulaInfo = ({ stepper, type, formData, setFormData }) => {
                 color="primary"
                 className="btn-next"
                 onClick={() => {
-                  // handleSubmit();
-                  console.log("visual:");
+                  const uniqueString = generateUniqueString();
                   setFormData((prev) => ({
                     ...prev,
                     visualInfo: {
-                      Image: "fakestringInageAddress1",
-                      TumbImageAddress: "fakestringInageAddress2",
-                      ImageAddress: "fakestringInageAddress3",
-                      ShortLink: "fakeShortLink",
-                      UniqeUrlString: "jfdnhkjdfnkd",
+                      Image: img,
+                      TumbImageAddress: img,
+                      ImageAddress: img,
+                      ShortLink: uniqueString,
+                      UniqeUrlString: uniqueString,
                       CurrentCoursePaymentNumber: 3,
                     },
                   })); // ذخیره داده در استیت اصلی
