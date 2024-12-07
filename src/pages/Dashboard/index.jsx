@@ -6,6 +6,8 @@ import {
   CardText,
   CardLink,
 } from "reactstrap";
+import CardCongratulations from '../../../src/views/ui-elements/cards/advance/CardCongratulations'
+
 import { User } from "react-feather";
 import allUsers from "../../assets/images/portrait/small/all-users.png";
 import activeUser from "../../assets/images/portrait/small/active-user.png";
@@ -81,7 +83,7 @@ const Dashboard = () => {
           <CardTitle> </CardTitle>
         </CardHeader>
         <CardBody>
-          <CardText></CardText>
+        <CardCongratulations></CardCongratulations>
           <CardText>
            
             <CardLink
