@@ -409,20 +409,19 @@ const UserManagement = () => {
                 نمایش
               </Label>
               <Input
-  className="dataTable-select"
-  type="select"
-  id="level"
-  value={rowsPerPage === Infinity ? "all" : rowsPerPage} // مقدار پیش‌فرض
-  onChange={handlePerPage} // تابع مدیریت تغییر
->
-  <option value={5}>5</option>
-  <option value={10}>10</option>
-  <option value={25}>25</option>
-  <option value={50}>50</option>
-  <option value={100}>100</option>
-  <option value="all">همه</option> {/* گزینه "همه" */}
-</Input>
-
+                className="dataTable-select"
+                type="select"
+                id="level"
+                value={rowsPerPage === Infinity ? "all" : rowsPerPage} // مقدار پیش‌فرض
+                onChange={handlePerPage} // تابع مدیریت تغییر
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value="all">همه</option> {/* گزینه "همه" */}
+              </Input>
             </Col>
             <Col lg={7}>
               <Row>
@@ -450,7 +449,6 @@ const UserManagement = () => {
                   >
                     اضافه کردن کاربر جدید
                   </Button>
-                 
                 </Col>
               </Row>
             </Col>

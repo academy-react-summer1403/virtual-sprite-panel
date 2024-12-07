@@ -53,6 +53,7 @@ const Comment = () => {
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState(10);
   const [RowsOfPage, setRowsOfPage] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
     try {
@@ -76,10 +77,10 @@ const Comment = () => {
   return (
     <>
       <Col>
-        {/* <Col className="mt-1"> */}
+        <Col className="mt-1">
           <Card>
             <CardBody>
-              {/* <Row lg={4} className="justify-content-between mb-2"> */}
+              <Row lg={4} className="justify-content-between mb-2">
                 <Col lg={2} className="mb-1">
                   <Label className="form-label" for="level">
                     نمایش
@@ -99,36 +100,44 @@ const Comment = () => {
                     onChange={(e) => setRowsOfPage(e.value)}
                   />
                 </Col>
-                <Col md="4" className="mb-1">
-                  <Label className="form-label" for="level">
-                    کاربر
-                  </Label>
-                  <Select
-                    theme={selectThemeColors}
-                    isClearable={false}
-                    id="level"
-                    name="level"
-                    className="react-select"
-                    classNamePrefix="select"
-                    // options={termOptions}
-                  />
+                <Col lg={7}>
+                  {/* <Row lg={3}>
+                    <Col md="4" className="mb-1">
+                      <Label className="form-label" for="level">
+                        کاربر
+                      </Label>
+                      <Select
+                        theme={selectThemeColors}
+                        isClearable={false}
+                        id="level"
+                        name="level"
+                        className="react-select"
+                        classNamePrefix="select"
+                        // options={termOptions}
+                      />
+                    </Col>
+                  </Row> */}
+                  <Row>
+                    <Col className="mt-2" lg={8}>
+                      <InputGroup>
+                        <Button color="primary" outline>
+                          <Search size={12} />
+                        </Button>
+                        <Input type="text" placeholder="Button on both sides" />
+                        <Button color="primary" outline
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                        
+                        >
+                        جستجو
+                        </Button>
+                      </InputGroup>
+                    </Col>
+                  </Row>
                 </Col>
-
-                <Col className="mt-2" lg={8}>
-                  <InputGroup>
-                    <Button color="primary" outline>
-                      <Search size={12} />
-                    </Button>
-                    <Input type="text" placeholder="Button on both sides" />
-                    <Button color="primary" outline>
-                      جستجو
-                    </Button>
-                  </InputGroup>
-                </Col>
-              {/* </Row> */}
+              </Row>
             </CardBody>
           </Card>
-        {/* </Col> */}
+        </Col>
         <Table
           id="totalTable"
           className="text-nowrap text-center border-bottom "
